@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: FFFFFFFF;" styleClass="slideBar" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.BoardFormController">
+   <left>
+      <VBox alignment="CENTER_RIGHT" fillWidth="false" prefHeight="800.0" prefWidth="250.0" spacing="20.0" styleClass="sideMenu" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#dashboardBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="DASHBOARD">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/dashboardMenu.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#rentBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="RENT">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/rentOrder.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#returnBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="RETURN">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/return.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#refundBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="REFUND">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/refund.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#printBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="REPORT">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/invoicePrint.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#vehicleBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="VEHICLES">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/vehicle.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#toolBtnONAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="TOOLS">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/tools.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#insuranceBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="INSURANCE">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/insurance.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#manageEmployeeBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="EMPLOYEE">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/employee.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#customerBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="CUSTOMER">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/customer.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#manageUserAccountBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="ACCOUNTS">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/userAccount.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#logoutBtnOnAction" prefHeight="60.0" prefWidth="200.0" styleClass="sideMenuButton" text="LOGOUT">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logout.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane fx:id="changeRoot" prefHeight="734.0" prefWidth="1020.0" BorderPane.alignment="CENTER_LEFT" />
+   </center>
+   <top>
+      <Pane prefHeight="48.0" prefWidth="1200.0" BorderPane.alignment="CENTER_RIGHT">
+         <children>
+            <Label fx:id="titleLabel" layoutX="249.0" layoutY="7.0" prefHeight="36.0" prefWidth="400.0" styleClass="sideTitleLabel" />
+            <Label fx:id="dateLabel" layoutX="14.0" layoutY="12.0" prefHeight="24.0" prefWidth="235.0" styleClass="sideDateLabel" />
+            <Label fx:id="employeeNameFld" alignment="CENTER_RIGHT" layoutX="1700.0" layoutY="5.0" prefHeight="15.0" prefWidth="200.0" styleClass="sideDateLabel" />
+            <Label fx:id="employeeIdFld" alignment="CENTER_RIGHT" layoutX="1700.0" layoutY="23.0" prefHeight="10.0" prefWidth="200.0" styleClass="sideDateLabel" />
+         </children>
+      </Pane>
+   </top>
+</BorderPane>

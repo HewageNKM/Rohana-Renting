@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<!--
+  ~ Copyright (c) 2023, All right reserved.
+  ~ Author: Nadun Kawishika
+  ~ Project Name: RohanaRenting
+  ~ Date and Time: 3/29/23, 8:08 PM
+  ~
+  -->
+
+<BorderPane prefHeight="960.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.EmployeeFormController">
+   <center>
+      <AnchorPane onMouseClicked="#refreshOnClick" prefHeight="590.0" prefWidth="943.0" style="-fx-background-color: FFFFFFFF;" stylesheets="@../css/styleSheet.css">
+         <children>
+            <JFXButton fx:id="saveBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1015.0" layoutY="318.0" onAction="#saveBtnOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #90EE90;" styleClass="formButton" text="Save">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="deleteBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1213.0" layoutY="318.0" onAction="#deleteBtnOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #ffcccb;" styleClass="formButton" text="Save">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cross.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="1425.0" layoutY="318.0" onAction="#clearBtnOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #C4A484;" styleClass="formButton" text="Save">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/clear.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <Label fx:id="notifyLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="498.0" layoutY="-13.0" prefHeight="5.0" prefWidth="635.0" styleClass="FormTitleLabel">
+               <font>
+                  <Font name="Times New Roman Bold" size="10.0" />
+               </font>
+            </Label>
+            <TableView fx:id="usersTable" layoutX="5.0" layoutY="377.0" prefHeight="548.0" prefWidth="1593.0">
+              <columns>
+                <TableColumn fx:id="columnID" prefWidth="85.00003051757812" text="ID" />
+                <TableColumn fx:id="columnFirstName" prefWidth="200.0" text="First Name" />
+                  <TableColumn fx:id="columnLastName" prefWidth="200.0" text="Last  Name" />
+                  <TableColumn fx:id="columnStreet" prefWidth="250.0" text="Street" />
+                  <TableColumn fx:id="columnCity" prefWidth="150.0" text="City" />
+                  <TableColumn fx:id="columnState" prefWidth="200.0" text="State" />
+                  <TableColumn fx:id="columnEmail" prefWidth="300.0" text="Email" />
+                  <TableColumn fx:id="columnMobileNumber" prefWidth="200.0" text="Mobile Number" />
+                  <TableColumn fx:id="columnNic" prefWidth="200.0" text="NIC" />
+                  <TableColumn fx:id="columnJoinDate" prefWidth="200.0" text="Joing Date" />
+                  <TableColumn fx:id="columnPosition" prefWidth="150.0" text="Position" />
+                  <TableColumn fx:id="columnGender" prefWidth="90.0" text="Gender" />
+                  <TableColumn fx:id="columnBirthday" prefWidth="200.0" text="Bithday" />
+                  <TableColumn fx:id="columnEdit" prefWidth="90.0" text="Edit" />
+                  <TableColumn fx:id="columnDelete" prefWidth="125.0" text="Delete" />
+              </columns>
+            </TableView>
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="458.0" layoutY="50.0" onAction="#idGenarateOnAction" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #00FF00;" styleClass="formButton" text="Genarate">
+               <font>
+                  <Font name="Times New Roman Bold" size="11.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/reload.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <TextField fx:id="employeeIdFld" layoutX="26.0" layoutY="50.0" onAction="#enterOnAction" onKeyReleased="#employeeIdValidate" prefHeight="40.0" prefWidth="400.0" promptText="EXXXX" />
+            <TextField fx:id="firstNameFld" layoutX="25.0" layoutY="158.0" onKeyReleased="#firstNameValidate" prefHeight="40.0" prefWidth="190.0" promptText="John" />
+            <TextField fx:id="emailFld" layoutX="616.0" layoutY="158.0" onKeyReleased="#emailValidate" prefHeight="40.0" prefWidth="400.0" promptText="Email" />
+            <TextField fx:id="mobileNumberFld" layoutX="616.0" layoutY="50.0" onKeyReleased="#mobileNumberValidate" prefHeight="40.0" prefWidth="400.0" promptText="Moobile Number" />
+            <TextField fx:id="nicFld" layoutX="26.0" layoutY="259.0" onKeyReleased="#nicValidate" prefHeight="40.0" prefWidth="400.0" promptText="NIC" />
+            <TextField fx:id="streetFld" layoutX="563.0" layoutY="259.0" onKeyReleased="#streetValidate" prefHeight="40.0" prefWidth="151.0" promptText="Jayanthi Rd" />
+            <TextField layoutX="55.0" layoutY="328.0" onKeyReleased="#searchFldOnAction" prefHeight="40.0" prefWidth="400.0" promptText="Search . . . . . . . " />
+            <Label layoutX="27.0" layoutY="135.0" styleClass="formTextFieldLabel" text="First Name" />
+            <Label layoutX="563.0" layoutY="236.0" styleClass="formTextFieldLabel" text="Street" />
+            <Label layoutX="615.0" layoutY="135.0" styleClass="formTextFieldLabel" text="Email" />
+            <Label layoutX="32.0" layoutY="29.0" styleClass="formTextFieldLabel" text="Employee ID" />
+            <Label layoutX="1146.0" layoutY="236.0" styleClass="formTextFieldLabel" text="Date Of Birth" />
+            <Label layoutX="1156.0" layoutY="29.0" styleClass="formTextFieldLabel" text="Position" />
+            <Label layoutX="615.0" layoutY="29.0" styleClass="formTextFieldLabel" text="Mobile Number" />
+            <Label layoutX="34.0" layoutY="236.0" prefHeight="19.0" prefWidth="39.0" styleClass="formTextFieldLabel" text="NIC" />
+            <Label layoutX="1146.0" layoutY="169.0" styleClass="formTextFieldLabel" text="Joing Date" />
+            <Label layoutX="55.0" layoutY="310.0" styleClass="formTextFieldLabel" text="Search" />
+            <ImageView fx:id="NICImgViewer1" fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="333.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/search.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="lastNameFld" layoutX="232.0" layoutY="158.0" onKeyReleased="#lastNameValidate" prefHeight="40.0" prefWidth="190.0" promptText="Snow" />
+            <Label layoutX="232.0" layoutY="135.0" styleClass="formTextFieldLabel" text="Last Name" />
+            <TextField fx:id="cityFld" layoutX="732.0" layoutY="259.0" onKeyReleased="#cityValidate" prefHeight="40.0" prefWidth="106.0" promptText="Dompe" />
+            <Label layoutX="732.0" layoutY="236.0" styleClass="formTextFieldLabel" text="City" />
+            <TextField fx:id="zipFld" layoutX="864.0" layoutY="259.0" onKeyReleased="#zipValidate" prefHeight="40.0" prefWidth="112.0" promptText="11068" />
+            <Label layoutX="871.0" layoutY="236.0" prefHeight="19.0" prefWidth="36.0" styleClass="formTextFieldLabel" text="ZIP " />
+            <TextField fx:id="stateFld" layoutX="993.0" layoutY="259.0" onKeyReleased="#stateValidate" prefHeight="40.0" prefWidth="114.0" promptText="Colombo" />
+            <Label layoutX="993.0" layoutY="236.0" styleClass="formTextFieldLabel" text="State" />
+            <TextField fx:id="positionFld" layoutX="1147.0" layoutY="50.0" onKeyReleased="#positionValidate" prefHeight="40.0" prefWidth="400.0" promptText="Cashier" />
+            <ComboBox fx:id="genderComboBox" layoutX="1238.0" layoutY="126.0" prefHeight="37.0" prefWidth="227.0" promptText="Choose Gender" />
+            <Label layoutX="1238.0" layoutY="100.0" styleClass="formTextFieldLabel" text="Gender" />
+            <JFXDatePicker fx:id="joinedDtePicker" defaultColor="BLACK" layoutX="1146.0" layoutY="188.0" prefHeight="33.0" prefWidth="401.0" />
+            <JFXDatePicker fx:id="birthDayPicker" defaultColor="BLACK" layoutX="1146.0" layoutY="266.0" prefHeight="33.0" prefWidth="401.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="10.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </left>
+   <bottom>
+      <AnchorPane prefHeight="10.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<!--
+  ~ Copyright (c) 2023, All right reserved.
+  ~ Author: Nadun Kawishika
+  ~ Project Name: RohanaRenting
+  ~ Date and Time: 3/29/23, 8:08 PM
+  ~
+  -->
+
+<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.UserAccountsFormController">
+   <center>
+      <AnchorPane onMouseClicked="#refreshOnClick" prefHeight="940.0" prefWidth="1556.0" styleClass="Displaybutton">
+         <children>
+            <JFXRadioButton fx:id="aPermission" layoutX="1467.0" layoutY="144.0" selected="true" styleClass="Displaylabel" text="A">
+               <toggleGroup>
+                  <ToggleGroup fx:id="permissionGroup" />
+               </toggleGroup>
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="bPermission" layoutX="1358.0" layoutY="144.0" selected="true" styleClass="Displaylabel" text="B" toggleGroup="$permissionGroup">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font></JFXRadioButton>
+            <Label layoutX="1347.0" layoutY="63.0" styleClass="Displaylabel" text="Permission">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="509.0" layoutY="63.0" styleClass="FormTitleLabel" text="A - All Permission" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="503.0" layoutY="153.0" styleClass="FormTitleLabel" text="B - Limit Management" textFill="#26ff00">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="14.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/search.png" />
+               </image></ImageView>
+            <JFXButton fx:id="saveBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1137.0" layoutY="232.0" onAction="#saveBtnOnAction" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #90EE90;" styleClass="formButton" text="Save">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="deleteBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1297.0" layoutY="232.0" onAction="#deleteBtnOnAction" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #ffcccb;" styleClass="formButton" text="Save">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cross.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="1455.0" layoutY="232.0" onAction="#clearBtnOnAction" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #c4a484;" styleClass="formButton" text="Save">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/clear.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <Label fx:id="notifyLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="467.0" layoutY="2.0" prefHeight="18.0" prefWidth="482.0" styleClass="FormTitleLabel">
+               <font>
+                  <Font name="Times New Roman Bold" size="10.0" />
+               </font>
+            </Label>
+            <TableView fx:id="usersTable" layoutX="6.0" layoutY="312.0" prefHeight="587.0" prefWidth="1585.0" styleClass="notifyLabel">
+              <columns>
+                <TableColumn fx:id="empIdColumn" prefWidth="301.0" text="Employee ID" />
+                <TableColumn fx:id="employeeNameColumn" prefWidth="335.9999694824219" text="User Name" />
+                  <TableColumn fx:id="passwordColumn" minWidth="0.0" prefWidth="430.0" text="Password" />
+                  <TableColumn fx:id="permissionColumn" prefWidth="218.0" text="Permission_Level" />
+                  <TableColumn fx:id="editColumn" prefWidth="149.0" text="Edit" />
+                  <TableColumn fx:id="deleteColumn" prefWidth="150.0" text="Delete" />
+              </columns>
+            </TableView>
+            <TextField fx:id="serachPhaseFld" layoutX="45.0" layoutY="249.0" onKeyReleased="#filteringFld" prefHeight="30.0" prefWidth="293.0" promptText="Search. . . . . . . . . " />
+            <TextField fx:id="employeeFld" layoutX="45.0" layoutY="61.0" onAction="#enterOnAction" onKeyReleased="#employeeValidate" prefHeight="40.0" prefWidth="400.0" promptText="EXXXX" />
+            <PasswordField fx:id="passwordFld" layoutX="871.0" layoutY="61.0" onKeyReleased="#passwordValidate" prefHeight="40.0" prefWidth="400.0" promptText="Password" />
+            <TextField fx:id="userNameFld" layoutX="45.0" layoutY="151.0" onAction="#enterOnAction" onKeyReleased="#userNameValidate" prefHeight="40.0" prefWidth="400.0" promptText="JSnow4567" />
+            <Label layoutX="56.0" layoutY="39.0" styleClass="formTextFieldLabel" text="Employee ID" />
+            <Label layoutX="52.0" layoutY="125.0" styleClass="formTextFieldLabel" text="User Name" />
+            <Label layoutX="871.0" layoutY="39.0" styleClass="formTextFieldLabel" text="Password" />
+            <Label layoutX="50.0" layoutY="224.0" styleClass="formTextFieldLabel" text="Search" />
+         </children>
+      </AnchorPane>
+   </center>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <AnchorPane prefHeight="970.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </left>
+   <top>
+      <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>

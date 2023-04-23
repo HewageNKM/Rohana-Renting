@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<!--
+  ~ Copyright (c) 2023, All right reserved.
+  ~ Author: Nadun Kawishika
+  ~ Project Name: RohanaRenting
+  ~ Date and Time: 3/29/23, 8:08 PM
+  ~
+  -->
+
+<BorderPane prefHeight="960.0" prefWidth="1700.0" style="-fx-background-color: #FFFFFFFF;" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.ToolFormController">
+   <center>
+      <AnchorPane onMouseClicked="#refreshOnClick" prefHeight="960.0" prefWidth="1700.0" style="-fx-background-color: #FFFFFFFF;">
+         <children>
+            <JFXButton fx:id="saveBtn" contentDisplay="GRAPHIC_ONLY" layoutX="964.0" layoutY="276.0" onAction="#saveBtnOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #90EE90;" styleClass="formButton" text="Save">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="deleteBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1174.0" layoutY="276.0" onAction="#deleteBtnOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #FFCCCB;" styleClass="formButton" text="Save">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cross.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="1378.0" layoutY="276.0" onAction="#clearBtnOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #C4A484;" styleClass="formButton" text="Save">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/clear.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <Label fx:id="notifyLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="456.0" layoutY="2.0" prefHeight="25.0" prefWidth="603.0" styleClass="FormTitleLabel">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Label>
+            <TableView fx:id="toolsTable" layoutX="58.0" layoutY="339.0" prefHeight="577.0" prefWidth="1496.0" style="-fx-background-color: #FFFFFFFF;">
+              <columns>
+                <TableColumn fx:id="columnID" prefWidth="116.0" text="Tool ID" />
+                <TableColumn fx:id="ColumnName" prefWidth="242.0" text="Name" />
+                  <TableColumn fx:id="columnBrandName" prefWidth="169.0" text="Brand Name" />
+                  <TableColumn fx:id="columnDescription" prefWidth="529.0" text="Description" />
+                  <TableColumn fx:id="columnRentalRate" minWidth="0.0" prefWidth="201.0" text="Rental Rate(Rs)" />
+                  <TableColumn fx:id="columnAvailability" prefWidth="162.0" text="Availability" />
+                  <TableColumn fx:id="columnEdit" prefWidth="90.0" text="Edit" />
+                  <TableColumn fx:id="columnDelete" prefWidth="120.0" text="Delete" />
+              </columns>
+            </TableView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="83.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/search.png" />
+               </image></ImageView>
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="378.0" layoutY="59.0" onAction="#idGenarateOnAction" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #00FF00;" styleClass="formButton" text="Genarate">
+               <font>
+                  <Font name="Times New Roman Bold" size="11.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/reload.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <Label alignment="CENTER" layoutX="607.0" layoutY="126.0" prefHeight="16.0" prefWidth="300.0" styleClass="FormTitleLabel" text="Availability" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <JFXRadioButton fx:id="availableRadiBtn" layoutX="690.0" layoutY="184.0" selected="true" styleClass="FormTitleLabel" text="Available">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="Availability" />
+               </toggleGroup>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="nAvailableRadioBtn" layoutX="690.0" layoutY="241.0" styleClass="FormTitleLabel" text="Not Available" toggleGroup="$Availability">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXRadioButton>
+            <TextField fx:id="toolIdFld" layoutX="53.0" layoutY="59.0" onAction="#enterOnAction" onKeyReleased="#toolIdValidate" prefHeight="40.0" prefWidth="300.0" promptText="TXXXX" />
+            <Label layoutX="63.0" layoutY="36.0" styleClass="formTextFieldLabel" text="Tool ID" />
+            <TextField fx:id="brandNameFld" layoutX="53.0" layoutY="133.0" onKeyReleased="#brandNameValidate" prefHeight="40.0" prefWidth="300.0" promptText="XXXXXX" />
+            <Label layoutX="61.0" layoutY="108.0" styleClass="formTextFieldLabel" text="Brand Name" />
+            <TextField fx:id="nameFld" layoutX="53.0" layoutY="202.0" onKeyReleased="#nameValidate" prefHeight="40.0" prefWidth="300.0" promptText="XXXXXXX" />
+            <Label layoutX="63.0" layoutY="177.0" styleClass="formTextFieldLabel" text="Name" />
+            <TextField layoutX="112.0" layoutY="291.0" prefHeight="40.0" prefWidth="300.0" promptText="Search . . . . . . . " />
+            <Label layoutX="121.0" layoutY="268.0" styleClass="formTextFieldLabel" text="Search" />
+            <TextField fx:id="rentalRateFld" layoutX="607.0" layoutY="59.0" onKeyReleased="#rentalRateValidate" prefHeight="40.0" prefWidth="300.0" promptText="00000000000000" />
+            <Label layoutX="607.0" layoutY="36.0" styleClass="formTextFieldLabel" text="Rental Rate" />
+            <TextArea fx:id="drecriptionFld" layoutX="1016.0" layoutY="53.0" onKeyReleased="#descriptionValidate" prefHeight="200.0" prefWidth="481.0" styleClass="text-area" />
+            <Label layoutX="1016.0" layoutY="27.0" styleClass="formTextFieldLabel" text="Descrition" />
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

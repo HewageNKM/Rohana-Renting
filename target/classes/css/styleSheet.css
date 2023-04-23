@@ -1,0 +1,153 @@
+/*
+ * Copyright (c) 2023, All right reserved.
+ * Author: Nadun Kawishika
+ * Project Name: RohanaRenting
+ * Date and Time: 4/11/23, 10:41 AM
+ *
+ */
+
+.loggingButton {
+    -fx-background-color: transparent;
+    -fx-font-size: 17;
+    -fx-font-weight: bold;
+    -fx-text-fill: #303A3C;
+    -fx-border-radius: 20px;
+    -fx-border-width: 3;
+    -fx-background-radius: 20 20 20 20;
+    -fx-border-color: #303A3C;
+}
+.loggingButton:pressed {
+    -fx-background-color: black;
+}
+.loggingLabel {
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+}
+.loggingButton:hover{
+    -fx-background-color: #303A3C;
+    -fx-text-fill: white;
+}
+.text-field {
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20 20 20 20;
+    -fx-text-fill: black;
+    -fx-font-size: 17;
+    -fx-font-weight: bold;
+    -fx-border-width: 2;
+}
+.text-field:focused {
+    -fx-border-color: Black;
+}
+.text-field:hover {
+    -fx-border-color: black;
+}
+.sideMenu {
+    -fx-background-image: url("/img/slideBar.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}
+.sideMenuButton {
+    -fx-background-color: #00ac26;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI";
+    -fx-border-color: #ffffff;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-radius: 0;
+    -fx-padding: 15 0 15 0;
+    -fx-background-radius: 20 0 0 20;
+}
+.sideMenuButton:hover {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1a1a1a;
+}
+.sideTitleLabel {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: black;
+}
+.sideDateLabel{
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+.table-view{
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-border-radius: 20px;
+    -fx-text-fill: black;
+}
+.FormTitleLabel{
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+.formButton{
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20 20 20 20;
+    -fx-text-fill: black;
+    -fx-font-size: 17;
+    -fx-font-weight: bold;
+}
+.formTextFieldLabel {
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+.combo-box{
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20 20 20 20;
+    -fx-text-fill: black;
+    -fx-font-size: 17;
+    -fx-font-weight: bold;
+    -fx-background-color: white;
+    -fx-border-color: black;
+}
+.text-area{
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-width: 2;
+    -fx-text-fill: black;
+    -fx-font-size: 17;
+    -fx-font-weight: bold;
+}
+.text-area:focused {
+    -fx-border-color: #0b0bc8;
+}
+.text-area:hover {
+    -fx-border-color: #0b0bc8;
+}
+.radio-button{
+    -fx-text-fill: black;
+    -fx-font-size: 17;
+    -fx-font-weight: bold;
+}
+.radio-button:hover {
+    -fx-border-color: #0b0bc8;
+}
+.dashboardBoxPane{
+    -fx-background-radius: 30 30 30 30;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+.dashboardBoxPane:hover{
+    -fx-background-color:white;
+}
+.dashboardTitleLabel{
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-background-radius: 20 20 20 20;
+    -fx-font-style: italic;
+}
+.loggingPane{
+    -fx-background-radius: 30 30 30 30;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+.forgotPasswordPane{
+    -fx-background-image: url("/img/forgotPasswordBG2.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat;
+}

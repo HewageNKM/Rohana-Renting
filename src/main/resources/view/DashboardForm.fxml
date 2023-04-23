@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<!--
+  ~ Copyright (c) 2023, AlEmployeeManageForml right reserved.
+  ~ Author: Nadun Kawishika
+  ~ Project Name: RohanaRenting
+  ~ Date and Time: 3/29/23, 8:08 PM
+  ~
+  -->
+
+<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.DashboardController">
+   <center>
+      <AnchorPane prefHeight="590.0" prefWidth="943.0">
+         <children>
+            <AnchorPane layoutX="110.0" layoutY="70.0" prefHeight="200.0" prefWidth="300.0" styleClass="dashboardBoxPane">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="27.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/dashboardCar.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="27.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/dashboardTool.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="carRentalCountLabel" alignment="CENTER" layoutX="132.0" layoutY="33.0" prefHeight="31.0" prefWidth="120.0" styleClass="dashboardTitleLabel" />
+                  <Label fx:id="toolRentalCountLabel" alignment="CENTER" layoutX="132.0" layoutY="121.0" prefHeight="30.0" prefWidth="120.0" styleClass="dashboardTitleLabel" />
+               </children></AnchorPane>
+            <Label layoutX="110.0" layoutY="39.0" styleClass="FormTitleLabel" text="Rent Today" />
+            <AnchorPane layoutX="472.0" layoutY="70.0" prefHeight="200.0" prefWidth="300.0" styleClass="dashboardBoxPane">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/dashboardRefund.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="refundCountLabel" alignment="CENTER" layoutX="89.0" layoutY="33.0" prefHeight="31.0" prefWidth="189.0" styleClass="dashboardTitleLabel" />
+                  <Label fx:id="valueRefundTable" alignment="CENTER" layoutX="113.0" layoutY="117.0" prefHeight="30.0" prefWidth="179.0" styleClass="dashboardTitleLabel" />
+                  <Label layoutX="14.0" layoutY="117.0" prefHeight="30.0" prefWidth="97.0" styleClass="formTextFieldLabel" text="Value : Rs." />
+               </children>
+            </AnchorPane>
+            <Label layoutX="472.0" layoutY="39.0" styleClass="FormTitleLabel" text="Refund Today" />
+            <AnchorPane layoutX="837.0" layoutY="70.0" prefHeight="200.0" prefWidth="300.0" styleClass="dashboardBoxPane">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/dashboardSale.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="InvoiceCount" alignment="CENTER" layoutX="89.0" layoutY="33.0" prefHeight="31.0" prefWidth="189.0" styleClass="dashboardTitleLabel" />
+                  <Label fx:id="totalSaleLabel" alignment="CENTER" layoutX="113.0" layoutY="117.0" prefHeight="30.0" prefWidth="179.0" styleClass="dashboardTitleLabel" />
+                  <Label layoutX="14.0" layoutY="117.0" prefHeight="30.0" prefWidth="97.0" styleClass="formTextFieldLabel" text="Value : Rs." />
+               </children>
+            </AnchorPane>
+            <Label layoutX="837.0" layoutY="39.0" styleClass="FormTitleLabel" text="Total Sale" />
+            <AnchorPane layoutX="1197.0" layoutY="70.0" prefHeight="200.0" prefWidth="300.0" styleClass="dashboardBoxPane">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/user.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="employeeIdFld" alignment="CENTER" layoutX="84.0" layoutY="33.0" prefHeight="31.0" prefWidth="189.0" styleClass="dashboardTitleLabel" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/dashboardUserName.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="userNameFld" alignment="CENTER" layoutX="89.0" layoutY="95.0" prefHeight="30.0" prefWidth="179.0" styleClass="dashboardTitleLabel" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/dashboardLastLogin.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lastLoginFld" alignment="CENTER" layoutX="89.0" layoutY="150.0" prefHeight="30.0" prefWidth="179.0" styleClass="dashboardTitleLabel" />
+               </children>
+            </AnchorPane>
+            <Label layoutX="1197.0" layoutY="39.0" styleClass="FormTitleLabel" text="User" />
+         </children></AnchorPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="10.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </left>
+   <bottom>
+      <AnchorPane prefHeight="10.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>

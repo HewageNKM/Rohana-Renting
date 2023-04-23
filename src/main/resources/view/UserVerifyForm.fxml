@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<!--
+  ~ Copyright (c) 2023, All right reserved.
+  ~ Author: Nadun Kawishika
+  ~ Project Name: RohanaRenting
+  ~ Date and Time: 4/12/23, 10:01 AM
+  ~
+  -->
+
+<AnchorPane onMouseClicked="#onClickRefresh" prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.UserVerifyController">
+   <children>
+      <TextField fx:id="employeeIdFld" layoutX="61.0" layoutY="157.0" onKeyReleased="#employeeIdValidate" prefHeight="40.0" prefWidth="300.0" promptText="EXXXXX" />
+      <PasswordField fx:id="passwordFld" layoutX="61.0" layoutY="259.0" onKeyReleased="#passwordValidate" prefHeight="40.0" prefWidth="300.0" promptText="XXXXXXXX" />
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="22.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/user.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="22.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/password.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="67.0" layoutY="130.0" styleClass="formTextFieldLabel" text="Employee ID" />
+      <Label layoutX="67.0" layoutY="234.0" styleClass="formTextFieldLabel" text="Password" />
+      <JFXButton fx:id="verifyBtn" layoutX="61.0" layoutY="351.0" onAction="#verifyBtnOnAction" prefHeight="50.0" prefWidth="300.0" styleClass="loggingButton" text="Verify" />
+      <Label layoutX="145.0" layoutY="14.0" styleClass="FormTitleLabel" text="VERIFY USER" />
+      <ImageView fx:id="employeeIdViewer" fitHeight="30.0" fitWidth="30.0" layoutX="361.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="passwordViewer" fitHeight="30.0" fitWidth="30.0" layoutX="361.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="notifyLabel" alignment="CENTER" layoutX="52.0" layoutY="85.0" prefHeight="21.0" prefWidth="300.0" styleClass="formTextFieldLabel" />
+   </children>
+   <padding>
+      <Insets left="10.0" right="10.0" />
+   </padding>
+</AnchorPane>
