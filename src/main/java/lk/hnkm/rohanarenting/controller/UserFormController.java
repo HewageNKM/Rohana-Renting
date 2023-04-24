@@ -53,7 +53,7 @@ public class UserFormController {
         setCellValueFactory();
         loadTableData();
     }
-
+    // Set Cell  Value Factory
     private void setCellValueFactory() {
         empIdColumn.setCellValueFactory(new PropertyValueFactory<>("EID"));
         employeeNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -62,11 +62,15 @@ public class UserFormController {
         editColumn.setCellValueFactory(new PropertyValueFactory<>("editBtn"));
         deleteColumn.setCellValueFactory(new PropertyValueFactory<>("deleteBtn"));
     }
-
+    // Load Table Data
     private void loadTableData() {
         try {
             usersList.clear();
             ArrayList<UserTM> arrayList =  UserAccountsModel.getAllUsers();
+            for (UserTM userTM: arrayList) {                                // Set Edit and Delete Button Action
+                setEditButtonAction(userTM.getEditBtn());
+                setDeleteButtonAction(userTM.getDeleteBtn());
+            }
             usersList.addAll(arrayList);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
@@ -75,6 +79,53 @@ public class UserFormController {
         usersTable.setItems(usersList);
     }
 
+    private void setDeleteButtonAction(JFXButton deleteBtn) {
+        deleteBtn.setOnAction(event -> {
+        UserTM user = usersTable.getSelectionModel().getSelectedItem();
+        if(user!=null){
+            new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure ?").showAndWait().ifPresent(buttonType -> {
+                if(buttonType==ButtonType.OK){
+                    try {
+                        if(UserAccountsModel.deleteUser(user.getEID())){
+                            new Alert(Alert.AlertType.INFORMATION,"User Deleted !").show();
+                            loadTableData();
+                            clearFields();
+                        }else {
+                            new Alert(Alert.AlertType.ERROR,"User Not Deleted !").show();
+                        }
+                    } catch (SQLException e) {
+                        new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }else {
+           new Alert(Alert.AlertType.ERROR,"Please Select A User !").show();
+        }
+        });
+    }
+
+    private void setEditButtonAction(JFXButton editBtn) {
+       editBtn.setOnAction(event -> {
+           UserTM user = usersTable.getSelectionModel().getSelectedItem();
+           if(user!=null){
+               employeeFld.setText(user.getEID());
+               userNameFld.setText(user.getName());
+               passwordFld.setText(user.getUPassword());
+               if(user.getPermissionLevel().equals("A")){
+                   aPermission.setSelected(true);
+               }else {
+                   bPermission.setSelected(true);
+               }
+               saveBtn.setDisable(false);
+               deleteBtn.setDisable(false);
+           }else {
+               new Alert(Alert.AlertType.ERROR,"Please Select A User !").show();
+           }
+       });
+    }
+
+    // Employee ID Fld Enter Action
     public void enterOnAction(ActionEvent actionEvent) {
         User user = null;
         try {
@@ -96,7 +147,7 @@ public class UserFormController {
             e.printStackTrace();
         }
     }
-
+    //Save Button Action
     public void saveBtnOnAction(ActionEvent actionEvent) {
         try {
            if(UserAccountsModel.isUserExist(employeeFld.getText())){
@@ -144,11 +195,11 @@ public class UserFormController {
         passwordFld.setStyle(null);
         userNameFld.setStyle(null);
     }
-
+    //Clear All Fields
     public void clearBtnOnAction(ActionEvent actionEvent) {
         clearFields();
     }
-
+    // Validate Employee ID
     public void employeeValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
@@ -167,7 +218,7 @@ public class UserFormController {
             e.printStackTrace();
         }
     }
-
+    // Validate Password
     public void passwordValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
@@ -181,7 +232,7 @@ public class UserFormController {
             passwordFld.setStyle("-fx-border-color: red;");
         }
     }
-
+    // Validate All the Fields
     public void refreshOnClick(MouseEvent mouseEvent) {
         try {
             if(Regex.validateEID(employeeFld.getText())&&Regex.validatePassword(passwordFld.getText())&&Regex.validatePassword(passwordFld.getText())& UserAccountsModel.verifyEmployeeID(employeeFld.getText())&&Regex.validateUsername(userNameFld.getText())){
@@ -202,7 +253,7 @@ public class UserFormController {
             e.printStackTrace();
         }
     }
-
+    // Delete Button Action
     public void deleteBtnOnAction(ActionEvent actionEvent) {
         new Alert(Alert.AlertType.WARNING, "User Details Will Be Deleted !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
             if (buttonType == ButtonType.YES) {
@@ -221,7 +272,7 @@ public class UserFormController {
             }
         });
     }
-
+    // Validate User Name
     public void userNameValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
@@ -235,13 +286,17 @@ public class UserFormController {
             userNameFld.setStyle("-fx-border-color: red;");
         }
     }
-
-    public void serachPhaseFldOnAction(KeyEvent keyEvent) {
+    // Search User
+    public void searchPhaseFldOnAction(KeyEvent keyEvent) {
         if (serachPhaseFld.getText().trim().isEmpty()) {
             loadTableData();
         } else {
             try {
                 ArrayList<UserTM> arrayList = UserAccountsModel.searchUser("%"+serachPhaseFld.getText()+"%");
+                for (UserTM userTM:arrayList) {
+                    setEditButtonAction(userTM.getEditBtn());
+                    setDeleteButtonAction(userTM.getDeleteBtn());
+                }
                 ObservableList<UserTM> users = FXCollections.observableArrayList(arrayList);
                 if (users != null) {
                     usersTable.setItems(users);
