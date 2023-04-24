@@ -14,12 +14,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import lk.hnkm.rohanarenting.db.DBConnection;
 import lk.hnkm.rohanarenting.dto.Vehicle;
 import lk.hnkm.rohanarenting.dto.tm.JesperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
@@ -30,6 +32,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +42,8 @@ import java.util.Map;
 
 public class VehicleFormController {
     public TableColumn<Object, Object> columnReport;
+    public TextField searchFld;
+    public Label orderStatusLabel;
     @FXML
     private JFXButton saveBtn;
 
@@ -185,6 +192,8 @@ public class VehicleFormController {
                 try {
                     isExist = VehicleModel.checkOrderStatus(selectedItem.getVID());
                     if(isExist){
+                        orderStatusLabel.setStyle("-fx-text-fill: red");
+                        orderStatusLabel.setText("This Vehicle is in an Order");
                         if (selectedItem.getAvailability().equals("Available")) {
                             availableRadiBtn.setSelected(true);
                         } else {
@@ -299,6 +308,8 @@ public class VehicleFormController {
         descriptionFld.setStyle(null);
         availableRadiBtn.setDisable(false);
         nAvailableRadioBtn.setDisable(false);
+        orderStatusLabel.setText("");
+        orderStatusLabel.setStyle(null);
     }
 
     @FXML
@@ -336,6 +347,8 @@ public class VehicleFormController {
                 deleteBtn.setDisable(false);
                 Boolean isExist = VehicleModel.checkOrderStatus(licenseFld.getText());
                 if(isExist){
+                    orderStatusLabel.setStyle("-fx-text-fill: red");
+                    orderStatusLabel.setText("This Vehicle is in an Order");
                     if (vehicle.getAvailability() == 1) {
                         availableRadiBtn.setSelected(true);
                     } else {
@@ -402,6 +415,7 @@ public class VehicleFormController {
             deleteBtn.setDisable(false);
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("All Set !");
+            licenseFld.setText(licenseFld.getText().toUpperCase());
 
         }else {
             saveBtn.setDisable(true);
@@ -514,7 +528,27 @@ public class VehicleFormController {
 
 
     public void searchOnAction(KeyEvent keyEvent) {
-
+        if (searchFld.getText().trim().isEmpty()) {
+            loadAllVehicles();
+        } else {
+            try {
+                ArrayList<VehicleTM> arrayList = VehicleModel.getSearchVehicles("%" + searchFld.getText() + "%");
+                for (VehicleTM vehicleTM : arrayList) {
+                    setEditBtnAction(vehicleTM.getEditBtn());
+                    setDeleteBtnAction(vehicleTM.getDeleteBtn());
+                    setShowBtnAction(vehicleTM.getShowBtn());
+                }
+                ObservableList<VehicleTM> vehicles = FXCollections.observableArrayList(arrayList);
+                if (vehicles != null) {
+                    vehiclesTable.setItems(vehicles);
+                } else {
+                    vehiclesTable.getItems().clear();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
+                e.printStackTrace();
+            }
+        }
     }
 
     public void descriptionValidate(KeyEvent keyEvent) {
@@ -529,22 +563,13 @@ public class VehicleFormController {
         }
     }
 
-    public void printReportOnAction(ActionEvent actionEvent) {
+    public void guideBtnOnAction(ActionEvent actionEvent) {
+        File htmlFile = new File("D:\\GDSE\\JavaProject\\RohanaRenting\\src\\main\\resources\\html\\guide.html");
         try {
-            JasperReport compileReport = JasperCompileManager.compileReport(
-                    JRXmlLoader.load(
-                            getClass().getResourceAsStream(
-                                    "/reports/vehicleList.jrxml"
-                            )
-                    )
-            );
-            JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, null, DBConnection.getInstance().getConnection());
-            JasperViewer.viewReport(jasperPrint, false);
-        } catch (JRException e) {
+            Desktop.getDesktop().browse(htmlFile.toURI());
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
-            new Alert(Alert.AlertType.INFORMATION, String.valueOf(e)).show();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 }
