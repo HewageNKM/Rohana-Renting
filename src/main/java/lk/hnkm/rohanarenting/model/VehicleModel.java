@@ -86,4 +86,19 @@ public class VehicleModel {
        }
        return jesperReportVehicleTMS;
     }
+
+    public static ArrayList<VehicleTM> getSearchVehicles(String searchPhrase) throws SQLException {
+        ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle WHERE VID LIKE ? OR Manufacturer LIKE ? OR Model_Name LIKE ? OR Description LIKE ? OR Availability LIKE ? OR Rate_Per_Day LIKE ? OR Category LIKE ?;",searchPhrase,searchPhrase,searchPhrase,searchPhrase,searchPhrase,searchPhrase,searchPhrase);
+        ArrayList <VehicleTM> vehicleTMS = new ArrayList<>();
+        while (resultSet.next()){
+            JFXButton showBtn = new JFXButton();
+            JFXButton editBtn = new JFXButton();
+            JFXButton deleteBtn = new JFXButton();
+            editBtn.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            deleteBtn.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            showBtn.setStyle("-fx-background-image: url('img/show.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),(0<resultSet.getInt(5))? "Available" : "Not Available",resultSet.getDouble(6),resultSet.getString(7),showBtn,editBtn,deleteBtn));
+        }
+        return vehicleTMS;
+    }
 }

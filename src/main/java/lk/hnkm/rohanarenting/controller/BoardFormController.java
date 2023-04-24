@@ -40,7 +40,7 @@ public class BoardFormController {
     public BorderPane root;
     public Label employeeNameFld;
     public Label employeeIdFld;
-    private Stage UserVerifyStage = new  Stage();
+    private Stage userVerifyStage = new  Stage();
     private String employeeId;
 
     public void initialize(String id) throws IOException {
@@ -98,13 +98,14 @@ public class BoardFormController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UserVerifyForm.fxml"));
         Parent parent = loader.load();
         UserVerifyController userVerifyController = loader.getController();
-        userVerifyController.initialize(employeeId,title,changeRoot,titleLabel,UserVerifyStage);
-        UserVerifyStage.setScene(new Scene(parent));
-        UserVerifyStage.centerOnScreen();
-        UserVerifyStage.setAlwaysOnTop(true);
-        UserVerifyStage.setTitle("User Verify");
-        UserVerifyStage.setResizable(false);
-        UserVerifyStage.show();
+        userVerifyController.initialize(employeeId,title,changeRoot,titleLabel,userVerifyStage);
+        userVerifyStage.setScene(new Scene(parent));
+        userVerifyStage.centerOnScreen();
+        userVerifyStage.setAlwaysOnTop(true);
+        userVerifyStage.setTitle("User Verify");
+        userVerifyStage.setResizable(false);
+        userVerifyStage.getIcons().add(new Image("/img/user.png"));
+        userVerifyStage.show();
     }
 
     @FXML

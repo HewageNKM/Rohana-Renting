@@ -82,7 +82,7 @@ public class UserVerifyController {
                     verifyUserStage.close();
                     loadForm();
                 }else {
-                    notifyLabel.setStyle("-fx-text-fill: red");
+                    notifyLabel.setStyle("-fx-text-fill: green");
                     notifyLabel.setText("You Don't Have Permission");
                 }
             }else {
