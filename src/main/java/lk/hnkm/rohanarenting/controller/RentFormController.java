@@ -14,12 +14,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lk.hnkm.rohanarenting.db.DBConnection;
-import lk.hnkm.rohanarenting.dto.Customer;
-import lk.hnkm.rohanarenting.dto.ToolOrder;
-import lk.hnkm.rohanarenting.dto.VehicleJesperReport;
-import lk.hnkm.rohanarenting.dto.VehicleOrder;
+import lk.hnkm.rohanarenting.dto.*;
 import lk.hnkm.rohanarenting.dto.tm.ToolCartTM;
+import lk.hnkm.rohanarenting.dto.tm.ToolRentOrderJesperReportDetailTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleCartTM;
+import lk.hnkm.rohanarenting.dto.tm.VehicleRentOrderJesperReportDetailTM;
 import lk.hnkm.rohanarenting.model.RentModel;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
@@ -251,7 +250,6 @@ public class RentFormController {
     private void printVehicleInvoice() {
         Customer customer =RentModel.getCustomer(vehicleCustomerFld.getText());
         Map<String,Object> params = new HashMap<String,Object>();
-        params.put("rentId",vehicleRentOrderLabel.getText());
         params.put("subTotal",RentModel.getVehicleTotal(vehicleCartTMS));
         params.put("name",customer.getFistName()+" "+customer.getLastName());
         params.put("street",customer.getStreet());
@@ -260,8 +258,8 @@ public class RentFormController {
         params.put("mobileNumber",customer.getMobileNumber());
         params.put("email",customer.getEmail());
         params.put("barCodeNumber",vehicleRentOrderLabel.getText());
-        ArrayList<VehicleJesperReport> vehicleJesperReports = RentModel.getVehicleJesperReport(vehicleCartTMS);
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(vehicleJesperReports);
+        ArrayList<VehicleRentOrderJesperReportDetailTM> vehicleRentOrderJesperReportDetailTMS = RentModel.getVehicleJesperReport(vehicleCartTMS);
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(vehicleRentOrderJesperReportDetailTMS);
         try {
             JasperReport compileReport = JasperCompileManager.compileReport(
                     JRXmlLoader.load(
@@ -512,6 +510,7 @@ public class RentFormController {
                          if(isToolTableUpdated){
                              connection.commit();
                              new Alert(Alert.AlertType.INFORMATION,"Tool Order Placed !").show();
+                             printToolInvoice();
                              newToolOrder();
                          }else {
                            new Alert(Alert.AlertType.ERROR,"Tool Order Not Placed !").show();
@@ -538,6 +537,35 @@ public class RentFormController {
                 new Alert(Alert.AlertType.ERROR,"Tool Order Not Placed !").show();
             }
         });
+    }
+
+    private void printToolInvoice() {
+        Customer customer =RentModel.getCustomer(toolCustomerFld.getText());
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("subTotal",RentModel.getToolTotal(toolCartTMS));
+        params.put("name",customer.getFistName()+" "+customer.getLastName());
+        params.put("street",customer.getStreet());
+        params.put("city",customer.getCity());
+        params.put("zip",customer.getZipCode());
+        params.put("mobileNumber",customer.getMobileNumber());
+        params.put("email",customer.getEmail());
+        params.put("barCodeNumber",toolRentOrderIdLabel.getText());
+        ArrayList<ToolRentOrderJesperReportDetailTM> toolRentOrderJesperReportDetailTM = RentModel.getToolJesperReport(toolCartTMS);
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(toolRentOrderJesperReportDetailTM);
+        try {
+            JasperReport compileReport = JasperCompileManager.compileReport(
+                    JRXmlLoader.load(
+                            getClass().getResourceAsStream(
+                                    "/reports/tool_Invoice.jrxml"
+                            )
+                    )
+            );
+            JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, params, dataSource);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (JRException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            e.printStackTrace();
+        }
     }
 
     public void newToolBtnOnAction(ActionEvent actionEvent) throws IOException {

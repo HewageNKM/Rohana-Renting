@@ -41,11 +41,12 @@
 .text-field:hover {
     -fx-border-color: black;
 }
-.sideMenu {
-    -fx-background-image: url("/img/slideBar.jpg");
+.sideMenu{
+    -fx-background-color: #034694;
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
 }
+
 .sideMenuButton {
     -fx-background-color: #00ac26;
     -fx-text-fill: #ffffff;
@@ -78,6 +79,40 @@
     -fx-font-weight: bold;
     -fx-border-radius: 20px;
     -fx-text-fill: black;
+}
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color:  #008080;
+}
+.table-view .column-header .label{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+.table-view .cell{
+    -fx-cell-size: 35;
+    -fx-alignment: CENTER;
+}
+.table-row-cell:selected {
+    -fx-background-color: #0B6623;
+    -fx-text-background-color:  white;
+}
+.table-view .increment-button ,.table-view .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 2em;
+}
+.table-view .scroll-bar:horizontal .track,
+.table-view .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color:derive( #008080,80%);
+    -fx-background-radius: 2em;
+    -fx-border-radius:2em;
+}
+.table-view .scroll-bar:horizontal .thumb,
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color:derive( #008080,90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
 }
 .FormTitleLabel{
     -fx-font-size: 20;
@@ -150,4 +185,26 @@
     -fx-background-image: url("/img/forgotPasswordBG2.jpg");
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat;
+}
+.formPane{
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+.titlePane{
+    -fx-background-color: #002244;
+}
+.titlePaneText{
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.titlePaneTextTitle{
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.titlePaneDate{
+    -fx-font-size: 19;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
 }

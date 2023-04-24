@@ -22,7 +22,7 @@
   ~
   -->
 
-<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.UserAccountsFormController">
+<BorderPane prefHeight="960.0" prefWidth="1700.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.UserFormController">
    <center>
       <AnchorPane onMouseClicked="#refreshOnClick" prefHeight="940.0" prefWidth="1556.0" styleClass="Displaybutton">
          <children>
@@ -108,7 +108,7 @@
                   <TableColumn fx:id="deleteColumn" prefWidth="150.0" text="Delete" />
               </columns>
             </TableView>
-            <TextField fx:id="serachPhaseFld" layoutX="45.0" layoutY="249.0" onKeyReleased="#filteringFld" prefHeight="30.0" prefWidth="293.0" promptText="Search. . . . . . . . . " />
+            <TextField fx:id="serachPhaseFld" layoutX="45.0" layoutY="249.0" onKeyReleased="#serachPhaseFldOnAction" prefHeight="30.0" prefWidth="293.0" promptText="Search. . . . . . . . . " />
             <TextField fx:id="employeeFld" layoutX="45.0" layoutY="61.0" onAction="#enterOnAction" onKeyReleased="#employeeValidate" prefHeight="40.0" prefWidth="400.0" promptText="EXXXX" />
             <PasswordField fx:id="passwordFld" layoutX="871.0" layoutY="61.0" onKeyReleased="#passwordValidate" prefHeight="40.0" prefWidth="400.0" promptText="Password" />
             <TextField fx:id="userNameFld" layoutX="45.0" layoutY="151.0" onAction="#enterOnAction" onKeyReleased="#userNameValidate" prefHeight="40.0" prefWidth="400.0" promptText="JSnow4567" />
