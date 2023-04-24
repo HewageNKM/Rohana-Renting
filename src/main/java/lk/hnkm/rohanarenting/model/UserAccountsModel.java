@@ -64,12 +64,30 @@ public class UserAccountsModel {
        ResultSet resultSet = CruidUtil.execute("SELECT * FROM user");
         ArrayList<UserTM> arrayList = new ArrayList<UserTM>();
        while (resultSet.next()){
+           JFXButton edit = new JFXButton();
+           JFXButton delete = new JFXButton();
+           edit.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+           delete.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+
            String EID = resultSet.getString(1);
            String name = resultSet.getString(2);
            String password = resultSet.getString(3);
            String permissionLevel = resultSet.getString(4);
-          arrayList.add(new UserTM(EID,name,password,permissionLevel,new JFXButton("Edit"),new JFXButton("Delete")));
+          arrayList.add(new UserTM(EID,name,password,permissionLevel,edit,delete));
        }
        return arrayList;
+    }
+
+    public static ArrayList<UserTM> searchUser(String searchPhrase) throws SQLException {
+        ResultSet resultSet =  CruidUtil.execute("SELECT * FROM user WHERE `Employee ID` LIKE ? OR UName LIKE ? OR UPassword LIKE ?  OR Permission_Level LIKE ?",searchPhrase ,searchPhrase,searchPhrase,searchPhrase);
+        ArrayList<UserTM> arrayList = new ArrayList<>();
+        while (resultSet.next()) {
+            String EID = resultSet.getString(1);
+            String name = resultSet.getString(2);
+            String password = resultSet.getString(3);
+            String permissionLevel = resultSet.getString(4);
+            arrayList.add(new UserTM(EID, name, password, permissionLevel, new JFXButton("Edit"), new JFXButton("Delete")));
+        }
+        return arrayList;
     }
 }

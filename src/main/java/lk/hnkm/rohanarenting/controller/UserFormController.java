@@ -26,7 +26,7 @@ import lk.hnkm.rohanarenting.utill.Regex;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UserAccountsFormController {
+public class UserFormController {
 
     public TextField employeeFld;
     public TextField serachPhaseFld;
@@ -222,10 +222,6 @@ public class UserAccountsFormController {
         });
     }
 
-    public void filteringFld(KeyEvent keyEvent) {
-
-    }
-
     public void userNameValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
@@ -237,6 +233,25 @@ public class UserAccountsFormController {
             notifyLabel.setTextFill(Color.RED);
             notifyLabel.setText("Invalid Name !");
             userNameFld.setStyle("-fx-border-color: red;");
+        }
+    }
+
+    public void serachPhaseFldOnAction(KeyEvent keyEvent) {
+        if (serachPhaseFld.getText().trim().isEmpty()) {
+            loadTableData();
+        } else {
+            try {
+                ArrayList<UserTM> arrayList = UserAccountsModel.searchUser("%"+serachPhaseFld.getText()+"%");
+                ObservableList<UserTM> users = FXCollections.observableArrayList(arrayList);
+                if (users != null) {
+                    usersTable.setItems(users);
+                } else {
+                    usersTable.getItems().clear();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
+                e.printStackTrace();
+            }
         }
     }
 }

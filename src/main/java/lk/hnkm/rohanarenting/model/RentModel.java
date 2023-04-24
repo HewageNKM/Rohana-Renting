@@ -10,7 +10,9 @@ import com.jfoenix.controls.JFXButton;
 import javafx.collections.ObservableList;
 import lk.hnkm.rohanarenting.dto.*;
 import lk.hnkm.rohanarenting.dto.tm.ToolCartTM;
+import lk.hnkm.rohanarenting.dto.tm.ToolRentOrderJesperReportDetailTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleCartTM;
+import lk.hnkm.rohanarenting.dto.tm.VehicleRentOrderJesperReportDetailTM;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
 import java.sql.Date;
@@ -182,10 +184,10 @@ public class RentModel {
         }
     }
 
-    public static ArrayList<VehicleJesperReport> getVehicleJesperReport(ObservableList<VehicleCartTM> vehicleCartTMS) {
-        ArrayList<VehicleJesperReport> vehicleJesperReports = new ArrayList<>();
+    public static ArrayList<VehicleRentOrderJesperReportDetailTM> getVehicleJesperReport(ObservableList<VehicleCartTM> vehicleCartTMS) {
+        ArrayList<VehicleRentOrderJesperReportDetailTM> vehicleRentOrderJesperReportDetailTMS = new ArrayList<>();
         for (VehicleCartTM vehicleCartTM:vehicleCartTMS) {
-            vehicleJesperReports.add(new VehicleJesperReport(
+            vehicleRentOrderJesperReportDetailTMS.add(new VehicleRentOrderJesperReportDetailTM(
                     vehicleCartTM.getVehicleID(),
                     vehicleCartTM.getVehicleManufacture(),
                     vehicleCartTM.getVehicleModelName(),
@@ -196,6 +198,22 @@ public class RentModel {
                     Date.valueOf(LocalDate.now().plusDays(vehicleCartTM.getRentDays()))
             ));
         }
-        return vehicleJesperReports;
+        return vehicleRentOrderJesperReportDetailTMS;
+    }
+
+    public static ArrayList<ToolRentOrderJesperReportDetailTM> getToolJesperReport(ObservableList<ToolCartTM> toolCartTMS) {
+        ArrayList<ToolRentOrderJesperReportDetailTM> toolRentOrderJesperReportDetailTMS = new ArrayList<>();
+        for (ToolCartTM toolCartTM:toolCartTMS) {
+            toolRentOrderJesperReportDetailTMS.add(new ToolRentOrderJesperReportDetailTM(
+                    toolCartTM.getToolID(),
+                    toolCartTM.getBrandName(),
+                    toolCartTM.getToolName(),
+                    toolCartTM.getRentDays(),
+                    toolCartTM.getRate(),
+                    toolCartTM.getTotal(),
+                    Date.valueOf(LocalDate.now().plusDays(toolCartTM.getRentDays()))
+            ));
+        }
+        return toolRentOrderJesperReportDetailTMS;
     }
 }
