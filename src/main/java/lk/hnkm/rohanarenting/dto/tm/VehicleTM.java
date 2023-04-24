@@ -26,6 +26,7 @@ public class VehicleTM {
   private String Availability;
   private Double rate;
   private String category;
+  private JFXButton showBtn;
   private JFXButton editBtn;
   private JFXButton deleteBtn;
 }

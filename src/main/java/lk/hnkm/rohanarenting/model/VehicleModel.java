@@ -10,6 +10,7 @@ package lk.hnkm.rohanarenting.model;
 
 import com.jfoenix.controls.JFXButton;
 import lk.hnkm.rohanarenting.dto.Vehicle;
+import lk.hnkm.rohanarenting.dto.tm.JesperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
@@ -56,8 +57,33 @@ public class VehicleModel {
        ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle");
        ArrayList <VehicleTM> vehicleTMS = new ArrayList<>();
        while (resultSet.next()){
-           vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),(0<resultSet.getInt(5))? "Available" : "Not Available",resultSet.getDouble(6),resultSet.getString(7),new JFXButton("Edit"),new JFXButton("Delete")));
+           JFXButton showBtn = new JFXButton();
+           JFXButton editBtn = new JFXButton();
+           JFXButton deleteBtn = new JFXButton();
+           editBtn.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+           deleteBtn.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+           showBtn.setStyle("-fx-background-image: url('img/show.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+
+           vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),(0<resultSet.getInt(5))? "Available" : "Not Available",resultSet.getDouble(6),resultSet.getString(7),showBtn,editBtn,deleteBtn));
        }
        return vehicleTMS;
+    }
+
+    public static Boolean checkOrderStatus(String vehicleId) throws SQLException {
+       ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle_rent_order_detail WHERE VID = ? AND Return_Status = 0 ;",vehicleId);
+       return resultSet.next();
+    }
+
+    public static Boolean updateVehicleWithoutAvailability(Vehicle vehicle) throws SQLException {
+        return CruidUtil.execute("UPDATE vehicle SET Manufacturer = ?, Model_Name = ?, Description = ?, Rate_Per_Day = ?, Category = ? WHERE VID = ?;",vehicle.getManufacturer(),vehicle.getModelName() ,vehicle.getDescription(),vehicle.getRate(), vehicle.getCategory(),vehicle.getVID());
+    }
+
+    public static ArrayList<JesperReportVehicleTM> jesperReportVehicleTMS(String vid) throws SQLException {
+        ArrayList<JesperReportVehicleTM> jesperReportVehicleTMS = new ArrayList<>();
+       ResultSet resultSet = CruidUtil.execute("SELECT vehicle_rent_order_detail.Rent_ID,vehicle_rent_order_detail.VID,vehicle_rent_order.Date FROM vehicle_rent_order_detail LEFT JOIN vehicle_rent_order ON vehicle_rent_order_detail.Rent_ID = vehicle_rent_order.Rent_ID WHERE vehicle_rent_order_detail.VID = ? ORDER BY vehicle_rent_order.Date DESC LIMIT 10;",vid);
+       while (resultSet.next()){
+           jesperReportVehicleTMS.add(new JesperReportVehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3)));
+       }
+       return jesperReportVehicleTMS;
     }
 }

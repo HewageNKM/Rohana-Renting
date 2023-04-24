@@ -21,17 +21,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lk.hnkm.rohanarenting.db.DBConnection;
 import lk.hnkm.rohanarenting.dto.Vehicle;
+import lk.hnkm.rohanarenting.dto.tm.JesperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
 import lk.hnkm.rohanarenting.model.VehicleModel;
 import lk.hnkm.rohanarenting.utill.Regex;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VehicleFormController {
+    public TableColumn<Object, Object> columnReport;
     @FXML
     private JFXButton saveBtn;
 
@@ -42,7 +47,7 @@ public class VehicleFormController {
     private Label notifyLabel;
 
     @FXML
-    private TableView<?> vehiclesTable;
+    private TableView<VehicleTM> vehiclesTable;
 
     @FXML
     private TableColumn<?, ?> columnID;
@@ -95,7 +100,7 @@ public class VehicleFormController {
     @FXML
     private ComboBox<String> categoryComboBox;
 
-    ObservableList vehicles = FXCollections.observableArrayList();
+    ObservableList<VehicleTM> vehicles = FXCollections.observableArrayList();
 
     public void initialize(){
        saveBtn.setDisable(true);
@@ -120,16 +125,137 @@ public class VehicleFormController {
         columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         columnEdit.setCellValueFactory(new PropertyValueFactory<>("editBtn"));
         columnDelete.setCellValueFactory(new PropertyValueFactory<>("deleteBtn"));
+        columnReport.setCellValueFactory(new PropertyValueFactory<>("showBtn"));
     }
     public void loadAllVehicles(){
         try {
             ArrayList <VehicleTM> allVehicles = VehicleModel.getAllVehicles();
+            for (VehicleTM vehicleTM:allVehicles) {
+                setShowBtnAction(vehicleTM.getShowBtn());
+                setEditBtnAction(vehicleTM.getEditBtn());
+                setDeleteBtnAction(vehicleTM.getDeleteBtn());
+            }
             vehicles.clear();
             vehicles.addAll(allVehicles);
             vehiclesTable.setItems(vehicles);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             throw new RuntimeException(e);
+        }
+    }
+
+    private void setDeleteBtnAction(JFXButton deleteBtn) {
+        deleteBtn.setOnAction(event -> {
+            VehicleTM selectedItem = vehiclesTable.getSelectionModel().getSelectedItem();
+            if(selectedItem!= null){
+                new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to delete this Vehicle ?",ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
+                    if(buttonType == ButtonType.YES){
+                        try {
+                            boolean isDeleted = VehicleModel.deleteVehicle(selectedItem.getVID());
+                            if(isDeleted){
+                                new Alert(Alert.AlertType.CONFIRMATION,"Vehicle Deleted Successfully").show();
+                                loadAllVehicles();
+                                clearFields();
+                            }else {
+                                new Alert(Alert.AlertType.ERROR,"Vehicle Delete Failed").show();
+                            }
+                        } catch (SQLException e) {
+                            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Please Select a Vehicle ").show();
+            }
+        });
+    }
+
+    private void setEditBtnAction(JFXButton editBtn) {
+        editBtn.setOnAction(event -> {
+            VehicleTM selectedItem = vehiclesTable.getSelectionModel().getSelectedItem();
+            if(selectedItem!= null) {
+                licenseFld.setText(selectedItem.getVID());
+                manufacturerFld.setText(selectedItem.getManufacturer());
+                modelNameFld.setText(selectedItem.getModelName());
+                descriptionFld.setText(selectedItem.getDescription());
+                rentalRateFld.setText(String.valueOf(selectedItem.getRate()));
+                categoryComboBox.setValue(selectedItem.getCategory());
+                Boolean isExist = null;
+                try {
+                    isExist = VehicleModel.checkOrderStatus(selectedItem.getVID());
+                    if(isExist){
+                        if (selectedItem.getAvailability().equals("Available")) {
+                            availableRadiBtn.setSelected(true);
+                        } else {
+                            nAvailableRadioBtn.setSelected(true);
+                        }
+                        nAvailableRadioBtn.setDisable(true);
+                        availableRadiBtn.setDisable(true);
+                    }else {
+                        if (selectedItem.getAvailability().equals("Available")) {
+                            availableRadiBtn.setSelected(true);
+                        } else {
+                            nAvailableRadioBtn.setSelected(true);
+                        }
+                    }
+                    if (selectedItem.getAvailability().equals("Available")) {
+                        availableRadiBtn.setSelected(true);
+                    } else {
+                        nAvailableRadioBtn.setSelected(true);
+                    }
+                    saveBtn.setDisable(false);
+                    deleteBtn.setDisable(false);
+                } catch (SQLException e) {
+                    new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                    e.printStackTrace();
+                }
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Please Select a Vehicle ").show();
+            }
+        });
+    }
+
+    private void setShowBtnAction(JFXButton showBtn) {
+        showBtn.setOnAction(event -> {
+            VehicleTM selectedItem = vehiclesTable.getSelectionModel().getSelectedItem();
+            if(selectedItem!=null){
+                printVehicleReport(selectedItem);
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Please Select a Vehicle ").show();
+            }
+        });
+    }
+
+    private void printVehicleReport(VehicleTM selectedItem) {
+        try {
+            ArrayList<JesperReportVehicleTM> jesperReportVehicleTMS = VehicleModel.jesperReportVehicleTMS(selectedItem.getVID());
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jesperReportVehicleTMS);
+            Map<String, Object> params = new HashMap<>();
+            params.put("VID",selectedItem.getVID());
+            params.put("manufacturer",selectedItem.getManufacturer());
+            params.put("modelName",selectedItem.getModelName());
+            params.put("description",selectedItem.getDescription());
+            params.put("rate",selectedItem.getRate());
+            params.put("Availability",selectedItem.getAvailability());
+            params.put("codeNumber",selectedItem.getVID());
+            try {
+                JasperReport compileReport = JasperCompileManager.compileReport(
+                        JRXmlLoader.load(
+                                getClass().getResourceAsStream(
+                                        "/reports/vehicle_Report.jrxml"
+                                )
+                        )
+                );
+                JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, params,dataSource);
+                JasperViewer.viewReport(jasperPrint, false);
+            } catch (JRException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.INFORMATION, String.valueOf(e)).show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            e.printStackTrace();
         }
     }
 
@@ -171,6 +297,8 @@ public class VehicleFormController {
         modelNameFld.setStyle(null);
         rentalRateFld.setStyle(null);
         descriptionFld.setStyle(null);
+        availableRadiBtn.setDisable(false);
+        nAvailableRadioBtn.setDisable(false);
     }
 
     @FXML
@@ -206,6 +334,22 @@ public class VehicleFormController {
                 System.out.println(manufacturerFld.getText());
                 saveBtn.setDisable(false);
                 deleteBtn.setDisable(false);
+                Boolean isExist = VehicleModel.checkOrderStatus(licenseFld.getText());
+                if(isExist){
+                    if (vehicle.getAvailability() == 1) {
+                        availableRadiBtn.setSelected(true);
+                    } else {
+                        nAvailableRadioBtn.setSelected(true);
+                    }
+                    nAvailableRadioBtn.setDisable(true);
+                    availableRadiBtn.setDisable(true);
+                }else {
+                    if (vehicle.getAvailability() == 1) {
+                        availableRadiBtn.setSelected(true);
+                    } else {
+                        nAvailableRadioBtn.setSelected(true);
+                    }
+                }
                 if (vehicle.getAvailability() == 1) {
                     availableRadiBtn.setSelected(true);
                 } else {
@@ -272,7 +416,7 @@ public class VehicleFormController {
         Vehicle vehicle = new Vehicle();
         try {
             if(VehicleModel.getVehicle(licenseFld.getText())){
-                new Alert(Alert.AlertType.CONFIRMATION,"New Vehicle Data Will Be Updated !", ButtonType.YES).showAndWait().ifPresent(buttonType -> {
+                new Alert(Alert.AlertType.CONFIRMATION,"New Vehicle Data Will Be Updated !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {
                             vehicle.setVID(licenseFld.getText());
@@ -286,12 +430,31 @@ public class VehicleFormController {
                                vehicle.setAvailability(0);
                             }
                            vehicle.setCategory(categoryComboBox.getSelectionModel().getSelectedItem().toString());
-                            if(VehicleModel.updateVehicle(vehicle)){
-                                new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Updated !").show();
-                                clearFields();
-                                loadAllVehicles();
+                            Boolean isExist = VehicleModel.checkOrderStatus(licenseFld.getText());
+                            if(isExist){
+                                new Alert(Alert.AlertType.WARNING,"Due to Ongoing Order On This Vehicle Manual Availability Will Not Be Effect !").showAndWait();
+                                Boolean isUpdated =VehicleModel.updateVehicleWithoutAvailability(vehicle);
+                                if(isUpdated){
+                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Updated !").show();
+                                    clearFields();
+                                    loadAllVehicles();
+                                }else {
+                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Updated !").show();
+                                    clearFields();
+                                    loadAllVehicles();
+                                }
+
                             }else {
-                                new Alert(Alert.AlertType.ERROR,"Vehicle Data Not Updated !").show();
+                                Boolean isUpdated =VehicleModel.updateVehicle(vehicle);
+                                if(isUpdated){
+                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Updated !").show();
+                                    clearFields();
+                                    loadAllVehicles();
+                                }else {
+                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Updated !").show();
+                                    clearFields();
+                                    loadAllVehicles();
+                                }
                             }
                         } catch (SQLException e) {
                             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
@@ -300,7 +463,7 @@ public class VehicleFormController {
                     }
                 });
             }else {
-                new Alert(Alert.AlertType.CONFIRMATION,"New Vehicle Data Will Be Saved !", ButtonType.YES).showAndWait().ifPresent(buttonType -> {
+                new Alert(Alert.AlertType.CONFIRMATION,"New Vehicle Data Will Be Saved !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {
                             vehicle.setVID(licenseFld.getText());
@@ -349,9 +512,6 @@ public class VehicleFormController {
         }
     }
 
-    public void idGenarateOnAction(ActionEvent actionEvent) {
-
-    }
 
     public void searchOnAction(KeyEvent keyEvent) {
 
@@ -367,10 +527,6 @@ public class VehicleFormController {
             descriptionFld.setStyle("-fx-border-color: green");
             notifyLabel.setText("Valid Description !");
         }
-    }
-
-    public void guideBtnOnAction(ActionEvent actionEvent) {
-
     }
 
     public void printReportOnAction(ActionEvent actionEvent) {
@@ -390,7 +546,6 @@ public class VehicleFormController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
 
