@@ -29,5 +29,4 @@ public class Insurance {
     private String fax;
     private LocalDate joinedDate;
     private LocalDate expireDate;
-
 }

@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class JesperReportVehicleTM {
+public class JasperReportVehicleTM {
     private String rentId;
     private String VID;
     private String orderDate;

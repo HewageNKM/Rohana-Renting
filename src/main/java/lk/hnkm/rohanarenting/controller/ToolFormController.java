@@ -19,15 +19,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import lk.hnkm.rohanarenting.dto.Insurance;
 import lk.hnkm.rohanarenting.dto.Tool;
+import lk.hnkm.rohanarenting.dto.tm.JasperReportToolTM;
 import lk.hnkm.rohanarenting.dto.tm.ToolTM;
 import lk.hnkm.rohanarenting.model.EmployeeModel;
 import lk.hnkm.rohanarenting.model.ToolModel;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ToolFormController {
 
@@ -36,6 +44,9 @@ public class ToolFormController {
     public TableColumn columnDelete;
     public TableColumn columnRentalRate;
     public TableColumn columnBrandName;
+    public Label orderStatusLabel;
+    public TableColumn columnReport;
+    public TextField searchFld;
     @FXML
     private JFXButton saveBtn;
 
@@ -89,13 +100,135 @@ public class ToolFormController {
 
     private void loadAllTools() {
         try {
-            ArrayList<ToolTM> arrayList  =ToolModel.getTools();
+            ArrayList<ToolTM> arrayList  = ToolModel.getTools();
+            for (ToolTM toolTM:arrayList) {
+                setShowBtnAction(toolTM.getShowBtn());
+                setEditBtnAction(toolTM.getEditBtn());
+                setDeleteBtnAction(toolTM.getDeleteBtn());
+            }
             toolsList.clear();
             toolsList.addAll(arrayList);
             toolsTable.setItems(toolsList);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+    }
+
+    private void setDeleteBtnAction(JFXButton deleteBtn) {
+        deleteBtn.setOnAction(event -> {
+            new Alert(Alert.AlertType.CONFIRMATION,"Are Sure You Want To Delete ?",ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(ButtonType->{
+                if(ButtonType == javafx.scene.control.ButtonType.YES){
+                    ToolTM toolTM = toolsTable.getSelectionModel().getSelectedItem();
+                    if(toolTM!=null){
+                        try {
+                            ToolModel.deleteTool(toolTM.getTID());
+                            loadAllTools();
+                        } catch (SQLException e) {
+                            new Alert(Alert.AlertType.ERROR,"Tool Can't Delete At the Moment!, Error Code: "+e.getErrorCode()).show();
+                            e.printStackTrace();
+                        }
+                    }else {
+                        new Alert(Alert.AlertType.WARNING,"Please Select Row !").show();
+                    }
+                }
+            });
+        });
+    }
+
+    private void setEditBtnAction(JFXButton editBtn) {
+        editBtn.setOnAction(event -> {
+            ToolTM toolTM = toolsTable.getSelectionModel().getSelectedItem();
+            if(toolTM != null){
+                toolIdFld.setText(toolTM.getTID());
+                brandNameFld.setText(toolTM.getBrandName());
+                nameFld.setText(toolTM.getName());
+                rentalRateFld.setText(String.valueOf(toolTM.getRate()));
+                try {
+                    Boolean isExist = ToolModel.checkOrderStatus(toolTM.getTID());
+                    if(isExist){
+                        orderStatusLabel.setStyle("-fx-text-fill: red");
+                        orderStatusLabel.setText("Tool is in an Order ");
+                        if(toolTM.getAvailability().equals("Available")){
+                            availableRadiBtn.setSelected(true);
+                        }else {
+                            nAvailableRadioBtn.setSelected(true);
+                        }
+                        availableRadiBtn.setDisable(true);
+                        nAvailableRadioBtn.setDisable(true);
+                    }else {
+                        if(toolTM.getAvailability().equals("Available")){
+                            availableRadiBtn.setSelected(true);
+                        }else {
+                            nAvailableRadioBtn.setSelected(true);
+                        }
+                        availableRadiBtn.setDisable(false);
+                        nAvailableRadioBtn.setDisable(false);
+                        orderStatusLabel.setText(null);
+                        orderStatusLabel.setStyle(null);
+                    }
+                } catch (SQLException e) {
+                    new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                    e.printStackTrace();
+                }
+            }else {
+                new Alert(Alert.AlertType.WARNING,"Please Select Row !").show();
+            }
+        });
+    }
+
+    private void setShowBtnAction(JFXButton showBtn) {
+        showBtn.setOnAction(event -> {
+            ToolTM toolTM = toolsTable.getSelectionModel().getSelectedItem();
+            if(toolTM != null){
+                printToolReport(toolTM);
+            }else {
+                new Alert(Alert.AlertType.WARNING,"Please Select Row !").show();
+            }
+        });
+    }
+
+    private void printToolReport(ToolTM toolTM) {
+        HashMap<String,Object> params = new HashMap<>();
+        try {
+            Insurance insurance = ToolModel.getInsurance(toolTM.getTID());
+            params.put("TID",toolTM.getTID());
+            params.put("codeNumber",toolTM.getTID());
+            params.put("brandName",toolTM.getBrandName());
+            params.put("name",toolTM.getName());
+            params.put("availability",toolTM.getAvailability());
+            params.put("rate",toolTM.getRate());
+            params.put("description",toolTM.getDescription());
+            params.put("IID",insurance.getIID());
+            params.put("insuranceName",insurance.getName());
+            params.put("iPName",insurance.getInsuranceProvider());
+            params.put("agentName",insurance.getAgentName());
+            params.put("agentContact",insurance.getAgentContact());
+            params.put("fax",insurance.getFax());
+            params.put("address",insurance.getAddress());
+            params.put("email",insurance.getEmail());
+            params.put("expireDate", Date.valueOf(insurance.getExpireDate()));
+            params.put("joinedDate",Date.valueOf(insurance.getJoinedDate()));
+
+            ArrayList<JasperReportToolTM> jasperToolTMS = ToolModel.getJasperToolTM(toolTM.getTID());
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jasperToolTMS);
+
+
+            JasperReport compileReport = JasperCompileManager.compileReport(
+                    JRXmlLoader.load(
+                            getClass().getResourceAsStream(
+                                    "/reports/tool_Report.jrxml"
+                            )
+                    )
+            );
+            JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, params,dataSource);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            e.printStackTrace();
+        } catch (JRException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            e.printStackTrace();
         }
     }
 
@@ -108,10 +241,12 @@ public class ToolFormController {
         columnBrandName.setCellValueFactory(new PropertyValueFactory<>("brandName"));
         columnEdit.setCellValueFactory(new PropertyValueFactory<>("editBtn"));
         columnDelete.setCellValueFactory(new PropertyValueFactory<>("deleteBtn"));
+        columnReport.setCellValueFactory(new PropertyValueFactory<>("showBtn"));
     }
 
     @FXML
     void clearBtnOnAction(ActionEvent event) {
+        clearFields();
     }
 
     @FXML
@@ -128,7 +263,7 @@ public class ToolFormController {
                         new Alert(Alert.AlertType.ERROR,"Tool Data Not Deleted !").show();
                     }
                 } catch (SQLException e) {
-                    new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                    new Alert(Alert.AlertType.ERROR,"Tool Can't Be Delete At the Moment!, Error Code: "+e.getErrorCode()).show();
                     e.printStackTrace();
                 }
             }
@@ -161,7 +296,7 @@ public class ToolFormController {
                 brandNameFld.setText(tool.getBrand());
                 saveBtn.setDisable(false);
                 deleteBtn.setDisable(false);
-                if (tool.getAvalability() == 1) {
+                if (tool.getAvalability().equals("Available")) {
                     availableRadiBtn.setSelected(true);
                 } else {
                     nAvailableRadioBtn.setSelected(true);
@@ -189,7 +324,6 @@ public class ToolFormController {
             toolIdFld.setText(id);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
-
         }
     }
 
@@ -223,9 +357,9 @@ public class ToolFormController {
                             tool.setRate(Double.valueOf(rentalRateFld.getText()));
                             tool.setDescription(drecriptionFld.getText());
                             if(availableRadiBtn.isSelected()){
-                                tool.setAvalability(1);
+                                tool.setAvalability("Available");
                             }else {
-                                tool.setAvalability(0);
+                                tool.setAvalability("Not Available");
                             }
                             if(ToolModel.updateTool(tool)){
                                 new Alert(Alert.AlertType.INFORMATION,"Tool Data Updated !").show();
@@ -251,9 +385,9 @@ public class ToolFormController {
                             tool.setDescription(drecriptionFld.getText());
                             tool.setRate(Double.valueOf(rentalRateFld.getText()));
                             if(availableRadiBtn.isSelected()){
-                                tool.setAvalability(1);
+                                tool.setAvalability("Available");
                             }else {
-                                tool.setAvalability(0);
+                                tool.setAvalability("Not Available");
                             }
                             if(ToolModel.saveTool(tool)){
                                 new Alert(Alert.AlertType.INFORMATION,"Tool Data Saved !").show();
@@ -348,6 +482,25 @@ public class ToolFormController {
             rentalRateFld.setStyle("-fx-border-color: red");
             notifyLabel.setTextFill(Color.RED);
             notifyLabel.setText("Invalid Value !");
+        }
+    }
+
+    public void searchFldOnAction(KeyEvent keyEvent) {
+        if(searchFld.getText().trim().isEmpty()){
+            loadAllTools();
+        }else {
+            try {
+                ArrayList<ToolTM> filterTools = ToolModel.searchTools("%"+searchFld.getText()+"%");
+                ObservableList<ToolTM> filterToolsTMS = FXCollections.observableArrayList(filterTools);
+                if(filterToolsTMS!=null){
+                  toolsTable.setItems(filterToolsTMS);
+                }else {
+                    toolsTable.getItems().clear();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                e.printStackTrace();
+            }
         }
     }
 }

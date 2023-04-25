@@ -25,6 +25,7 @@ public class ToolTM {
  private String description;
  private String availability;
  private Double rate;
+ private JFXButton showBtn;
  private JFXButton editBtn;
  private JFXButton deleteBtn;
 }

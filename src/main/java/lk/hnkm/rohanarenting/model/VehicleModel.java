@@ -10,7 +10,7 @@ package lk.hnkm.rohanarenting.model;
 
 import com.jfoenix.controls.JFXButton;
 import lk.hnkm.rohanarenting.dto.Vehicle;
-import lk.hnkm.rohanarenting.dto.tm.JesperReportVehicleTM;
+import lk.hnkm.rohanarenting.dto.tm.JasperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
@@ -78,13 +78,13 @@ public class VehicleModel {
         return CruidUtil.execute("UPDATE vehicle SET Manufacturer = ?, Model_Name = ?, Description = ?, Rate_Per_Day = ?, Category = ? WHERE VID = ?;",vehicle.getManufacturer(),vehicle.getModelName() ,vehicle.getDescription(),vehicle.getRate(), vehicle.getCategory(),vehicle.getVID());
     }
 
-    public static ArrayList<JesperReportVehicleTM> jesperReportVehicleTMS(String vid) throws SQLException {
-        ArrayList<JesperReportVehicleTM> jesperReportVehicleTMS = new ArrayList<>();
+    public static ArrayList<JasperReportVehicleTM> jesperReportVehicleTMS(String vid) throws SQLException {
+        ArrayList<JasperReportVehicleTM> jasperReportVehicleTMS = new ArrayList<>();
        ResultSet resultSet = CruidUtil.execute("SELECT vehicle_rent_order_detail.Rent_ID,vehicle_rent_order_detail.VID,vehicle_rent_order.Date FROM vehicle_rent_order_detail LEFT JOIN vehicle_rent_order ON vehicle_rent_order_detail.Rent_ID = vehicle_rent_order.Rent_ID WHERE vehicle_rent_order_detail.VID = ? ORDER BY vehicle_rent_order.Date DESC LIMIT 10;",vid);
        while (resultSet.next()){
-           jesperReportVehicleTMS.add(new JesperReportVehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3)));
+           jasperReportVehicleTMS.add(new JasperReportVehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3)));
        }
-       return jesperReportVehicleTMS;
+       return jasperReportVehicleTMS;
     }
 
     public static ArrayList<VehicleTM> getSearchVehicles(String searchPhrase) throws SQLException {

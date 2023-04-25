@@ -23,7 +23,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lk.hnkm.rohanarenting.dto.Vehicle;
-import lk.hnkm.rohanarenting.dto.tm.JesperReportVehicleTM;
+import lk.hnkm.rohanarenting.dto.tm.JasperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
 import lk.hnkm.rohanarenting.model.VehicleModel;
 import lk.hnkm.rohanarenting.utill.Regex;
@@ -238,8 +238,8 @@ public class VehicleFormController {
 
     private void printVehicleReport(VehicleTM selectedItem) {
         try {
-            ArrayList<JesperReportVehicleTM> jesperReportVehicleTMS = VehicleModel.jesperReportVehicleTMS(selectedItem.getVID());
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jesperReportVehicleTMS);
+            ArrayList<JasperReportVehicleTM> jasperReportVehicleTMS = VehicleModel.jesperReportVehicleTMS(selectedItem.getVID());
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jasperReportVehicleTMS);
             Map<String, Object> params = new HashMap<>();
             params.put("VID",selectedItem.getVID());
             params.put("manufacturer",selectedItem.getManufacturer());

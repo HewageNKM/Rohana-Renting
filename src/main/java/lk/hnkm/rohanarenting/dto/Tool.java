@@ -22,6 +22,6 @@ public class Tool {
   private String brand;
   private String name;
   private String description;
-  private Integer avalability;
+  private String avalability;
   private Double rate;
 }

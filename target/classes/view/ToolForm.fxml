@@ -75,6 +75,7 @@
                   <TableColumn fx:id="columnDescription" prefWidth="529.0" text="Description" />
                   <TableColumn fx:id="columnRentalRate" minWidth="0.0" prefWidth="201.0" text="Rental Rate(Rs)" />
                   <TableColumn fx:id="columnAvailability" prefWidth="162.0" text="Availability" />
+                 <TableColumn fx:id="columnReport" prefWidth="162.0" text="Show" />
                   <TableColumn fx:id="columnEdit" prefWidth="90.0" text="Edit" />
                   <TableColumn fx:id="columnDelete" prefWidth="120.0" text="Delete" />
               </columns>
@@ -119,12 +120,17 @@
             <Label layoutX="61.0" layoutY="108.0" styleClass="formTextFieldLabel" text="Brand Name" />
             <TextField fx:id="nameFld" layoutX="53.0" layoutY="202.0" onKeyReleased="#nameValidate" prefHeight="40.0" prefWidth="300.0" promptText="XXXXXXX" />
             <Label layoutX="63.0" layoutY="177.0" styleClass="formTextFieldLabel" text="Name" />
-            <TextField layoutX="112.0" layoutY="291.0" prefHeight="40.0" prefWidth="300.0" promptText="Search . . . . . . . " />
+            <TextField fx:id="searchFld" layoutX="112.0" layoutY="291.0" onKeyReleased="#searchFldOnAction" prefHeight="40.0" prefWidth="300.0" promptText="Search . . . . . . . " />
             <Label layoutX="121.0" layoutY="268.0" styleClass="formTextFieldLabel" text="Search" />
             <TextField fx:id="rentalRateFld" layoutX="607.0" layoutY="59.0" onKeyReleased="#rentalRateValidate" prefHeight="40.0" prefWidth="300.0" promptText="00000000000000" />
             <Label layoutX="607.0" layoutY="36.0" styleClass="formTextFieldLabel" text="Rental Rate" />
             <TextArea fx:id="drecriptionFld" layoutX="1016.0" layoutY="53.0" onKeyReleased="#descriptionValidate" prefHeight="200.0" prefWidth="481.0" styleClass="text-area" />
             <Label layoutX="1016.0" layoutY="27.0" styleClass="formTextFieldLabel" text="Descrition" />
+            <Label fx:id="orderStatusLabel" alignment="CENTER" layoutX="608.0" layoutY="156.0" prefHeight="16.0" prefWidth="300.0" styleClass="formTextFieldLabel" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>

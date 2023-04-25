@@ -68,7 +68,7 @@ public class RentModel {
     public static ToolCartTM getToolCartModel(ToolOrder toolOrder) throws SQLException {
        ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool WHERE TID=? AND (Availability > 0)",toolOrder.getToolId());
         if(resultSet.next()){
-            Tool tool = new Tool(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getInt(5),resultSet.getDouble(6));
+            Tool tool = new Tool(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6));
             Double tolal = toolOrder.getRentDays()*tool.getRate();
             return new ToolCartTM(toolOrder.getRentalOrderId(),tool.getTID(),tool.getBrand(),tool.getName(),toolOrder.getCustomerId(),tool.getDescription(),tool.getRate(),toolOrder.getRentDays(),tolal,new JFXButton("Remove"));
         }else {
