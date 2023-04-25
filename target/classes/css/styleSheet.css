@@ -93,7 +93,7 @@
     -fx-cell-size: 35;
     -fx-alignment: CENTER;
 }
-.table-row-cell:selected {
+.table-cell:selected {
     -fx-background-color: #0B6623;
     -fx-text-background-color:  white;
 }

@@ -26,7 +26,9 @@ import lk.hnkm.rohanarenting.dto.Vehicle;
 import lk.hnkm.rohanarenting.dto.tm.JasperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
 import lk.hnkm.rohanarenting.model.VehicleModel;
+import lk.hnkm.rohanarenting.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Regex;
+import lk.hnkm.rohanarenting.utill.TableUtil;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -57,7 +59,7 @@ public class VehicleFormController {
     private TableView<VehicleTM> vehiclesTable;
 
     @FXML
-    private TableColumn<?, ?> columnID;
+    private TableColumn<VehicleTM, String> columnID;
 
     @FXML
     private TableColumn<?, ?> ColumnManufacturer;
@@ -115,6 +117,7 @@ public class VehicleFormController {
        setCellValueFactory();
        loadAllVehicles();
        setComboBox();
+       TableUtil.installCopy(vehiclesTable);
     }
 
     private void setComboBox() {
@@ -123,7 +126,7 @@ public class VehicleFormController {
     }
 
     private void setCellValueFactory() {
-        columnID.setCellValueFactory(new PropertyValueFactory<>("VID"));
+        columnID.setCellValueFactory(new PropertyValueFactory<VehicleTM,String>("VID"));
         ColumnManufacturer.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         columnModelName.setCellValueFactory(new PropertyValueFactory<>("modelName"));
         columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -160,7 +163,7 @@ public class VehicleFormController {
                         try {
                             boolean isDeleted = VehicleModel.deleteVehicle(selectedItem.getVID());
                             if(isDeleted){
-                                new Alert(Alert.AlertType.CONFIRMATION,"Vehicle Deleted Successfully").show();
+                                TopUpNotifications.success("Vehicle Deleted Successfully!");
                                 loadAllVehicles();
                                 clearFields();
                             }else {
@@ -213,8 +216,7 @@ public class VehicleFormController {
                     } else {
                         nAvailableRadioBtn.setSelected(true);
                     }
-                    saveBtn.setDisable(false);
-                    deleteBtn.setDisable(false);
+                    licenseFld.setDisable(true);
                 } catch (SQLException e) {
                     new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                     e.printStackTrace();
@@ -310,6 +312,7 @@ public class VehicleFormController {
         nAvailableRadioBtn.setDisable(false);
         orderStatusLabel.setText("");
         orderStatusLabel.setStyle(null);
+        licenseFld.setDisable(false);
     }
 
     @FXML
@@ -318,7 +321,7 @@ public class VehicleFormController {
             if(buttonType == ButtonType.OK){
                 try {
                     if(VehicleModel.deleteVehicle(licenseFld.getText())){
-                        new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Deleted !").show();
+                        TopUpNotifications.success("Vehicle Data Deleted Successfully !");
                         clearFields();
                         loadAllVehicles();
                     }else {
@@ -369,6 +372,7 @@ public class VehicleFormController {
                     nAvailableRadioBtn.setSelected(true);
                 }
                 categoryComboBox.getSelectionModel().select(vehicle.getCategory());
+                licenseFld.setDisable(true);
             }else {
                 new Alert(Alert.AlertType.ERROR,"No Vehicle Found !").show();
             }
@@ -449,11 +453,11 @@ public class VehicleFormController {
                                 new Alert(Alert.AlertType.WARNING,"Due to Ongoing Order On This Vehicle Manual Availability Will Not Be Effect !").showAndWait();
                                 Boolean isUpdated =VehicleModel.updateVehicleWithoutAvailability(vehicle);
                                 if(isUpdated){
-                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Updated !").show();
+                                    TopUpNotifications.success("Vehicle Data Updated !");
                                     clearFields();
                                     loadAllVehicles();
                                 }else {
-                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Updated !").show();
+                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Not Updated !").show();
                                     clearFields();
                                     loadAllVehicles();
                                 }
@@ -461,11 +465,11 @@ public class VehicleFormController {
                             }else {
                                 Boolean isUpdated =VehicleModel.updateVehicle(vehicle);
                                 if(isUpdated){
-                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Updated !").show();
+                                    TopUpNotifications.success("Vehicle Data Updated !");
                                     clearFields();
                                     loadAllVehicles();
                                 }else {
-                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Updated !").show();
+                                    new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Not Updated !").show();
                                     clearFields();
                                     loadAllVehicles();
                                 }
@@ -492,7 +496,7 @@ public class VehicleFormController {
                             }
                             vehicle.setCategory(categoryComboBox.getSelectionModel().getSelectedItem());
                             if(VehicleModel.saveVehicle(vehicle)){
-                                new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Saved !").show();
+                                TopUpNotifications.success("Vehicle Data Saved !");
                                 clearFields();
                                 loadAllVehicles();
                             }else {

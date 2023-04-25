@@ -65,7 +65,7 @@ public class InsuranceModel {
     }
 
     public static Boolean updateVehicleInsuranceDetails(Insurance insurance) throws SQLException {
-        return CruidUtil.execute("UPDATE vehicle_insurance SET Name =? Provider = ? ,Agent_Name = ? , Agent_Contact = ? , Email = ? , Address = ? , Fax = ? , Joined_Date = ? ,Expire_Date = ? WHERE IID = ?", insurance.getName(), insurance.getInsuranceProvider(), insurance.getAgentName(), insurance.getAgentContact(), insurance.getEmail(), insurance.getAddress(), insurance.getFax(), insurance.getJoinedDate(), insurance.getExpireDate(), insurance.getIID());
+        return CruidUtil.execute("UPDATE vehicle_insurance SET Name =?, Provider = ? ,Agent_Name = ? , Agent_Contact = ? , Email = ? , Address = ? , Fax = ? , Joined_Date = ? ,Expire_Date = ? WHERE IID = ?", insurance.getName(), insurance.getInsuranceProvider(), insurance.getAgentName(), insurance.getAgentContact(), insurance.getEmail(), insurance.getAddress(), insurance.getFax(), insurance.getJoinedDate(), insurance.getExpireDate(), insurance.getIID());
     }
 
     public static Boolean addVehicleInsuranceDetails(Insurance insurance) throws SQLException {
@@ -89,6 +89,8 @@ public class InsuranceModel {
         ResultSet vehicleResultSet = CruidUtil.execute("SELECT * FROM vehicle_insurance");
         ArrayList<InsuranceTM> insuranceTMS = new ArrayList<>();
         while (vehicleResultSet.next()) {
+            JFXButton update = new JFXButton();
+            update.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
             insuranceTMS.add(new InsuranceTM(
                         vehicleResultSet.getString(1),
                         vehicleResultSet.getString(2),
@@ -100,11 +102,13 @@ public class InsuranceModel {
                         vehicleResultSet.getString(8),
                         vehicleResultSet.getDate(9).toLocalDate(),
                         vehicleResultSet.getDate(10).toLocalDate(),
-                        new JFXButton("Update")
+                        update
             ));
         }
         ResultSet toolResultSet = CruidUtil.execute("SELECT * FROM tool_insurance");
         while (toolResultSet.next()) {
+            JFXButton update = new JFXButton();
+            update.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
             insuranceTMS.add(new InsuranceTM(
                     toolResultSet.getString(1),
                     toolResultSet.getString(2),
@@ -116,7 +120,7 @@ public class InsuranceModel {
                     toolResultSet.getString(8),
                     toolResultSet.getDate(9).toLocalDate(),
                     toolResultSet.getDate(10).toLocalDate(),
-                    new JFXButton("Update")
+                    update
             ));
         }
         return insuranceTMS;
@@ -130,5 +134,46 @@ public class InsuranceModel {
     public static boolean isVehicleIdExists(String vid) throws SQLException {
        ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle WHERE VID = ?", vid);
        return resultSet.next();
+    }
+
+    public static ArrayList<InsuranceTM> searchInsurance(String searchPhrase) throws SQLException {
+        ResultSet resultSet =CruidUtil.execute("SELECT * FROM vehicle_insurance WHERE IID LIKE ? OR Name LIKE ? OR Provider LIKE ? OR Agent_Name LIKE ? OR Agent_Contact LIKE ? OR Email LIKE ? OR Address LIKE ? OR Fax LIKE ? OR Joined_Date LIKE ? OR Expire_Date LIKE ?", searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase);
+        ArrayList<InsuranceTM> insuranceTMS = new ArrayList<>();
+        while (resultSet.next()) {
+            JFXButton update = new JFXButton();
+            update.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            insuranceTMS.add(new InsuranceTM(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8),
+                    resultSet.getDate(9).toLocalDate(),
+                    resultSet.getDate(10).toLocalDate(),
+                    update
+            ));
+        }
+        ResultSet resultSet1 = CruidUtil.execute("SELECT * FROM tool_insurance WHERE IID LIKE ? OR Name LIKE ? OR Provider LIKE ? OR Agent_Name LIKE ? OR Agent_Contact LIKE ? OR Email LIKE ? OR Address LIKE ? OR Fax LIKE ? OR Joined_Date LIKE ? OR Expire_Date LIKE ?", searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase, searchPhrase);
+        while (resultSet1.next()){
+            JFXButton update = new JFXButton();
+            update.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            insuranceTMS.add(new InsuranceTM(
+                    resultSet1.getString(1),
+                    resultSet1.getString(2),
+                    resultSet1.getString(3),
+                    resultSet1.getString(4),
+                    resultSet1.getString(5),
+                    resultSet1.getString(6),
+                    resultSet1.getString(7),
+                    resultSet1.getString(8),
+                    resultSet1.getDate(9).toLocalDate(),
+                    resultSet1.getDate(10).toLocalDate(),
+                    update
+            ));
+        }
+        return insuranceTMS;
     }
 }

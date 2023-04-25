@@ -20,17 +20,18 @@ public class EmployeeTM {
  private String EID;
  private String firstName;
  private String lastName;
- private String nic;
+ private String NIC;
  private String gender;
- private LocalDate dateOfBirth;
- private String mobileNumber;
+ private LocalDate birthday;
+ private String mobile;
  private String email;
- private Integer zip;
+ private Integer zipCode;
  private String city;
  private String street;
  private String state;
  private LocalDate joinedDate;
  private String position;
+ private JFXButton showBtn;
  private JFXButton edit;
  private JFXButton delete;
 }

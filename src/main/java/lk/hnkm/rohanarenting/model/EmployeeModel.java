@@ -104,6 +104,12 @@ public class EmployeeModel {
       ResultSet resultSet =  CruidUtil.execute("SELECT * FROM employee");
         ArrayList<EmployeeTM> employees = new ArrayList<EmployeeTM>();
       while (resultSet.next()){
+          JFXButton showBtn = new JFXButton();
+          JFXButton editBtn = new JFXButton();
+          JFXButton deleteBtn = new JFXButton();
+          editBtn.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+          deleteBtn.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+          showBtn.setStyle("-fx-background-image: url('img/show.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
             employees.add(new EmployeeTM(
                     resultSet.getString(1),
                     resultSet.getString(2),
@@ -119,10 +125,59 @@ public class EmployeeModel {
                     resultSet.getString(12),
                     resultSet.getDate(13).toLocalDate(),
                     resultSet.getString(14),
-                    new JFXButton("Edit"),
-                    new JFXButton("Delete")
+                    showBtn,
+                    editBtn,
+                    deleteBtn
             ));
         }
         return employees;
+    }
+
+    public static ArrayList<EmployeeTM> searchEmployee(String searchPhrase) throws SQLException {
+        ArrayList<EmployeeTM> employees = new ArrayList<EmployeeTM>();
+        ResultSet resultSet =  CruidUtil.execute("SELECT * FROM employee WHERE EID LIKE ? OR First_Name LIKE ? OR Last_Name LIKE ?OR NIC LIKE ? OR Gender LIKE ? OR Date_Of_Birth LIKE ? OR Mobile_Number LIKE ? OR Email LIKE ? OR Zip LIKE ? OR City LIKE ? OR Street LIKE ? OR State LIKE ? OR Joined_Date LIKE ? OR Position LIKE ?",
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase
+        );
+         while (resultSet.next()){
+            JFXButton showBtn = new JFXButton();
+            JFXButton editBtn = new JFXButton();
+            JFXButton deleteBtn = new JFXButton();
+            editBtn.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            deleteBtn.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            showBtn.setStyle("-fx-background-image: url('img/show.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            employees.add(new EmployeeTM(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getDate(6).toLocalDate(),
+                    resultSet.getString(7),
+                    resultSet.getString(8),
+                    resultSet.getInt(9),
+                    resultSet.getString(10),
+                    resultSet.getString(11),
+                    resultSet.getString(12),
+                    resultSet.getDate(13).toLocalDate(),
+                    resultSet.getString(14),
+                    showBtn,
+                    editBtn,
+                    deleteBtn
+            ));
+         }
+      return employees;
     }
 }

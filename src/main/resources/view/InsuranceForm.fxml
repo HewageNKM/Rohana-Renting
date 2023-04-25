@@ -76,7 +76,7 @@
             <Label layoutX="75.0" layoutY="31.0" styleClass="formTextFieldLabel" text="Insurance ID" />
             <Label layoutX="75.0" layoutY="112.0" styleClass="formTextFieldLabel" text="Insurance Name" />
             <Label layoutX="76.0" layoutY="199.0" styleClass="formTextFieldLabel" text="Insurance Provider" />
-            <TextField layoutX="64.0" layoutY="304.0" onKeyReleased="#searchFldOnAction" prefHeight="40.0" prefWidth="400.0" promptText="XXXXXXXX" />
+            <TextField fx:id="searchFld" layoutX="64.0" layoutY="304.0" onKeyReleased="#searchFldOnAction" prefHeight="40.0" prefWidth="400.0" promptText="XXXXXXXX" />
             <Label layoutX="84.0" layoutY="284.0" styleClass="formTextFieldLabel" text="Search" />
             <TextField fx:id="agentNameFld" layoutX="620.0" layoutY="56.0" onKeyReleased="#agentNameValidate" prefHeight="40.0" prefWidth="400.0" promptText="XXXXXXXX" />
             <TextField fx:id="agentContactFld" layoutX="620.0" layoutY="139.0" onKeyReleased="#agentContactValidate" prefHeight="40.0" prefWidth="400.0" promptText="07/1XXXXXXXX" />
@@ -90,6 +90,11 @@
             <Label layoutX="1132.0" layoutY="31.0" styleClass="formTextFieldLabel" text="Email" />
             <Label layoutX="1188.0" layoutY="120.0" styleClass="formTextFieldLabel" text="Joined Date" />
             <Label layoutX="1187.0" layoutY="199.0" styleClass="formTextFieldLabel" text="Expire Date" />
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="34.0" layoutY="309.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/search.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>

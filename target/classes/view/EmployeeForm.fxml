@@ -66,13 +66,14 @@
                   <Font name="Times New Roman Bold" size="10.0" />
                </font>
             </Label>
-            <TableView fx:id="usersTable" layoutX="5.0" layoutY="377.0" prefHeight="548.0" prefWidth="1593.0">
+            <TableView fx:id="employeeTable" layoutX="5.0" layoutY="377.0" prefHeight="548.0" prefWidth="1593.0">
               <columns>
                 <TableColumn fx:id="columnID" prefWidth="85.00003051757812" text="ID" />
                 <TableColumn fx:id="columnFirstName" prefWidth="200.0" text="First Name" />
                   <TableColumn fx:id="columnLastName" prefWidth="200.0" text="Last  Name" />
                   <TableColumn fx:id="columnStreet" prefWidth="250.0" text="Street" />
                   <TableColumn fx:id="columnCity" prefWidth="150.0" text="City" />
+                 <TableColumn fx:id="columnZipCode" prefWidth="150.0" text="City" />
                   <TableColumn fx:id="columnState" prefWidth="200.0" text="State" />
                   <TableColumn fx:id="columnEmail" prefWidth="300.0" text="Email" />
                   <TableColumn fx:id="columnMobileNumber" prefWidth="200.0" text="Mobile Number" />
@@ -81,8 +82,9 @@
                   <TableColumn fx:id="columnPosition" prefWidth="150.0" text="Position" />
                   <TableColumn fx:id="columnGender" prefWidth="90.0" text="Gender" />
                   <TableColumn fx:id="columnBirthday" prefWidth="200.0" text="Bithday" />
+                 <TableColumn fx:id="columnReport" prefWidth="90.0" text="Show" />
                   <TableColumn fx:id="columnEdit" prefWidth="90.0" text="Edit" />
-                  <TableColumn fx:id="columnDelete" prefWidth="125.0" text="Delete" />
+                  <TableColumn fx:id="columnDelete" prefWidth="90.0" text="Delete" />
               </columns>
             </TableView>
             <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="458.0" layoutY="50.0" onAction="#idGenarateOnAction" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #00FF00;" styleClass="formButton" text="Genarate">
@@ -103,7 +105,7 @@
             <TextField fx:id="mobileNumberFld" layoutX="616.0" layoutY="50.0" onKeyReleased="#mobileNumberValidate" prefHeight="40.0" prefWidth="400.0" promptText="Moobile Number" />
             <TextField fx:id="nicFld" layoutX="26.0" layoutY="259.0" onKeyReleased="#nicValidate" prefHeight="40.0" prefWidth="400.0" promptText="NIC" />
             <TextField fx:id="streetFld" layoutX="563.0" layoutY="259.0" onKeyReleased="#streetValidate" prefHeight="40.0" prefWidth="151.0" promptText="Jayanthi Rd" />
-            <TextField layoutX="55.0" layoutY="328.0" onKeyReleased="#searchFldOnAction" prefHeight="40.0" prefWidth="400.0" promptText="Search . . . . . . . " />
+            <TextField fx:id="searchFld" layoutX="55.0" layoutY="328.0" onKeyReleased="#searchFldOnAction" prefHeight="40.0" prefWidth="400.0" promptText="Search . . . . . . . " />
             <Label layoutX="27.0" layoutY="135.0" styleClass="formTextFieldLabel" text="First Name" />
             <Label layoutX="563.0" layoutY="236.0" styleClass="formTextFieldLabel" text="Street" />
             <Label layoutX="615.0" layoutY="135.0" styleClass="formTextFieldLabel" text="Email" />

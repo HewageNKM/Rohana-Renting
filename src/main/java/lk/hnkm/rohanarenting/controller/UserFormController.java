@@ -22,6 +22,7 @@ import lk.hnkm.rohanarenting.dto.User;
 import lk.hnkm.rohanarenting.dto.tm.UserTM;
 import lk.hnkm.rohanarenting.model.UserAccountsModel;
 import lk.hnkm.rohanarenting.utill.Regex;
+import lk.hnkm.rohanarenting.utill.TableUtil;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class UserFormController {
         deleteBtn.setDisable(true);
         setCellValueFactory();
         loadTableData();
+        TableUtil.installCopy(usersTable);
     }
     // Set Cell  Value Factory
     private void setCellValueFactory() {

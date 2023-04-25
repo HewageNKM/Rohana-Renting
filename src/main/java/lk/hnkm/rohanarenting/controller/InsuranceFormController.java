@@ -16,13 +16,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.paint.Color;
 import lk.hnkm.rohanarenting.dto.Insurance;
 import lk.hnkm.rohanarenting.dto.tm.InsuranceTM;
 import lk.hnkm.rohanarenting.model.InsuranceModel;
+import lk.hnkm.rohanarenting.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Regex;
+import lk.hnkm.rohanarenting.utill.TableUtil;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -34,37 +35,38 @@ public class InsuranceFormController {
     public JFXButton saveBtn;
     public TableView<InsuranceTM> insuranceTable;
     public TextField insuranceIdFld;
-    public TableColumn columnAddress;
-    public TableColumn<Object, Object> columnjoinedDate;
+    public TableColumn<InsuranceTM, String> columnAddress;
+    public TableColumn<InsuranceTM, LocalDate> columnjoinedDate;
+    public TextField searchFld;
     @FXML
     private Label notifyLabel;
 
     @FXML
-    private TableColumn<?, ?> columnID;
+    private TableColumn<InsuranceTM, String> columnID;
 
     @FXML
-    private TableColumn<?, ?> columnName;
+    private TableColumn<InsuranceTM, String> columnName;
 
     @FXML
-    private TableColumn<?, ?> columnProvider;
+    private TableColumn<InsuranceTM, String> columnProvider;
 
     @FXML
-    private TableColumn<?, ?> colunmAgentName;
+    private TableColumn<InsuranceTM, String> colunmAgentName;
 
     @FXML
-    private TableColumn<?, ?> colunmContact;
+    private TableColumn<InsuranceTM, String> colunmContact;
 
     @FXML
-    private TableColumn<?, ?> columnFax;
+    private TableColumn<InsuranceTM, String> columnFax;
 
     @FXML
-    private TableColumn<?, ?> columnEmail;
+    private TableColumn<InsuranceTM, String> columnEmail;
 
     @FXML
-    private TableColumn<?, ?> columnExpireDate;
+    private TableColumn<InsuranceTM, LocalDate> columnExpireDate;
 
     @FXML
-    private TableColumn<?, ?> columnUpdate;
+    private TableColumn<InsuranceTM, JFXButton> columnUpdate;
 
     @FXML
     private JFXDatePicker joingDatePicker;
@@ -99,11 +101,16 @@ public class InsuranceFormController {
         saveBtn.setDisable(true);
         setCellValueFactory();
         loadAllInsurance();
+        TableUtil.installCopy(insuranceTable);
     }
+
 
     private void loadAllInsurance() {
         try {
             ArrayList<InsuranceTM> allInsurance = InsuranceModel.getAllInsurance();
+            for (InsuranceTM insuranceTM:allInsurance) {
+                setOnActionOnBtn(insuranceTM);
+            }
             insuranceTMS.clear();
             insuranceTMS.addAll(allInsurance);
             insuranceTable.setItems(insuranceTMS);
@@ -113,18 +120,34 @@ public class InsuranceFormController {
         }
     }
 
+    private void setOnActionOnBtn(InsuranceTM insuranceTM) {
+        insuranceTM.getUpdate().setOnAction((e)->{
+            insuranceIdFld.setText(insuranceTM.getIID());
+            insuranceNameFld.setText(insuranceTM.getName());
+            insuranceProviderFld.setText(insuranceTM.getInsuranceProvider());
+            agentNameFld.setText(insuranceTM.getAgentName());
+            agentContactFld.setText(insuranceTM.getAgentContact());
+            addressFld.setText(insuranceTM.getAddress());
+            emailFld.setText(insuranceTM.getEmail());
+            faxFld.setText(insuranceTM.getFax());
+            joingDatePicker.setValue(insuranceTM.getJoinedDate());
+            expireDatePicker.setValue(insuranceTM.getExpireDate());
+            insuranceIdFld.setDisable(true);
+        });
+    }
+
     private void setCellValueFactory() {
-        columnID.setCellValueFactory(new PropertyValueFactory<>("IID"));
-        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        columnProvider.setCellValueFactory(new PropertyValueFactory<>("insuranceProvider"));
-        colunmAgentName.setCellValueFactory(new PropertyValueFactory<>("agentName"));
-        colunmContact.setCellValueFactory(new PropertyValueFactory<>("agentContact"));
-        columnFax.setCellValueFactory(new PropertyValueFactory<>("fax"));
-        columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        columnjoinedDate.setCellValueFactory(new PropertyValueFactory<>("joinedDate"));
-        columnExpireDate.setCellValueFactory(new PropertyValueFactory<>("expireDate"));
-        columnUpdate.setCellValueFactory(new PropertyValueFactory<>("update"));
-        columnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        columnID.setCellValueFactory(new PropertyValueFactory<InsuranceTM,String>("IID"));
+        columnName.setCellValueFactory(new PropertyValueFactory<InsuranceTM,String>("name"));
+        columnProvider.setCellValueFactory(new PropertyValueFactory<InsuranceTM,String>("insuranceProvider"));
+        colunmAgentName.setCellValueFactory(new PropertyValueFactory<InsuranceTM,String>("agentName"));
+        colunmContact.setCellValueFactory(new PropertyValueFactory<InsuranceTM,String>("agentContact"));
+        columnFax.setCellValueFactory(new PropertyValueFactory<InsuranceTM,String>("fax"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<InsuranceTM,String>("email"));
+        columnjoinedDate.setCellValueFactory(new PropertyValueFactory<InsuranceTM,LocalDate>("joinedDate"));
+        columnExpireDate.setCellValueFactory(new PropertyValueFactory<InsuranceTM,LocalDate>("expireDate"));
+        columnUpdate.setCellValueFactory(new PropertyValueFactory<InsuranceTM,JFXButton>("update"));
+        columnAddress.setCellValueFactory(new PropertyValueFactory<InsuranceTM,String>("address"));
     }
 
     @FXML
@@ -148,6 +171,7 @@ public class InsuranceFormController {
                     faxFld.setText(insurance.getFax());
                     joingDatePicker.setValue(insurance.getJoinedDate());
                     expireDatePicker.setValue(insurance.getExpireDate());
+                    insuranceIdFld.setDisable(true);
                 }else {
                     new Alert(Alert.AlertType.ERROR,"Insurance Details  Not Found !").show();
                 }
@@ -169,6 +193,7 @@ public class InsuranceFormController {
                     faxFld.setText(insurance.getFax());
                     joingDatePicker.setValue(insurance.getJoinedDate());
                     expireDatePicker.setValue(insurance.getExpireDate());
+                    insuranceIdFld.setDisable(true);
                 }else {
                     new Alert(Alert.AlertType.ERROR,"Insurance Details  Not Found !").show();
                 }
@@ -211,7 +236,7 @@ public class InsuranceFormController {
                                         try {
                                             Boolean isUpdated = InsuranceModel.updateVehicleInsuranceDetails(new Insurance(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
                                             if (isUpdated) {
-                                                new Alert(Alert.AlertType.INFORMATION, "Data Updated !").show();
+                                                TopUpNotifications.success("Vehicle Insurance Details Updated ! ");
                                                 clearFields();
                                                 loadAllInsurance();
                                             } else {
@@ -229,7 +254,7 @@ public class InsuranceFormController {
                                         try {
                                             Boolean isUpdated = InsuranceModel.addVehicleInsuranceDetails(new Insurance(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
                                             if (isUpdated) {
-                                                new Alert(Alert.AlertType.INFORMATION, "Data Saved !").show();
+                                                TopUpNotifications.success("Vehicle Insurance Details Saved ! ");
                                                 clearFields();
                                                 loadAllInsurance();
                                             } else {
@@ -254,7 +279,7 @@ public class InsuranceFormController {
                                         try {
                                             Boolean isUpdated = InsuranceModel.updateToolInsuranceDetails(new Insurance(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
                                             if (isUpdated) {
-                                                new Alert(Alert.AlertType.INFORMATION, "Data Updated !").show();
+                                                TopUpNotifications.success("Tool Insurance Details Updated ! ");
                                                 clearFields();
                                                 loadAllInsurance();
                                             } else {
@@ -272,7 +297,7 @@ public class InsuranceFormController {
                                         try {
                                             Boolean isUpdated = InsuranceModel.addToolInsuranceDetails(new Insurance(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
                                             if (isUpdated) {
-                                                new Alert(Alert.AlertType.INFORMATION, "Data Saved !").show();
+                                                TopUpNotifications.success("Tool Insurance Details Saved ! ");
                                                 clearFields();
                                                 loadAllInsurance();
                                             } else {
@@ -319,10 +344,50 @@ public class InsuranceFormController {
        expireDatePicker.setStyle(null);
        expireDatePicker.setValue(null);
        insuranceIdFld.setStyle(null);
+       insuranceIdFld.setDisable(false);
     }
 
     public void searchFldOnAction(KeyEvent keyEvent) {
+        if(searchFld.getText().trim().isEmpty()){
+            loadAllInsurance();
+        }else {
+            try {
+                ArrayList<InsuranceTM> filteredList = InsuranceModel.searchInsurance("%"+searchFld.getText()+"%");
+                ObservableList<InsuranceTM> filterInsuranceTMS = FXCollections.observableArrayList(filteredList);
+                for (InsuranceTM insuranceTM:filterInsuranceTMS) {
+                    setOnActionOnBtn(insuranceTM.getUpdate());
+                }
+                if(filterInsuranceTMS.size()>0){
+                    insuranceTable.setItems(filterInsuranceTMS);
+                }else {
+                    insuranceTable.getItems().clear();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                e.printStackTrace();
+            }
+        }
+    }
 
+    private void setOnActionOnBtn(JFXButton update) {
+        update.setOnAction(event -> {
+            InsuranceTM insuranceTM = insuranceTable.getSelectionModel().getSelectedItem();
+            if(insuranceTM != null){
+                insuranceIdFld.setText(insuranceTM.getIID());
+                insuranceNameFld.setText(insuranceTM.getName());
+                insuranceProviderFld.setText(insuranceTM.getInsuranceProvider());
+                addressFld.setText(insuranceTM.getAddress());
+                agentContactFld.setText(insuranceTM.getAgentContact());
+                agentNameFld.setText(insuranceTM.getAgentName());
+                emailFld.setText(insuranceTM.getEmail());
+                faxFld.setText(insuranceTM.getFax());
+                joingDatePicker.setValue(insuranceTM.getJoinedDate());
+                expireDatePicker.setValue(insuranceTM.getExpireDate());
+                insuranceIdFld.setDisable(true);
+            }else {
+               new Alert(Alert.AlertType.ERROR,"Please Select a Row !").show();
+            }
+        });
     }
 
     public void insuranceProviderValidate(KeyEvent keyEvent) {
@@ -480,4 +545,5 @@ public class InsuranceFormController {
             expireDatePicker.setStyle("-fx-border-color: red");
         }
     }
+
 }

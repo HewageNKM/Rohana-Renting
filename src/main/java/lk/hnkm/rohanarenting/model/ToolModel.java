@@ -128,4 +128,8 @@ public class ToolModel {
             return jasperReportToolTMS;
         }
     }
+
+    public static boolean updateToolWithoutAvailability(Tool tool) throws SQLException {
+        return CruidUtil.execute("UPDATE tool SET Brand = ?,Name = ?,Description = ?,Rate_Per_Day = ? WHERE TID = ?",tool.getBrand(),tool.getName(),tool.getDescription(),tool.getRate(),tool.getTID());
+    }
 }
