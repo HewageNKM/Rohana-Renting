@@ -84,7 +84,7 @@
                <image>
                   <Image url="@../img/search.png" />
                </image></ImageView>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="378.0" layoutY="59.0" onAction="#idGenarateOnAction" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #00FF00;" styleClass="formButton" text="Genarate">
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="378.0" layoutY="59.0" onAction="#idGenerateOnAction" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #00FF00;" styleClass="formButton" text="Genarate">
                <font>
                   <Font name="Times New Roman Bold" size="11.0" />
                </font>
