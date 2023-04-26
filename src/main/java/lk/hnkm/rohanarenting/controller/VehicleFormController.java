@@ -150,7 +150,7 @@ public class VehicleFormController {
             vehiclesTable.setItems(vehicles);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

@@ -577,8 +577,8 @@ public class RentFormController {
 
     public void newVehicleBtnOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
-        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/VehicleForm.fxml"))));
-        stage.setTitle("Vehicle Form");
+        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/VehicleViewForm.fxml"))));
+        stage.setTitle("Vehicle View Form");
         stage.show();
     }
 }

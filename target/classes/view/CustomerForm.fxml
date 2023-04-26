@@ -73,6 +73,7 @@
                <TableColumn fx:id="columnZipCode" prefWidth="130.0" text="Zip Code" />
                <TableColumn fx:id="columnStreet" prefWidth="200.0" text="Street" />
                <TableColumn fx:id="columnCity" prefWidth="200.0" text="City" />
+               <TableColumn fx:id="columnShow" prefWidth="200.0" text="Show" />
                <TableColumn fx:id="columnEdit" prefWidth="90.0" text="Edit" />
                <TableColumn fx:id="columnDelete" prefWidth="120.0" text="Delete" />
             </columns>
@@ -93,7 +94,7 @@
          <TextField fx:id="firstNameFld" layoutX="52.0" layoutY="159.0" onKeyReleased="#firstNameValidate" prefHeight="40.0" prefWidth="200.0" promptText="John" />
          <TextField fx:id="streetFld" layoutX="856.0" layoutY="159.0" onKeyReleased="#streetValidate" prefHeight="40.0" prefWidth="300.0" promptText="XXXXXX" />
          <TextField fx:id="mobileNumberFld" layoutX="856.0" layoutY="246.0" onKeyReleased="#mobileNumberValidate" prefHeight="40.0" prefWidth="250.0" promptText="07XXXXXXXX" />
-         <TextField layoutX="76.0" layoutY="346.0" onKeyReleased="#searchFldOnAction" prefHeight="40.0" prefWidth="350.0" promptText="Search . . . . .  . . ." />
+         <TextField fx:id="searchFld" layoutX="76.0" layoutY="346.0" onKeyReleased="#searchFldOnAction" prefHeight="40.0" prefWidth="350.0" promptText="Search . . . . .  . . ." />
          <Label layoutX="65.0" layoutY="46.0" styleClass="formTextFieldLabel" text="Customer ID" />
          <Label layoutX="65.0" layoutY="136.0" styleClass="formTextFieldLabel" text="First Name" />
          <Label layoutX="65.0" layoutY="222.0" styleClass="formTextFieldLabel" text="NIC" />

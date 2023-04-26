@@ -72,6 +72,12 @@ public class CustomerModel {
        ResultSet resultSet = CruidUtil.execute("SELECT * FROM customer");
        ArrayList<CustomerTM> arrayList = new ArrayList<>();
         while (resultSet.next()){
+            JFXButton showBtn = new JFXButton();
+            JFXButton editBtn = new JFXButton();
+            JFXButton deleteBtn = new JFXButton();
+            editBtn.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            deleteBtn.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            showBtn.setStyle("-fx-background-image: url('img/show.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
             arrayList.add(new CustomerTM(
                     resultSet.getString(1),
                     resultSet.getString(2),
@@ -83,8 +89,50 @@ public class CustomerModel {
                     resultSet.getString(8),
                     resultSet.getString(9),
                     resultSet.getInt(10),
-                    new JFXButton("Edit"),
-                    new JFXButton("Delete")
+                    editBtn,
+                    deleteBtn,
+                    showBtn
+
+            ));
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<CustomerTM> searchCustomer(String searchPhrase) throws SQLException {
+        ArrayList<CustomerTM> arrayList = new ArrayList<>();
+        ResultSet resultSet = CruidUtil.execute("SELECT * FROM customer WHERE CID LIKE ? OR First_Name LIKE ? OR Last_Name LIKE ? OR NIC LIKE ? OR Mobile_Number LIKE ? OR Email LIKE ? OR Street LIKE ? OR City LIKE ? OR Zip_Code LIKE ? OR Birthday LIKE ?",
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase,
+                searchPhrase);
+        while (resultSet.next()){
+            JFXButton showBtn = new JFXButton();
+            JFXButton editBtn = new JFXButton();
+            JFXButton deleteBtn = new JFXButton();
+            editBtn.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            deleteBtn.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            showBtn.setStyle("-fx-background-image: url('img/show.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            arrayList.add(new CustomerTM(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getDate(5).toLocalDate(),
+                    resultSet.getString(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8),
+                    resultSet.getString(9),
+                    resultSet.getInt(10),
+                    editBtn,
+                    deleteBtn,
+                    showBtn
+
             ));
         }
         return arrayList;

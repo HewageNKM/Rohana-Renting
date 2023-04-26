@@ -28,6 +28,7 @@ import lk.hnkm.rohanarenting.model.LoginModel;
 import lk.hnkm.rohanarenting.utill.Regex;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -86,9 +87,9 @@ public class LoginFormController {
                     notifyLabel.setTextFill(Color.RED);
                     notifyLabel.setText("User Not Found !");
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }

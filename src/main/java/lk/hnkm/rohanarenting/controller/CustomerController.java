@@ -14,14 +14,22 @@ import lk.hnkm.rohanarenting.dto.Customer;
 import lk.hnkm.rohanarenting.dto.tm.CustomerTM;
 import lk.hnkm.rohanarenting.model.CustomerModel;
 import lk.hnkm.rohanarenting.model.EmployeeModel;
+import lk.hnkm.rohanarenting.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
+import lk.hnkm.rohanarenting.utill.TableUtil;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class CustomerController {
-    public TableView customerTable;
+    public TableView<CustomerTM> customerTable;
     public TableColumn columnFirstName;
     public TableColumn columnLastName;
     public TableColumn columnMobileNumber;
@@ -35,6 +43,8 @@ public class CustomerController {
     public TableColumn columnStreet;
     public TableColumn columnCity;
     public DatePicker birthdayDatePicker;
+    public TableColumn columnShow;
+    public TextField searchFld;
     @FXML
     private ImageView CustomerIdImgViewer;
 
@@ -83,18 +93,101 @@ public class CustomerController {
         setCellValueFromTableToTextFields();
         loadAllCustomers();
         genarateId();
+        TableUtil.installCopy(customerTable);
     }
 
     private void loadAllCustomers() {
         try {
             customerList.clear();
-            ArrayList<CustomerTM> arrayList = CustomerModel.getAllCustomers();
-            customerList.addAll(arrayList);
+            ArrayList<CustomerTM> customerTMArrayList = CustomerModel.getAllCustomers();
+            for (CustomerTM customerTM:customerTMArrayList) {
+                setActionOnBtn(customerTM.getEditBtn(),customerTM.getDeleteBtn(),customerTM.getShowBtn());
+            }
+            customerList.addAll(customerTMArrayList);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             throw new RuntimeException(e);
         }
         customerTable.setItems(customerList);
+    }
+
+    private void setActionOnBtn(JFXButton editBtn, JFXButton deleteBtn, JFXButton showBtn) {
+        deleteBtn.setOnAction(event -> {
+            CustomerTM customerTM = (CustomerTM) customerTable.getSelectionModel().getSelectedItem();
+            if(customerTM != null){
+                loadAllCustomers();
+            }else {
+                new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure Want to Delete Customer ?").showAndWait().ifPresent(buttonType -> {
+                    if (buttonType == ButtonType.OK){
+                        try {
+                            boolean isDeleted = CustomerModel.deleteCustomer(editBtn.getId());
+                            if(isDeleted){
+                                loadAllCustomers();
+                                genarateId();
+                                TopUpNotifications.success("Customer Deleted Successfully !");
+                                clearFields();
+                            }else {
+                                new Alert(Alert.AlertType.ERROR,"Customer Not Deleted !").show();
+                            };
+                        } catch (SQLException e) {
+                            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+            }
+        });
+
+        editBtn.setOnAction(event -> {
+            CustomerTM customerTM =  customerTable.getSelectionModel().getSelectedItem();
+                if(customerTM != null){
+                    customerIdFld.setText(customerTM.getCID());
+                    firstNameFld.setText(customerTM.getFirstName());
+                    lastNameFld.setText(customerTM.getLastName());
+                    nicFld.setText(customerTM.getNIC());
+                    birthdayDatePicker.setValue(customerTM.getBirthday());
+                    mobileNumberFld.setText(customerTM.getMobileNumber());
+                    emailFld.setText(customerTM.getEmail());
+                    streetFld.setText(customerTM.getStreet());
+                    cityFld.setText(customerTM.getCity());
+                    zipCodeFld.setText(String.valueOf(customerTM.getZipCode()));
+                    customerIdFld.setDisable(true);
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Please Select Customer !").show();
+                }
+        });
+
+        showBtn.setOnAction(event -> {
+            CustomerTM customerTM = customerTable.getSelectionModel().getSelectedItem();
+            if(customerTM != null){
+                printCustomerDetails(customerTM);
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Please Select Customer !").show();
+            }
+        });
+    }
+
+    private void printCustomerDetails(CustomerTM customerTM) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/reports/customer_Report.jrxml"));
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(Collections.singleton(customerTM));
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("customerId",customerTM.getCID());
+            params.put("firstName",customerTM.getFirstName());
+            params.put("lastName",customerTM.getLastName());
+            params.put("NIC",customerTM.getNIC());
+            params.put("birthday", Date.valueOf(customerTM.getBirthday()));
+            params.put("mobile",customerTM.getMobileNumber());
+            params.put("email",customerTM.getEmail());
+            params.put("street",customerTM.getStreet());
+            params.put("city",customerTM.getCity());
+            params.put("zipCode",customerTM.getZipCode());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params,dataSource );
+            JasperViewer.viewReport(jasperPrint,false);
+        } catch (JRException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            throw new RuntimeException(e);
+        }
     }
 
     private void setCellValueFromTableToTextFields() {
@@ -110,6 +203,7 @@ public class CustomerController {
         columnZipCode.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
         columnEdit.setCellValueFactory(new PropertyValueFactory<>("editBtn"));
         columnDelete.setCellValueFactory(new PropertyValueFactory<>("deleteBtn"));
+        columnShow.setCellValueFactory(new PropertyValueFactory<>("showBtn"));
     }
 
     @FXML
@@ -249,6 +343,7 @@ public class CustomerController {
        emailFld.clear();
        saveBtn.setDisable(true);
        deleteBtn.setDisable(true);
+       customerIdFld.setDisable(false);
    }
 
     public void idGenarateOnAction(javafx.event.ActionEvent actionEvent) {
@@ -364,6 +459,20 @@ public class CustomerController {
     }
 
     public void searchFldOnAction(KeyEvent keyEvent) {
+        if(searchFld.getText().trim().isEmpty()){
+           loadAllCustomers();
+        }else {
+            try {
+                ArrayList<CustomerTM> filterList = CustomerModel.searchCustomer("%"+searchFld.getText()+"%");
+                for (CustomerTM customerTM:filterList) {
+                 setActionOnBtn(customerTM.getEditBtn(),customerTM.getDeleteBtn(),customerTM.getShowBtn());
+                }
+                customerTable.setItems(FXCollections.observableArrayList(filterList));
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                e.printStackTrace();
+            }
+        }
 
     }
 

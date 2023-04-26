@@ -26,6 +26,7 @@ import lk.hnkm.rohanarenting.model.UserVerifyModel;
 import lk.hnkm.rohanarenting.utill.Regex;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 public class UserVerifyController {
@@ -89,7 +90,7 @@ public class UserVerifyController {
                 notifyLabel.setStyle("-fx-text-fill: red");
                 notifyLabel.setText("Invalid Employee ID or Password");
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }

@@ -11,8 +11,10 @@ package lk.hnkm.rohanarenting.model;
 import com.jfoenix.controls.JFXButton;
 import lk.hnkm.rohanarenting.dto.User;
 import lk.hnkm.rohanarenting.dto.tm.UserTM;
+import lk.hnkm.rohanarenting.security.Encrypt;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,17 +40,14 @@ public class UserAccountsModel {
     }
 
 
-    public static Boolean updateUser(User user) throws SQLException {
-     Boolean isUpdate = CruidUtil.execute("UPDATE user SET `Employee ID`=?,UName = ?,UPassword=?,Permission_Level=? WHERE `Employee ID`=?",user.getEID(),user.getUName(),user.getUPassword(),user.getPermissionLevel(),user.getEID());
-     if(isUpdate) {
-         return true;
-     }else {
-         return false;
-     }
+    public static Boolean updateUser(User user) throws SQLException, NoSuchAlgorithmException {
+        String password = Encrypt.encrypt(user.getUPassword());
+        return CruidUtil.execute("UPDATE user SET `Employee ID`=?,UName = ?,UPassword=?,Permission_Level=? WHERE `Employee ID`=?",user.getEID(),user.getUName(),password,user.getPermissionLevel(),user.getEID());
     }
 
-    public static boolean addUser(User user) throws SQLException {
-        return CruidUtil.execute("INSERT INTO user VALUES (?,?,?,?)",user.getEID(),user.getUName(),user.getUPassword(),user.getPermissionLevel());
+    public static boolean addUser(User user) throws SQLException, NoSuchAlgorithmException {
+        String password = Encrypt.encrypt(user.getUPassword());
+        return CruidUtil.execute("INSERT INTO user VALUES (?,?,?,?)",user.getEID(),user.getUName(),password,user.getPermissionLevel());
     }
 
     public static Boolean deleteUser(String employeeID) throws SQLException {
@@ -79,7 +78,7 @@ public class UserAccountsModel {
     }
 
     public static ArrayList<UserTM> searchUser(String searchPhrase) throws SQLException {
-        ResultSet resultSet =  CruidUtil.execute("SELECT * FROM user WHERE `Employee ID` LIKE ? OR UName LIKE ? OR UPassword LIKE ?  OR Permission_Level LIKE ?",searchPhrase ,searchPhrase,searchPhrase,searchPhrase);
+        ResultSet resultSet =  CruidUtil.execute("SELECT * FROM user WHERE `Employee ID` LIKE ? OR UName LIKE ?  OR Permission_Level LIKE ?" ,searchPhrase,searchPhrase,searchPhrase);
         ArrayList<UserTM> arrayList = new ArrayList<>();
         while (resultSet.next()) {
             JFXButton edit = new JFXButton();

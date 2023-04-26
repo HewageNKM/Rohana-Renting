@@ -29,12 +29,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#vehicleOnClickRefresh" prefHeight="650.0" prefWidth="1000.0">
                      <children>
-                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="14.0" prefHeight="25.0" prefWidth="90.0" styleClass="formTextFieldLabel" text="Order ID :">
+                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="14.0" prefHeight="25.0" prefWidth="75.0" styleClass="formTextFieldLabel" text="Order ID :">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="vehicleAddCartBtn" contentDisplay="GRAPHIC_ONLY" layoutX="943.0" layoutY="196.0" onAction="#vehicleCartBtnOnAction" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #044cd0;" styleClass="formButton">
+                        <JFXButton fx:id="vehicleAddCartBtn" contentDisplay="GRAPHIC_ONLY" layoutX="943.0" layoutY="225.0" onAction="#vehicleCartBtnOnAction" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #044cd0;" styleClass="formButton">
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -43,7 +43,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton layoutX="985.0" layoutY="75.0" onAction="#vehicleNewBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
+                        <JFXButton layoutX="966.0" layoutY="77.0" onAction="#vehicleNewBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -52,7 +52,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <TableView fx:id="vehicleRentTable" layoutX="33.0" layoutY="246.0" prefHeight="591.0" prefWidth="1635.0">
+                        <TableView fx:id="vehicleRentTable" layoutX="33.0" layoutY="282.0" prefHeight="572.0" prefWidth="1635.0">
                           <columns>
                             <TableColumn fx:id="vehicleRentIdColumn" prefWidth="170.0" text="Rent ID" />
                             <TableColumn fx:id="vehicleCustomerIdColumn" prefWidth="149.0" text="Customer ID" />
@@ -67,12 +67,12 @@
                               <TableColumn fx:id="vehicleColumRemove" prefWidth="150.0" text="Remove" />
                           </columns>
                         </TableView>
-                        <Label fx:id="vehicleSubTotalLabel" alignment="CENTER_RIGHT" layoutX="1347.0" layoutY="214.0" prefHeight="25.0" prefWidth="321.0" styleClass="FormTitleLabel">
+                        <Label fx:id="vehicleSubTotalLabel" alignment="CENTER_RIGHT" layoutX="1347.0" layoutY="248.0" prefHeight="25.0" prefWidth="321.0" styleClass="FormTitleLabel">
                            <font>
                               <Font name="Times New Roman Bold" size="20.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="vehiclePlaceOrderBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1588.0" layoutY="846.0" onAction="#placeVehicleOrderOnAction" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #e6bc15;" styleClass="formButton" text="Button">
+                        <JFXButton fx:id="vehiclePlaceOrderBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1588.0" layoutY="860.0" onAction="#placeVehicleOrderOnAction" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #e6bc15;" styleClass="formButton" text="Button">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -82,37 +82,29 @@
                            </graphic>
                         </JFXButton>
                         <TextField fx:id="vehicleCustomerFld" layoutX="727.0" layoutY="78.0" onKeyReleased="#vehicleCustomerIdValidate" promptText="CXXXXX" />
-                        <Label fx:id="vehicleRentOrderLabel" alignment="TOP_LEFT" layoutX="815.0" layoutY="14.0" prefHeight="25.0" prefWidth="188.0" styleClass="formTextFieldLabel">
+                        <Label fx:id="vehicleRentOrderLabel" alignment="TOP_LEFT" layoutX="801.0" layoutY="14.0" prefHeight="25.0" prefWidth="184.0" styleClass="formTextFieldLabel">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" layoutX="739.0" layoutY="56.0" prefHeight="19.0" prefWidth="113.0" text="Customer ID">
+                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="54.0" prefHeight="21.0" prefWidth="99.0" text="Customer ID">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="vehicleFld" layoutX="728.0" layoutY="136.0" onKeyReleased="#vehicleIdValidate" promptText="VXXXXX" />
-                        <Label alignment="TOP_LEFT" layoutX="739.0" layoutY="115.0" prefHeight="19.0" prefWidth="113.0" text="Vehicle ID">
+                        <TextField fx:id="vehicleFld" layoutX="727.0" layoutY="154.0" onKeyReleased="#vehicleIdValidate" promptText="VXXXXX" />
+                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="133.0" prefHeight="21.0" prefWidth="83.0" text="Vehicle ID">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="vehicleRentDaysFld" layoutX="780.0" layoutY="195.0" onKeyReleased="#vehicleRentDaysValidate" prefHeight="33.0" prefWidth="143.0" promptText="00000" />
-                        <Label alignment="TOP_LEFT" layoutX="795.0" layoutY="172.0" prefHeight="19.0" prefWidth="97.0" text="Rent Days">
+                        <TextField fx:id="vehicleRentDaysFld" layoutX="781.0" layoutY="225.0" onKeyReleased="#vehicleRentDaysValidate" prefHeight="33.0" prefWidth="143.0" promptText="00000" />
+                        <Label alignment="TOP_LEFT" layoutX="781.0" layoutY="204.0" prefHeight="19.0" prefWidth="97.0" text="Rent Days">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <JFXButton layoutX="985.0" layoutY="133.0" onAction="#newVehicleBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/plus.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
+                        <JFXButton layoutX="966.0" layoutY="153.0" onAction="#newVehicleBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="View" />
                      </children>
                   </AnchorPane>
             </content>
@@ -121,12 +113,12 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#toolOnClickRefresh" prefHeight="650.0" prefWidth="1000.0">
                      <children>
-                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="14.0" prefHeight="19.0" prefWidth="95.0" styleClass="formTextFieldLabel" text="Order ID :">
+                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="14.0" prefHeight="21.0" prefWidth="76.0" styleClass="formTextFieldLabel" text="Order ID :">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="toolAddCartBtn" contentDisplay="GRAPHIC_ONLY" layoutX="943.0" layoutY="196.0" onAction="#toolCartBtnOnAction" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #044cd0;" styleClass="formButton">
+                        <JFXButton fx:id="toolAddCartBtn" contentDisplay="GRAPHIC_ONLY" layoutX="943.0" layoutY="227.0" onAction="#toolCartBtnOnAction" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #044cd0;" styleClass="formButton">
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -135,7 +127,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton layoutX="985.0" layoutY="75.0" onAction="#toolNewBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
+                        <JFXButton layoutX="967.0" layoutY="77.0" onAction="#toolNewBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -144,7 +136,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <TableView fx:id="toolRentTable" layoutX="33.0" layoutY="246.0" prefHeight="591.0" prefWidth="1635.0">
+                        <TableView fx:id="toolRentTable" layoutX="33.0" layoutY="282.0" prefHeight="572.0" prefWidth="1635.0">
                            <columns>
                               <TableColumn fx:id="toolColumnRid" prefWidth="170.0" text="Rent ID" />
                               <TableColumn fx:id="toolCustomerIDColumn" prefWidth="149.0" text="Customer ID" />
@@ -158,12 +150,12 @@
                               <TableColumn fx:id="toolRemoveColumn" prefWidth="150.0" text="Remove" />
                            </columns>
                         </TableView>
-                        <Label fx:id="toolSubTotalLabel" alignment="CENTER_RIGHT" layoutX="1347.0" layoutY="216.0" prefHeight="25.0" prefWidth="321.0" styleClass="FormTitleLabel">
+                        <Label fx:id="toolSubTotalLabel" alignment="CENTER_RIGHT" layoutX="1347.0" layoutY="246.0" prefHeight="25.0" prefWidth="321.0" styleClass="FormTitleLabel">
                            <font>
                               <Font name="Times New Roman Bold" size="20.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="toolPlaceOrderBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1588.0" layoutY="846.0" onAction="#placeToolOrderOnAction" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #e6bc15;" styleClass="formButton" text="Button">
+                        <JFXButton fx:id="toolPlaceOrderBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1588.0" layoutY="867.0" onAction="#placeToolOrderOnAction" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #e6bc15;" styleClass="formButton" text="Button">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -173,37 +165,29 @@
                            </graphic>
                         </JFXButton>
                         <TextField fx:id="toolCustomerFld" layoutX="727.0" layoutY="78.0" onKeyReleased="#customerIdValidate" promptText="CXXXXX" />
-                        <Label fx:id="toolRentOrderIdLabel" alignment="TOP_LEFT" layoutX="815.0" layoutY="14.0" prefHeight="19.0" prefWidth="147.0" styleClass="formTextFieldLabel">
+                        <Label fx:id="toolRentOrderIdLabel" alignment="TOP_LEFT" layoutX="801.0" layoutY="14.0" prefHeight="21.0" prefWidth="142.0" styleClass="formTextFieldLabel">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" layoutX="739.0" layoutY="56.0" prefHeight="19.0" prefWidth="113.0" text="Customer ID">
+                        <Label alignment="TOP_LEFT" layoutX="736.0" layoutY="50.0" prefHeight="19.0" prefWidth="113.0" text="Customer ID">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="toolFld" layoutX="728.0" layoutY="136.0" onKeyReleased="#toolIdValidate" promptText="TXXXXX" />
-                        <Label alignment="TOP_LEFT" layoutX="739.0" layoutY="115.0" prefHeight="19.0" prefWidth="113.0" text="Tool ID">
+                        <TextField fx:id="toolFld" layoutX="728.0" layoutY="154.0" onKeyReleased="#toolIdValidate" promptText="TXXXXX" />
+                        <Label alignment="TOP_LEFT" layoutX="739.0" layoutY="133.0" prefHeight="19.0" prefWidth="113.0" text="Tool ID">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="toolRentDaysFld" layoutX="780.0" layoutY="195.0" onKeyReleased="#toolRentDaysValidate" prefHeight="33.0" prefWidth="143.0" promptText="00000" />
-                        <Label alignment="TOP_LEFT" layoutX="795.0" layoutY="172.0" prefHeight="19.0" prefWidth="97.0" text="Rent Days">
+                        <TextField fx:id="toolRentDaysFld" layoutX="781.0" layoutY="227.0" onKeyReleased="#toolRentDaysValidate" prefHeight="33.0" prefWidth="143.0" promptText="00000" />
+                        <Label alignment="TOP_LEFT" layoutX="792.0" layoutY="205.0" prefHeight="19.0" prefWidth="97.0" text="Rent Days">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <JFXButton layoutX="985.0" layoutY="133.0" onAction="#newToolBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
-                           <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/plus.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
+                        <JFXButton layoutX="967.0" layoutY="153.0" onAction="#newToolBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="View" />
                      </children>
                   </AnchorPane>
                </content>

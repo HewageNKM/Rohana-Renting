@@ -14,6 +14,7 @@ import lk.hnkm.rohanarenting.dto.tm.EmployeeTM;
 import lk.hnkm.rohanarenting.model.EmployeeModel;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
+import lk.hnkm.rohanarenting.utill.TableUtil;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -101,6 +102,7 @@ public class EmployeeFormController {
         getId();
         setCellValueFactory();
         loadAllEmployees();
+        TableUtil.installCopy(employeeTable);
     }
 
     private void loadAllEmployees() {
@@ -288,6 +290,7 @@ public class EmployeeFormController {
         birthDayPicker.setStyle("-fx-border-color: null");
         joinedDtePicker.setStyle("-fx-border-color: null");
         notifyLabel.setText("");
+        employeeIdFld.setDisable(false);
    }
 
     public void idGenarateOnAction(javafx.event.ActionEvent actionEvent) {
@@ -325,6 +328,7 @@ public class EmployeeFormController {
                 joinedDtePicker.setValue(employee.getJoinedDate());
                 positionFld.setText(employee.getPosition());
                 joinedDtePicker.setDisable(true);
+                employeeIdFld.setDisable(true);
             }else {
                 new Alert(Alert.AlertType.ERROR,"Employee Details Not Found !").show();
                 emailFld.clear();
@@ -451,6 +455,7 @@ public class EmployeeFormController {
                 joinedDtePicker.setValue(employeeTM.getJoinedDate());
                 positionFld.setText(employeeTM.getPosition());
                 joinedDtePicker.setDisable(true);
+                employeeIdFld.setDisable(true);
             }else {
                 new Alert(Alert.AlertType.ERROR,"Please, Select a Row").show();
             }
@@ -461,7 +466,7 @@ public class EmployeeFormController {
                 new Alert(Alert.AlertType.CONFIRMATION,"Are You sure Want to Delete Employee ?", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(ButtonType->{
                     if(ButtonType == ButtonType.YES){
                         try {
-                            Boolean  isDeleted = EmployeeModel.deleteEmployee(employeeTM.getEID());
+                            Boolean isDeleted = EmployeeModel.deleteEmployee(employeeTM.getEID());
                             if (isDeleted) {
                                 new Alert(Alert.AlertType.INFORMATION, "Employee Deleted Successfully !").show();
                                 clearFields();

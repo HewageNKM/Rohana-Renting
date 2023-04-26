@@ -21,9 +21,9 @@
   ~
   -->
 
-<BorderPane prefHeight="960.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.EmployeeFormController">
+<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.EmployeeFormController">
    <center>
-      <AnchorPane onMouseClicked="#refreshOnClick" prefHeight="590.0" prefWidth="943.0" style="-fx-background-color: FFFFFFFF;" stylesheets="@../css/styleSheet.css">
+      <AnchorPane onMouseClicked="#refreshOnClick" prefHeight="590.0" prefWidth="943.0" style="-fx-background-color: FFFFFFFF;">
          <children>
             <JFXButton fx:id="saveBtn" contentDisplay="GRAPHIC_ONLY" layoutX="1015.0" layoutY="318.0" onAction="#saveBtnOnAction" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #90EE90;" styleClass="formButton" text="Save">
                <font>

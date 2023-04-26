@@ -21,9 +21,11 @@ import javafx.scene.paint.Color;
 import lk.hnkm.rohanarenting.dto.User;
 import lk.hnkm.rohanarenting.dto.tm.UserTM;
 import lk.hnkm.rohanarenting.model.UserAccountsModel;
+import lk.hnkm.rohanarenting.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Regex;
 import lk.hnkm.rohanarenting.utill.TableUtil;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -113,7 +115,6 @@ public class UserFormController {
            if(user!=null){
                employeeFld.setText(user.getEID());
                userNameFld.setText(user.getName());
-               passwordFld.setText(user.getUPassword());
                if(user.getPermissionLevel().equals("A")){
                    aPermission.setSelected(true);
                }else {
@@ -121,6 +122,7 @@ public class UserFormController {
                }
                saveBtn.setDisable(false);
                deleteBtn.setDisable(false);
+               employeeFld.setDisable(true);
            }else {
                new Alert(Alert.AlertType.ERROR,"Please Select A User !").show();
            }
@@ -136,7 +138,6 @@ public class UserFormController {
                 new Alert(Alert.AlertType.ERROR,"No User Account Found !").show();
                 clearFields();
             }else {
-                passwordFld.setText(user.getUPassword());
                 if(user.getPermissionLevel().equals("A")){
                     aPermission.setSelected(true);
                 }else {
@@ -144,6 +145,7 @@ public class UserFormController {
                 }
                 userNameFld.setText(user.getUName());
             }
+            employeeFld.setDisable(true);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
@@ -156,14 +158,14 @@ public class UserFormController {
                new Alert(Alert.AlertType.CONFIRMATION,"New User Data Will Be Updated !",ButtonType.YES).showAndWait().ifPresent(buttonType -> {
                    if(buttonType==ButtonType.YES){
                        try {
-                           if(UserAccountsModel.updateUser(new User(employeeFld.getText(),userNameFld.getText(),passwordFld.getText(),aPermission.isSelected()?"A":"B"))) {
-                               new Alert(Alert.AlertType.INFORMATION, "User Data Updated !").show();
+                           if(UserAccountsModel.updateUser(new User(employeeFld.getText(),userNameFld.getText(), passwordFld.getText(),aPermission.isSelected()?"A":"B"))) {
+                               TopUpNotifications.success("User Data Updated !");
                                clearFields();
                                loadTableData();
                            }else {
                                new Alert(Alert.AlertType.ERROR, "User Data Not Updated !").show();
                            }
-                       } catch (SQLException e) {
+                       } catch (SQLException | NoSuchAlgorithmException e) {
                            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
                           e.printStackTrace();
                        }
@@ -171,17 +173,18 @@ public class UserFormController {
                });
            }else {
                 if(UserAccountsModel.addUser(new User(employeeFld.getText(),userNameFld.getText(),passwordFld.getText(),aPermission.isSelected()?"A":"B"))){
-                     new Alert(Alert.AlertType.INFORMATION,"User Data Saved !").show();
+                    TopUpNotifications.success("User Data Saved !");
                     loadTableData();
                      clearFields();
                 }else {
                      new Alert(Alert.AlertType.ERROR,"User Data Not Saved !").show();
                 }
            }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
+
     }
 
     private void clearFields() {
@@ -196,6 +199,7 @@ public class UserFormController {
         employeeFld.setStyle(null);
         passwordFld.setStyle(null);
         userNameFld.setStyle(null);
+        employeeFld.setDisable(false);
     }
     //Clear All Fields
     public void clearBtnOnAction(ActionEvent actionEvent) {
@@ -300,11 +304,7 @@ public class UserFormController {
                     setDeleteButtonAction(userTM.getDeleteBtn());
                 }
                 ObservableList<UserTM> users = FXCollections.observableArrayList(arrayList);
-                if (users != null) {
-                    usersTable.setItems(users);
-                } else {
-                    usersTable.getItems().clear();
-                }
+                usersTable.setItems(users);
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
                 e.printStackTrace();

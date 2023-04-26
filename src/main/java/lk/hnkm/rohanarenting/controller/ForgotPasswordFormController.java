@@ -28,6 +28,7 @@ import lk.hnkm.rohanarenting.dto.User;
 import lk.hnkm.rohanarenting.model.ForgotPasswordModel;
 import lk.hnkm.rohanarenting.utill.Regex;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 public class ForgotPasswordFormController {
@@ -77,7 +78,7 @@ public class ForgotPasswordFormController {
                     }else {
                         new Alert(Alert.AlertType.ERROR,"New Password Update Fails !").show();
                     }
-                } catch (SQLException e) {
+                } catch (SQLException | NoSuchAlgorithmException e) {
                     new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                     e.printStackTrace();
                 }
@@ -99,7 +100,7 @@ public class ForgotPasswordFormController {
                 notifyLabel.setTextFill(Color.RED);
                 notifyLabel.setText("Please Fill All Fields Correctly");
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
@@ -136,10 +137,15 @@ public class ForgotPasswordFormController {
 
     public void oldPasswordValidate(KeyEvent keyEvent) {
         changePasswordBtn.setDisable(true);
-        if(Regex.validatePassword(oldPasswordFld.getText())&&ForgotPasswordModel.verifyPassword(employeeFld.getText(),oldPasswordFld.getText())){
-            prFldImageViewer.setImage(new Image("/img/checkmark.png"));
-        }else {
-            prFldImageViewer.setImage(new Image("/img/cross.png"));
+        try {
+            if(Regex.validatePassword(oldPasswordFld.getText())&&ForgotPasswordModel.verifyPassword(employeeFld.getText(),oldPasswordFld.getText())){
+                prFldImageViewer.setImage(new Image("/img/checkmark.png"));
+            }else {
+                prFldImageViewer.setImage(new Image("/img/cross.png"));
+            }
+        } catch (SQLException | NoSuchAlgorithmException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            e.printStackTrace();
         }
     }
 

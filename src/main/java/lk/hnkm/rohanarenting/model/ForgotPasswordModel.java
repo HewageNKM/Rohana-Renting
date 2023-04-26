@@ -9,27 +9,24 @@
 
 package lk.hnkm.rohanarenting.model;
 
-import javafx.scene.control.Alert;
 import lk.hnkm.rohanarenting.dto.User;
+import lk.hnkm.rohanarenting.security.Encrypt;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ForgotPasswordModel {
-    public static Boolean verifyPassword(String uName,String uPassword){
-        try {
-            ResultSet resultSet = CruidUtil.execute("SELECT * FROM user WHERE `Employee ID` = ? AND UPassword = ?",uName,uPassword);
-            return resultSet.next();
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,"SQL Error Occurred !").show();
-           e.printStackTrace();
-        }
-        return null;
+    public static Boolean verifyPassword(String uName,String uPassword) throws SQLException, NoSuchAlgorithmException {
+        uPassword = Encrypt.encrypt(uPassword);
+        ResultSet resultSet = CruidUtil.execute("SELECT * FROM user WHERE `Employee ID` = ? AND UPassword = ?",uName,uPassword);
+        return resultSet.next();
     }
 
-    public static Boolean updateUserPassword(User user) throws SQLException {
-        return CruidUtil.execute(" UPDATE user SET UPassword = ? WHERE `Employee ID` = ?;",user.getUPassword(),user.getEID());
+    public static Boolean updateUserPassword(User user) throws SQLException, NoSuchAlgorithmException {
+        String password = Encrypt.encrypt(user.getUPassword());
+        return CruidUtil.execute(" UPDATE user SET UPassword = ? WHERE `Employee ID` = ?;",password,user.getEID());
     }
 
     public static Boolean verifyEmployeeId(String employeeId) throws SQLException {

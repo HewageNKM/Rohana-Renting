@@ -8,14 +8,17 @@
 
 package lk.hnkm.rohanarenting.model;
 
+import lk.hnkm.rohanarenting.security.Encrypt;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserVerifyModel {
 
-    public static Boolean verifyUser(String employeeId, String password) throws SQLException {
+    public static Boolean verifyUser(String employeeId, String password) throws SQLException, NoSuchAlgorithmException {
+        password = Encrypt.encrypt(password);
         ResultSet resultSet = CruidUtil.execute("SELECT Permission_Level FROM user WHERE `Employee ID` = ? AND UPassword = ?;", employeeId, password);
         if (resultSet.next()) {
            String permissionLevel = resultSet.getString(1);

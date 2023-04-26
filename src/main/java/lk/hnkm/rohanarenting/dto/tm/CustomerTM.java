@@ -29,4 +29,5 @@ public class CustomerTM {
     private Integer zipCode;
     private JFXButton editBtn;
     private JFXButton deleteBtn;
+    private JFXButton showBtn;
 }
