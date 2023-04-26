@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 6.20.1-7584acb244139816654f64e2fd57a00d3e31921e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="96dd9581-e2f2-410b-8831-3578170e85b1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<parameter name="employeeId" class="java.lang.String"/>
+	<parameter name="firstName" class="java.lang.String"/>
+	<parameter name="lastName" class="java.lang.String"/>
+	<parameter name="gender" class="java.lang.String"/>
+	<parameter name="birthday" class="java.sql.Date"/>
+	<parameter name="joinedDate" class="java.sql.Date"/>
+	<parameter name="street" class="java.lang.String"/>
+	<parameter name="city" class="java.lang.String"/>
+	<parameter name="state" class="java.lang.String"/>
+	<parameter name="zipCode" class="java.lang.Integer"/>
+	<parameter name="position" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="mobile" class="java.lang.String"/>
+	<parameter name="NIC" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="113" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="55" width="205" height="15" uuid="061fa9e5-d96b-4bf4-8de4-30508ad212ac"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[0702409090,+94112409090]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="205" height="15" uuid="a393991f-d1cc-4b0b-b765-40d999571e6a"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Colombo, 11000]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="25" width="205" height="15" uuid="2d74c479-6101-4bec-962a-6ef8350684e0"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[111/A1,Rajagiriya,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="235" height="25" uuid="06c1fdbb-9f04-4847-a7d0-3956a1a772ab">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rohana Renting PVT LTD]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="430" y="0" width="120" height="25" uuid="5c7428b0-5e4e-4e56-a4e7-e32c43954e48"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="430" y="30" width="100" height="30" uuid="9664feec-3400-45c3-a3de-523818ba22ab"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="EAN128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$P{employeeId}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement x="360" y="0" width="60" height="30" uuid="522734a0-ad9d-4379-a8ad-6fc43bdc5289"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="25" width="60" height="30" uuid="6a574a4b-6782-4d47-88af-a7b37f4cfc53"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[EID:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="47" width="100" height="23" uuid="55a275ec-2a62-4f4a-b00c-17db86e359cc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{employeeId}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="112" width="554" height="1" uuid="27beb683-17e8-46a2-8a13-f644aa2aece1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="170" y="20" width="235" height="25" forecolor="#03FF3D" uuid="98b6ea11-e0a8-4acc-85c6-3e26b40f68f1">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Employee Report]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="430" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="10" width="181" height="20" forecolor="#030FFF" uuid="2db0ac0c-987a-43de-a76f-cf4ff3ee6996">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{firstName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="50" width="181" height="20" forecolor="#030FFF" uuid="b6724f55-624e-4806-964d-ae0702cb39c6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{lastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="90" width="181" height="20" forecolor="#030FFF" uuid="b1f92f92-ee7e-4940-a371-341c6923be9b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{gender}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="130" width="181" height="20" forecolor="#030FFF" uuid="b51853a3-036e-42dd-a0ea-6d7403fcc127">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{birthday}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="170" width="181" height="20" forecolor="#030FFF" uuid="8bdc0060-3be4-453b-b815-bdf5ec560da5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{joinedDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="90" height="20" uuid="b6a3c68c-c5fe-4b48-be71-a9b789a58a2c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[First Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="90" height="20" uuid="34c8dafb-4e77-4a16-9b42-73f48c05800f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Last Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="90" width="90" height="20" uuid="305d588d-5462-4211-bfa6-a18be18a47c3"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Gender:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="130" width="90" height="20" uuid="b83d6b2c-0853-4cbb-a0e1-b20e66e2719f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Birthday:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="170" width="90" height="20" uuid="bf4b6352-59c0-463d-b7e0-7da89fbe66ad"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Joined Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="210" width="90" height="20" uuid="d458da9a-a504-429c-bffe-ecec7b0c41db"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Mobile:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="210" width="181" height="20" forecolor="#030FFF" uuid="33592e1d-c1f4-422c-8637-c3ad66ce2907">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mobile}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="50" width="161" height="20" forecolor="#030FFF" uuid="468cbfbb-99c5-4ab1-a4da-d9d853df4c36">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{street}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="90" width="160" height="20" forecolor="#030FFF" uuid="c7d60fb8-376a-4cac-831d-68ccc8c35bd7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="130" width="161" height="20" forecolor="#030FFF" uuid="01ed6f80-35ca-44e2-86ef-9794163108b3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{state}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="170" width="160" height="20" forecolor="#030FFF" uuid="c4a648b3-d8b7-4e4f-ab3a-49ba40114bd0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{zipCode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="10" width="161" height="20" forecolor="#030FFF" uuid="be9e05c7-291a-4fd4-a910-3abe4ebadf3c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="320" y="10" width="60" height="20" uuid="c0a02413-087a-41bd-ae68-cae1093aeaef"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="50" width="70" height="20" uuid="8d8c69cb-1106-416b-82d6-7b6792182445"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Street:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="90" width="60" height="20" uuid="9d9a7754-00d2-42b9-8b36-0e6fba0ad32b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[City:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="130" width="50" height="20" uuid="9b99a87a-8737-4740-b59c-8c076a91c7f7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[State:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="170" width="70" height="20" uuid="5279d565-9fb0-4864-abf8-a01aa5a57d74"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Zip Code:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="250" width="90" height="20" uuid="143934c7-339c-47b6-b8af-ef420ba1b9eb"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[NIC:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="250" width="181" height="20" forecolor="#030FFF" uuid="2ded9506-56a9-4bdd-af45-c8ffcb762efe">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NIC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="210" width="161" height="20" forecolor="#030FFF" uuid="2861d05c-00ef-46ec-bc94-0f215d41f251">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{position}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="210" width="70" height="20" uuid="aafb6364-04a7-4f85-8300-1f05127bfc35"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[Position:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="410" width="554" height="2" uuid="830ae40d-feb7-4452-97e4-5e5ac14ee5d3"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="130" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="10" width="339" height="20" forecolor="#FF0703" uuid="11f3320b-8eaf-4d4f-9d6f-c5e97aaf780c"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[@Property Of Rohana Renting PVT LTD.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="40" width="339" height="30" forecolor="#FF0703" uuid="4698b27c-dc22-4390-ada7-5c89338ca9c5"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[@Do Not temper,edit or share this document.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="90" width="340" height="30" forecolor="#FF0703" uuid="d1bc0694-fb12-4699-a420-c4ee9b9a7edd"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Arial Black" size="13"/>
+				</textElement>
+				<text><![CDATA[@All Rigth Reserved.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
