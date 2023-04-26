@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,7 +18,7 @@
   ~
   -->
 
-<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.DashboardController">
+<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css"  xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.DashboardController">
    <center>
       <AnchorPane prefHeight="590.0" prefWidth="943.0">
          <children>
@@ -83,6 +87,15 @@
                </children>
             </AnchorPane>
             <Label layoutX="1197.0" layoutY="39.0" styleClass="FormTitleLabel" text="User" />
+            <BarChart fx:id="barChart" layoutX="47.0" layoutY="407.0" prefHeight="501.0" prefWidth="670.0">
+              <xAxis>
+                <CategoryAxis label="Month" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis label="Count" side="LEFT" upperBound="500.0" />
+              </yAxis>
+            </BarChart>
+            <PieChart fx:id="pieChart" layoutX="876.0" layoutY="397.0" prefHeight="487.0" prefWidth="672.0" styleClass="pieChart" />
          </children></AnchorPane>
    </center>
    <top>

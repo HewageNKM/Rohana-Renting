@@ -18,6 +18,5 @@ public class LoginModel {
         password = Encrypt.encrypt(password);
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM user WHERE   `Employee ID` =? AND UPassword=?",employeeId,password);
         return resultSet.next();
-
     }
 }

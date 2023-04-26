@@ -8,11 +8,15 @@
 
 package lk.hnkm.rohanarenting.controller;
 
+import javafx.collections.ObservableList;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import lk.hnkm.rohanarenting.dto.UserLogin;
 import lk.hnkm.rohanarenting.model.DashboardModel;
+import lombok.SneakyThrows;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +30,6 @@ public class DashboardController {
     public Label totalSaleLabel;
     public BarChart barChart;
     public PieChart pieChart;
-    String employeeId;
     public Label employeeIdFld;
     public Label userNameFld;
     public Label lastLoginFld;
@@ -36,8 +39,29 @@ public class DashboardController {
         setSaleDetails();
         setRefundDetails();
         setUserDetails();
+        loardBarChart();
+        loardPieChart();
     }
 
+    @SneakyThrows
+    private void loardPieChart() {
+        ObservableList<PieChart.Data> pieChartData = DashboardModel.getRentedCountPerMonthPie();
+        pieChart.setData(pieChartData);
+        pieChart.setTitle("Sales Value Through the Year");
+    }
+
+    private void loardBarChart() {
+        try {
+            barChart.setTitle("Orders Through the Year");
+            XYChart.Series<String, Integer> series = series = DashboardModel.getRentedCountPerMonth();
+            barChart.setStyle("-fx-font-size: 12px;");
+            barChart.setStyle("-fx-font-weight: bold;");
+            barChart.getData().add(series);
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
+            e.printStackTrace();
+        }
+    }
 
     private void setRefundDetails() {
         try {
@@ -66,7 +90,19 @@ public class DashboardController {
         }
     }
     public void setUserDetails() {
-        System.out.println(employeeId);
-//        employeeIdFld.setText(employeeId.toUpperCase());
+        try {
+            UserLogin userLogin = DashboardModel.getLastLogin();
+            if(userLogin != null){
+                employeeIdFld.setText(userLogin.getEID());
+                lastLoginFld.setText(userLogin.getLogTime().toString());
+            }else {
+                employeeIdFld.setText("No Data");
+                lastLoginFld.setText("No Data");
+                userNameFld.setText("No Data");
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
+            e.printStackTrace();
+        }
     }
 }

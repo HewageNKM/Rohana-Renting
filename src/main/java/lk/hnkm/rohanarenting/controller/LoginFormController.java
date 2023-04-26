@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import lk.hnkm.rohanarenting.model.LoginModel;
+import lk.hnkm.rohanarenting.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Regex;
 
 import java.io.IOException;
@@ -36,7 +37,6 @@ import java.util.Objects;
 
 
 public class LoginFormController {
-
     public Label notifyLabel;
     public TextField employeeIdFld;
     public AnchorPane root;
@@ -66,16 +66,16 @@ public class LoginFormController {
 
     @FXML
     void loginBtnOnAction(ActionEvent event) throws IOException {
-        if(Regex.validateEID(employeeIdFld.getText())&&Regex.validatePassword(passwordFld.getText())){
+        if(Regex.validateEID(employeeIdFld.getText())&&Regex.validatePassword(passwordFld.getText())) {
             try {
-                Boolean isExist = LoginModel.verifyEmployeeId(employeeIdFld.getText(),passwordFld.getText());
-                if(Boolean.TRUE.equals(isExist)){
+                Boolean isExist = LoginModel.verifyEmployeeId(employeeIdFld.getText(), passwordFld.getText());
+                if (Boolean.TRUE.equals(isExist)) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/BoardForm.fxml"));
                     Parent parent = loader.load();
                     BoardFormController boardController = loader.getController();
                     boardController.initialize(employeeIdFld.getText());
                     Stage stage;
-                    stage = (Stage)root.getScene().getWindow();
+                    stage = (Stage) root.getScene().getWindow();
                     stage.close();
                     Stage dashboardStage = new Stage();
                     dashboardStage.setMaximized(true);
@@ -83,16 +83,20 @@ public class LoginFormController {
                     dashboardStage.getIcons().add(new Image("/img/dashboard.png"));
                     dashboardStage.setTitle("Dashboard");
                     dashboardStage.show();
-                }else {
+                    System.out.println("Login Success");
+                    TopUpNotifications.logIn(employeeIdFld.getText().toUpperCase());
+                } else {
                     notifyLabel.setTextFill(Color.RED);
-                    notifyLabel.setText("User Not Found !");
+                    notifyLabel.setText("Invalid Employee ID or Password");
+                    System.out.println("Login Failed");
                 }
-            } catch (SQLException | NoSuchAlgorithmException e) {
-                new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            } catch (SQLException | NoSuchAlgorithmException | IOException e) {
+                new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }
         }
     }
+
     //Validate user name
     public void employeeIdValidate(KeyEvent keyEvent) {
         loginBtn.setDisable(true);

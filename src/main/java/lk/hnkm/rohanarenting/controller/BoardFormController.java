@@ -25,6 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.hnkm.rohanarenting.model.BoardModel;
+import lk.hnkm.rohanarenting.notification.TopUpNotifications;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -51,7 +52,6 @@ public class BoardFormController {
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
-        System.out.println(id);
         employeeId = id;
         setEmployeeDetails();
         loadDashboard();
@@ -122,6 +122,7 @@ public class BoardFormController {
                     loginFormStage.centerOnScreen();
                     loginFormStage.setTitle("Login Form");
                     loginFormStage.show();
+                    TopUpNotifications.logOut(employeeId.toUpperCase());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

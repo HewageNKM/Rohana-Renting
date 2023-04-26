@@ -12,6 +12,15 @@ import javafx.geometry.Pos;
 import org.controlsfx.control.Notifications;
 
 public class TopUpNotifications {
+
+    public static void error(String text){
+        Notifications notifications = Notifications.create();
+        notifications.title("Error");
+        notifications.text(text);
+        notifications.hideAfter(javafx.util.Duration.seconds(2));
+        notifications.position(Pos.TOP_RIGHT);
+        notifications.showError();
+    }
     public static void copied(String text){
         Notifications notifications = Notifications.create();
         notifications.title("Copied");

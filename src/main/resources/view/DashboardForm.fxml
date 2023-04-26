@@ -18,7 +18,7 @@
   ~
   -->
 
-<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.DashboardController">
+<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css"  xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.DashboardController">
    <center>
       <AnchorPane prefHeight="590.0" prefWidth="943.0">
          <children>
@@ -87,17 +87,15 @@
                </children>
             </AnchorPane>
             <Label layoutX="1197.0" layoutY="39.0" styleClass="FormTitleLabel" text="User" />
-            <BarChart fx:id="barChart" layoutX="47.0" layoutY="407.0" prefHeight="463.0" prefWidth="670.0">
+            <BarChart fx:id="barChart" layoutX="47.0" layoutY="407.0" prefHeight="501.0" prefWidth="670.0">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <CategoryAxis label="Month" side="BOTTOM" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis label="Count" side="LEFT" upperBound="500.0" />
               </yAxis>
             </BarChart>
-            <Label layoutX="86.0" layoutY="377.0" styleClass="FormTitleLabel" text="Rents" />
-            <PieChart fx:id="pieChart" layoutX="957.0" layoutY="397.0" prefHeight="442.0" prefWidth="548.0" />
-            <Label layoutX="957.0" layoutY="362.0" styleClass="FormTitleLabel" text="Sales" />
+            <PieChart fx:id="pieChart" layoutX="876.0" layoutY="397.0" prefHeight="487.0" prefWidth="672.0" styleClass="pieChart" />
          </children></AnchorPane>
    </center>
    <top>

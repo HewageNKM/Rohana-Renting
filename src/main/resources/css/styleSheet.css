@@ -208,3 +208,8 @@
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }
+.pieChart{
+    -fx-text-fill: black;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+}

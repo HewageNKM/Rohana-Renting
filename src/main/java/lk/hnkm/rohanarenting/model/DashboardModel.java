@@ -8,13 +8,19 @@
 
 package lk.hnkm.rohanarenting.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import lk.hnkm.rohanarenting.dto.UserLogin;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DashboardModel {
     public static ArrayList<Integer> getRentalCounts(Label carRentalCountLabel) throws SQLException {
@@ -59,5 +65,111 @@ public class DashboardModel {
             totalValue += resultSet1.getDouble(1);
         }
         return totalValue;
+    }
+
+    public static XYChart.Series<String, Integer> getRentedCountPerMonth() throws SQLException {
+        HashMap<Integer,Integer> vehicle = new HashMap<>();
+        HashMap<Integer,Integer> tool = new HashMap<>();
+        XYChart.Series<String,Integer> series = new XYChart.Series<>();
+        HashMap<Integer,String> months = new HashMap<>();
+        months.put(1,"January");
+        months.put(2,"February");
+        months.put(3,"March");
+        months.put(4,"April");
+        months.put(5,"May");
+        months.put(6,"June");
+        months.put(7,"July");
+        months.put(8,"August");
+        months.put(9,"September");
+        months.put(10,"October");
+        months.put(11,"November");
+        months.put(12,"December");
+        series.setName("Order Count Per Month");
+        ArrayList<Integer> vehicleMonth = new ArrayList<>();
+        ArrayList<Integer> toolMonth = new ArrayList<>();
+        ResultSet resultSet = CruidUtil.execute("SELECT MONTH(Date),COUNT(Rent_ID) FROM vehicle_rent_order GROUP BY MONTH(Date)");
+        while (resultSet.next()){
+            vehicle.put(resultSet.getInt(1),resultSet.getInt(2));
+            vehicleMonth.add(resultSet.getInt(1));
+        }
+        for (int i = 1; i <= 12; i++) {
+            if(!vehicleMonth.contains(i)){
+                series.getData().add(new XYChart.Data<>(months.get(i),0));
+                vehicle.put(i,0);
+            }
+        }
+        ResultSet resultSet1 = CruidUtil.execute("SELECT MONTH(Date),COUNT(Rent_ID) FROM tool_rent_order GROUP BY MONTH(Date)");
+        while (resultSet1.next()){
+            tool.put(resultSet1.getInt(1),resultSet1.getInt(2));
+            toolMonth.add(resultSet1.getInt(1));
+        }
+        for (int i = 1; i <= 12; i++) {
+            if(!toolMonth.contains(i)){
+                tool.put(i,0);
+            }
+        }
+        for(int i=0;i<12;i++){
+            series.getData().add(new XYChart.Data<>(months.get(i+1),vehicle.get(i+1)+tool.get(i+1)));
+        }
+        return series;
+    }
+
+    public static ObservableList<PieChart.Data> getRentedCountPerMonthPie() throws SQLException {
+        HashMap<Integer,Integer> vehicle = new HashMap<>();
+        HashMap<Integer,Integer> tool = new HashMap<>();
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        HashMap<Integer,String> months = new HashMap<>();
+        months.put(1,"January");
+        months.put(2,"February");
+        months.put(3,"March");
+        months.put(4,"April");
+        months.put(5,"May");
+        months.put(6,"June");
+        months.put(7,"July");
+        months.put(8,"August");
+        months.put(9,"September");
+        months.put(10,"October");
+        months.put(11,"November");
+        months.put(12,"December");
+        ArrayList<Integer> vehicleMonth = new ArrayList<>();
+        ArrayList<Integer> toolMonth = new ArrayList<>();
+        ResultSet resultSet = CruidUtil.execute("SELECT MONTH(vehicle_rent_order.Date),SUM(vrod.Total) FROM vehicle_rent_order RIGHT JOIN vehicle_rent_order_detail vrod on vehicle_rent_order.Rent_ID = vrod.Rent_ID GROUP BY  MONTH(vehicle_rent_order.Date);");
+        while (resultSet.next()){
+            vehicle.put(resultSet.getInt(1),resultSet.getInt(2));
+            vehicleMonth.add(resultSet.getInt(1));
+        }
+        for (int i = 1; i <= 12; i++) {
+            if(!vehicleMonth.contains(i)){
+                pieChartData.add(new PieChart.Data(months.get(i),0));
+                vehicle.put(i,0);
+            }
+        }
+        ResultSet resultSet1 = CruidUtil.execute("SELECT MONTH(tool_rent_order.Date),SUM(trod.Total) FROM tool_rent_order RIGHT JOIN tool_rent_order_detail trod on tool_rent_order.Rent_ID = trod.Rent_ID GROUP BY  MONTH(tool_rent_order.Date);");
+        while (resultSet1.next()){
+            tool.put(resultSet1.getInt(1),resultSet1.getInt(2));
+            toolMonth.add(resultSet1.getInt(1));
+        }
+        for (int i = 1; i <= 12; i++) {
+            if(!toolMonth.contains(i)){
+                tool.put(i,0);
+            }
+        }
+        for(int i=0;i<12;i++){
+            pieChartData.add(new PieChart.Data(months.get(i+1),vehicle.get(i+1)+tool.get(i+1)));
+        }
+        return pieChartData;
+    }
+
+    public static UserLogin getLastLogin() throws SQLException {
+       ResultSet resultSet = CruidUtil.execute("SELECT * FROM user_login_history ORDER BY Log_Time  DESC LIMIT 1");
+       UserLogin userLogin = null;
+       if(resultSet.next()){
+          userLogin = new UserLogin(resultSet.getString(1),null,resultSet.getDate(2).toLocalDate(),resultSet.getTime(4).toLocalTime(),resultSet.getTime(4).toLocalTime());
+       }
+       ResultSet resultSet1 = CruidUtil.execute("SELECT 'UName' FROM user WHERE `Employee ID` = ?",userLogin.getEID());
+       if(resultSet1.next()){
+           userLogin.setUserName(resultSet1.getString(1));
+       }
+       return userLogin;
     }
 }
