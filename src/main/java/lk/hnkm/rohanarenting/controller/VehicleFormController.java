@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import lk.hnkm.rohanarenting.dto.Insurance;
 import lk.hnkm.rohanarenting.dto.Vehicle;
 import lk.hnkm.rohanarenting.dto.tm.JasperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
@@ -37,6 +38,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -242,6 +244,7 @@ public class VehicleFormController {
         try {
             ArrayList<JasperReportVehicleTM> jasperReportVehicleTMS = VehicleModel.jesperReportVehicleTMS(selectedItem.getVID());
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jasperReportVehicleTMS);
+            Insurance insurance = VehicleModel.getInsuranceDetails(selectedItem.getVID());
             Map<String, Object> params = new HashMap<>();
             params.put("VID",selectedItem.getVID());
             params.put("manufacturer",selectedItem.getManufacturer());
@@ -250,6 +253,16 @@ public class VehicleFormController {
             params.put("rate",selectedItem.getRate());
             params.put("Availability",selectedItem.getAvailability());
             params.put("codeNumber",selectedItem.getVID());
+            params.put("IID",insurance.getIID());
+            params.put("insuranceName",insurance.getName());
+            params.put("iPName",insurance.getInsuranceProvider());
+            params.put("fax",insurance.getFax());
+            params.put("email",insurance.getEmail());
+            params.put("agentContact",insurance.getAgentContact());
+            params.put("agentName",insurance.getAgentName());
+            params.put("expireDate", Date.valueOf(insurance.getExpireDate()));
+            params.put("joinedDate",Date.valueOf(insurance.getJoinedDate()));
+            params.put("address",insurance.getAddress());
             try {
                 JasperReport compileReport = JasperCompileManager.compileReport(
                         JRXmlLoader.load(

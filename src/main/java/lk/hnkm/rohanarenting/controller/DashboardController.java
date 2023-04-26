@@ -8,6 +8,8 @@
 
 package lk.hnkm.rohanarenting.controller;
 
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import lk.hnkm.rohanarenting.model.DashboardModel;
@@ -22,18 +24,18 @@ public class DashboardController {
     public Label valueRefundTable;
     public Label InvoiceCount;
     public Label totalSaleLabel;
+    public BarChart barChart;
+    public PieChart pieChart;
     String employeeId;
     public Label employeeIdFld;
     public Label userNameFld;
     public Label lastLoginFld;
 
-    public void initialize(String employeeId) {
+    public void initialize() {
         rentalCounts();
         setSaleDetails();
         setRefundDetails();
         setUserDetails();
-        this.employeeId = employeeId;
-       // setEmployeeId("employeeId");
     }
 
 

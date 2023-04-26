@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -83,6 +87,17 @@
                </children>
             </AnchorPane>
             <Label layoutX="1197.0" layoutY="39.0" styleClass="FormTitleLabel" text="User" />
+            <BarChart fx:id="barChart" layoutX="47.0" layoutY="407.0" prefHeight="463.0" prefWidth="670.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </BarChart>
+            <Label layoutX="86.0" layoutY="377.0" styleClass="FormTitleLabel" text="Rents" />
+            <PieChart fx:id="pieChart" layoutX="957.0" layoutY="397.0" prefHeight="442.0" prefWidth="548.0" />
+            <Label layoutX="957.0" layoutY="362.0" styleClass="FormTitleLabel" text="Sales" />
          </children></AnchorPane>
    </center>
    <top>

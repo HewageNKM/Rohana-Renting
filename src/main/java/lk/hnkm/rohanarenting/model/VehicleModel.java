@@ -9,6 +9,7 @@
 package lk.hnkm.rohanarenting.model;
 
 import com.jfoenix.controls.JFXButton;
+import lk.hnkm.rohanarenting.dto.Insurance;
 import lk.hnkm.rohanarenting.dto.Vehicle;
 import lk.hnkm.rohanarenting.dto.tm.JasperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
@@ -16,6 +17,7 @@ import lk.hnkm.rohanarenting.utill.CruidUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class VehicleModel {
@@ -100,5 +102,15 @@ public class VehicleModel {
             vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),(0<resultSet.getInt(5))? "Available" : "Not Available",resultSet.getDouble(6),resultSet.getString(7),showBtn,editBtn,deleteBtn));
         }
         return vehicleTMS;
+    }
+
+    public static Insurance getInsuranceDetails(String vid) throws SQLException {
+            ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle_insurance WHERE IID = ?;",vid);
+            if (resultSet.next()){
+                return new Insurance(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getString(6),resultSet.getString(7),resultSet.getString(8),resultSet.getDate(9).toLocalDate(),resultSet.getDate(10).toLocalDate());
+            }else {
+                return new Insurance("No Details","No Details","No Details","No Details","No Details","No Details","No Details","No Details", LocalDate.now(),LocalDate.now());
+            }
+
     }
 }
