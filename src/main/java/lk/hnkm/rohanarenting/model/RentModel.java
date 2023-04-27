@@ -47,11 +47,13 @@ public class RentModel {
         return  resultSet.next();
     }
     public static VehicleCartTM getVehicleCartModel(VehicleOrder vehicleOrder) throws SQLException {
-       ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle WHERE VID=? AND (Availability > 0)", vehicleOrder.getVehicleId());
+       ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle WHERE VID=? AND (Availability = 'Available')", vehicleOrder.getVehicleId());
        if(resultSet.next()){
-            Vehicle vehicle = new Vehicle(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6),resultSet.getString(7));
-            Double total= vehicleOrder.getRentDays()*vehicle.getRate();
-            return new VehicleCartTM(vehicleOrder.getRentalOrderId(), vehicleOrder.getVehicleId(),vehicle.getManufacturer(),vehicle.getModelName(), vehicleOrder.getCustomerID(),vehicle.getDescription(),vehicle.getCategory(),vehicle.getRate(), vehicleOrder.getRentDays(),total,0,new JFXButton("Remove"));
+           JFXButton remove = new JFXButton();
+           remove.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+           Vehicle vehicle = new Vehicle(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6),resultSet.getString(7));
+           Double total= vehicleOrder.getRentDays()*vehicle.getRate();
+           return new VehicleCartTM(vehicleOrder.getRentalOrderId(), vehicleOrder.getVehicleId(),vehicle.getManufacturer(),vehicle.getModelName(), vehicleOrder.getCustomerID(),vehicle.getDescription(),vehicle.getCategory(),vehicle.getRate(), vehicleOrder.getRentDays(),total,0,remove);
        } else {
            return null;
        }
@@ -66,11 +68,13 @@ public class RentModel {
     }
 
     public static ToolCartTM getToolCartModel(ToolOrder toolOrder) throws SQLException {
-       ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool WHERE TID=? AND (Availability > 0)",toolOrder.getToolId());
+       ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool WHERE TID=? AND (Availability = 'Available')",toolOrder.getToolId());
         if(resultSet.next()){
+            JFXButton remove = new JFXButton();
+            remove.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
             Tool tool = new Tool(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6));
             Double tolal = toolOrder.getRentDays()*tool.getRate();
-            return new ToolCartTM(toolOrder.getRentalOrderId(),tool.getTID(),tool.getBrand(),tool.getName(),toolOrder.getCustomerId(),tool.getDescription(),tool.getRate(),toolOrder.getRentDays(),tolal,new JFXButton("Remove"));
+            return new ToolCartTM(toolOrder.getRentalOrderId(),tool.getTID(),tool.getBrand(),tool.getName(),toolOrder.getCustomerId(),tool.getDescription(),tool.getRate(),toolOrder.getRentDays(),tolal,remove);
         }else {
              return null;
         }
@@ -107,7 +111,7 @@ public class RentModel {
     public static Boolean updateVehicleTable(ObservableList<VehicleCartTM> vehicleCartTMS) throws SQLException {
         int count=0;
         for (VehicleCartTM vehicleCartTM:vehicleCartTMS) {
-          Boolean b =  CruidUtil.execute("UPDATE vehicle SET Availability = Availability - 1 WHERE VID = ?",vehicleCartTM.getVehicleID());
+          Boolean b =  CruidUtil.execute("UPDATE vehicle SET Availability = 'Not Available' WHERE VID = ?",vehicleCartTM.getVehicleID());
             if(b){
                 count++;
             }
@@ -141,7 +145,7 @@ public class RentModel {
     public static Boolean updateToolTable(ObservableList<ToolCartTM> toolCartTMS) throws SQLException {
         int count=0;
         for (ToolCartTM toolCartTM:toolCartTMS) {
-            Boolean b = CruidUtil.execute("UPDATE tool SET Availability = Availability - 1 WHERE TID = ?",toolCartTM.getToolID());
+            Boolean b = CruidUtil.execute("UPDATE tool SET Availability = 'Not Available' WHERE TID = ?",toolCartTM.getToolID());
             if(b){
                 count++;
             }
@@ -234,5 +238,22 @@ public class RentModel {
        for (String toolId:toolIds) {
            CruidUtil.execute("UPDATE tool SET Availability = 'Not Available' WHERE TID = ?", toolId);
        }
+    }
+
+    public static boolean checkValidVehicleInsurance(VehicleCartTM vehicleCartTM) throws SQLException {
+       ResultSet resultSet = CruidUtil.execute("SELECT Expire_Date FROM vehicle_insurance WHERE IID = ?",vehicleCartTM.getVehicleID());
+        if (resultSet.next()){
+            return !resultSet.getDate(1).toLocalDate().isAfter(LocalDate.now().plusDays(vehicleCartTM.getRentDays()));
+        }else {
+            return true;
+        }
+    }
+    public static boolean checkValidToolInsurance(ToolCartTM toolCartTM) throws SQLException {
+        ResultSet resultSet = CruidUtil.execute("SELECT Expire_Date FROM tool_insurance WHERE IID = ?",toolCartTM.getToolID());
+        if (resultSet.next()){
+            return !resultSet.getDate(1).toLocalDate().isAfter(LocalDate.now().plusDays(toolCartTM.getRentDays()));
+        }else {
+            return true;
+        }
     }
 }

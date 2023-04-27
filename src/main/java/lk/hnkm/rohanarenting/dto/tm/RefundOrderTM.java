@@ -15,10 +15,10 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@Getter
-@Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 public class RefundOrderTM {
     private String productId;
     private Integer rentDays;

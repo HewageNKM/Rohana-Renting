@@ -16,11 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lk.hnkm.rohanarenting.db.DBConnection;
 import lk.hnkm.rohanarenting.dto.*;
-import lk.hnkm.rohanarenting.dto.tm.ToolCartTM;
-import lk.hnkm.rohanarenting.dto.tm.ToolRentOrderJesperReportDetailTM;
-import lk.hnkm.rohanarenting.dto.tm.VehicleCartTM;
-import lk.hnkm.rohanarenting.dto.tm.VehicleRentOrderJesperReportDetailTM;
+import lk.hnkm.rohanarenting.dto.tm.*;
 import lk.hnkm.rohanarenting.model.RentModel;
+import lk.hnkm.rohanarenting.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
 import net.sf.jasperreports.engine.*;
@@ -221,7 +219,7 @@ public class RentFormController {
                             Boolean isVehicleUpdated = RentModel.updateVehicleTable(vehicleCartTMS);
                             if(isVehicleUpdated){
                                 connection.commit();
-                                new Alert(Alert.AlertType.INFORMATION,"Order Place !").show();
+                                TopUpNotifications.success("Order Placed Successfully !");
                                 printVehicleInvoice();
                                 newVehicleOrder();
                             }else {
@@ -238,7 +236,7 @@ public class RentFormController {
                     }
                 } catch (SQLException e) {
                     new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }finally {
                     try {
                         assert connection != null;
@@ -327,18 +325,23 @@ public class RentFormController {
     void vehicleCartBtnOnAction(ActionEvent event) {
         try {
             VehicleCartTM vehicleCartTM = RentModel.getVehicleCartModel(new VehicleOrder(vehicleRentOrderLabel.getText(),vehicleCustomerFld.getText(),vehicleFld.getText(),Integer.valueOf(vehicleRentDaysFld.getText())));
+            setActionVehicleBtn(vehicleCartTM.getRemove());
             if(vehicleCartTM!=null){
                 vehicleCartTMS = vehicleRentTable.getItems();
                 if(RentModel.checkVehicleCartDuplicate(vehicleCartTMS,vehicleFld.getText())){
                     new Alert(Alert.AlertType.ERROR,"Vehicle Already Added !").show();
                 }else {
-                    vehicleCartTMS.add(vehicleCartTM);
-                    Double subTotal = RentModel.getVehicleTotal(vehicleCartTMS);
-                    vehicleSubTotalLabel.setTextFill(Color.GREEN);
-                    vehicleSubTotalLabel.setText("Sub Total Is :"+subTotal);
-                    vehicleRentTable.setItems(vehicleCartTMS);
-                    clearVehicleFields();
-                    vehiclePlaceOrderBtn.setDisable(false);
+                    if(RentModel.checkValidVehicleInsurance(vehicleCartTM)){
+                        new Alert(Alert.AlertType.ERROR,"Rental Period Longer Than Insurance Period Or No Insurance Details !").show();
+                    }else {
+                        vehicleCartTMS.add(vehicleCartTM);
+                        Double subTotal = RentModel.getVehicleTotal(vehicleCartTMS);
+                        vehicleSubTotalLabel.setTextFill(Color.GREEN);
+                        vehicleSubTotalLabel.setText("Sub Total Is :"+subTotal);
+                        vehicleRentTable.setItems(vehicleCartTMS);
+                        clearVehicleFields();
+                        vehiclePlaceOrderBtn.setDisable(false);
+                    }
                 }
             }else {
                 new Alert(Alert.AlertType.ERROR,"Vehicle Not Available !").show();
@@ -436,18 +439,23 @@ public class RentFormController {
     public void toolCartBtnOnAction(ActionEvent actionEvent) {
         try {
             ToolCartTM toolCartTM = RentModel.getToolCartModel(new ToolOrder(toolRentOrderIdLabel.getText(),toolCustomerFld.getText(),toolFld.getText(),Integer.valueOf(toolRentDaysFld.getText())));
+            setActionOnToolBtn(toolCartTM.getRemove());
            if(toolCartTM!=null){
                toolCartTMS = toolRentTable.getItems();
                if(RentModel.checkToolCartDuplicate(toolCartTMS,toolFld.getText())){
                    new Alert(Alert.AlertType.ERROR,"Tool Already Added !").show();
                }else {
-                   toolCartTMS.add(toolCartTM);
-                   Double subTotal = RentModel.getToolTotal(toolCartTMS);
-                   toolSubTotalLabel.setTextFill(Color.GREEN);
-                   toolSubTotalLabel.setText("Sub Total Is :"+subTotal);
-                   toolRentTable.setItems(toolCartTMS);
-                   clearToolFields();
-                   toolPlaceOrderBtn.setDisable(false);
+                   if(RentModel.checkValidToolInsurance(toolCartTM)){
+                       new Alert(Alert.AlertType.ERROR,"Rental Period Longer Than Insurance Period Or No Insurance Details !").show();
+                   }else {
+                       toolCartTMS.add(toolCartTM);
+                       Double subTotal = RentModel.getToolTotal(toolCartTMS);
+                       toolSubTotalLabel.setTextFill(Color.GREEN);
+                       toolSubTotalLabel.setText("Sub Total Is :"+subTotal);
+                       toolRentTable.setItems(toolCartTMS);
+                       clearToolFields();
+                       toolPlaceOrderBtn.setDisable(false);
+                   }
                }
            }else{
                new Alert(Alert.AlertType.ERROR,"Tool Not Available !").show();
@@ -456,6 +464,39 @@ public class RentFormController {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             throw new RuntimeException(e);
         }
+    }
+
+    private void setActionOnToolBtn(JFXButton remove) {
+        remove.setOnAction(event -> {
+            ToolCartTM toolCartTM = toolRentTable.getSelectionModel().getSelectedItem();
+            if(toolCartTM!=null){
+                toolCartTMS.remove(toolRentTable.getSelectionModel().getSelectedItem());
+                Double subTotal = RentModel.getToolTotal(toolCartTMS);
+                toolSubTotalLabel.setTextFill(Color.GREEN);
+                toolSubTotalLabel.setText("Sub Total Is :"+subTotal);
+                if(toolCartTMS.size()==0){
+                    toolPlaceOrderBtn.setDisable(true);
+                }
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Please Select Row !").show();
+            }
+        });
+    }
+    private void setActionVehicleBtn(JFXButton remove) {
+        remove.setOnAction(event -> {
+            VehicleCartTM vehicleTM = vehicleRentTable.getSelectionModel().getSelectedItem();
+            if(vehicleTM!=null){
+                vehicleCartTMS.remove(vehicleRentTable.getSelectionModel().getSelectedItem());
+                Double subTotal = RentModel.getToolTotal(toolCartTMS);
+                vehicleSubTotalLabel.setTextFill(Color.GREEN);
+                vehicleSubTotalLabel.setText("Sub Total Is :"+subTotal);
+                if(vehicleCartTMS.size()==0){
+                    vehiclePlaceOrderBtn.setDisable(true);
+                }
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Please Select Row !").show();
+            }
+        });
     }
 
     private void clearToolFields() {
@@ -516,7 +557,7 @@ public class RentFormController {
                          Boolean  isToolTableUpdated = RentModel.updateToolTable(toolCartTMS);
                          if(isToolTableUpdated){
                              connection.commit();
-                             new Alert(Alert.AlertType.INFORMATION,"Tool Order Placed !").show();
+                             TopUpNotifications.success("Tool Order Placed !");
                              printToolInvoice();
                              newToolOrder();
                          }else {

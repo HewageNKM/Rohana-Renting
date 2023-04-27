@@ -21,14 +21,11 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="rentId" class="java.lang.String"/>
-	<field name="VID" class="java.lang.String"/>
-	<field name="orderDate" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="506" splitType="Stretch">
+		<band height="609" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="235" height="25" uuid="b1598585-7752-43f0-80b2-350dfe63ea1a">
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -220,42 +217,42 @@
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="28" y="460" width="120" height="20" uuid="469b799b-2966-4703-a1dc-629353d1c0ff"/>
+				<reportElement x="23" y="510" width="120" height="20" uuid="469b799b-2966-4703-a1dc-629353d1c0ff"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Agent Contact:  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="44" y="344" width="104" height="20" uuid="59cc6024-3097-4a35-a5f7-0faf07800b85"/>
+				<reportElement x="44" y="366" width="104" height="20" uuid="59cc6024-3097-4a35-a5f7-0faf07800b85"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Insurance ID:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="18" y="372" width="130" height="20" uuid="a3a956e6-0206-417e-bf4b-e603dedbcac1"/>
+				<reportElement x="18" y="400" width="130" height="20" uuid="a3a956e6-0206-417e-bf4b-e603dedbcac1"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Insurance Name:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="-1" y="400" width="150" height="20" uuid="6e5b6fc2-f17b-4113-93c3-644820fa7cb5"/>
+				<reportElement x="0" y="435" width="150" height="20" uuid="6e5b6fc2-f17b-4113-93c3-644820fa7cb5"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Insurance Provider:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="44" y="430" width="104" height="20" uuid="60e165cd-6c7f-4601-9f34-29e72c3b11f3"/>
+				<reportElement x="44" y="470" width="104" height="20" uuid="60e165cd-6c7f-4601-9f34-29e72c3b11f3"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Agent Name: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="148" y="340" width="146" height="24" forecolor="#3903FF" uuid="413c1b63-95c0-4f13-a632-443df70ef75f"/>
+				<reportElement x="148" y="364" width="146" height="24" forecolor="#3903FF" uuid="413c1b63-95c0-4f13-a632-443df70ef75f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -268,7 +265,7 @@
 				<textFieldExpression><![CDATA[$P{IID}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="149" y="370" width="144" height="24" forecolor="#3903FF" uuid="9d46fbe9-c051-41b2-9d2c-99ed46a33aac"/>
+				<reportElement x="149" y="401" width="144" height="24" forecolor="#3903FF" uuid="9d46fbe9-c051-41b2-9d2c-99ed46a33aac"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -281,7 +278,7 @@
 				<textFieldExpression><![CDATA[$P{insuranceName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="149" y="395" width="144" height="30" forecolor="#3903FF" uuid="8d638328-1d98-461c-8bf9-3c8e1a547e80"/>
+				<reportElement x="149" y="430" width="144" height="30" forecolor="#3903FF" uuid="8d638328-1d98-461c-8bf9-3c8e1a547e80"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -294,7 +291,7 @@
 				<textFieldExpression><![CDATA[$P{iPName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="148" y="425" width="146" height="30" forecolor="#3903FF" uuid="5e3c9b4a-fda5-46d3-a13f-4dc07afa77ef"/>
+				<reportElement x="148" y="465" width="146" height="30" forecolor="#3903FF" uuid="5e3c9b4a-fda5-46d3-a13f-4dc07afa77ef"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -307,7 +304,7 @@
 				<textFieldExpression><![CDATA[$P{agentName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="148" y="460" width="146" height="24" forecolor="#3903FF" uuid="a3e282ce-69f2-413a-9999-588c974839fc"/>
+				<reportElement x="148" y="508" width="146" height="24" forecolor="#3903FF" uuid="a3e282ce-69f2-413a-9999-588c974839fc"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -320,21 +317,21 @@
 				<textFieldExpression><![CDATA[$P{agentContact}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="325" y="370" width="70" height="20" uuid="24ce3297-463f-4535-9352-4f5950408aad"/>
+				<reportElement x="325" y="400" width="70" height="20" uuid="24ce3297-463f-4535-9352-4f5950408aad"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Address:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="295" y="332" width="100" height="20" uuid="1e958f6a-2d50-4739-9aa5-ce0969602dee"/>
+				<reportElement x="295" y="364" width="100" height="20" uuid="1e958f6a-2d50-4739-9aa5-ce0969602dee"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Fax Number:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="395" y="330" width="158" height="24" forecolor="#3903FF" uuid="6b6b7efd-53a6-4339-bb26-06ffe304f615"/>
+				<reportElement x="397" y="360" width="158" height="24" forecolor="#3903FF" uuid="6b6b7efd-53a6-4339-bb26-06ffe304f615"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -344,7 +341,7 @@
 				<textFieldExpression><![CDATA[$P{fax}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="395" y="367" width="158" height="26" forecolor="#3903FF" uuid="fb7f4098-a794-446a-a237-9f5a69fc4833"/>
+				<reportElement x="395" y="397" width="158" height="26" forecolor="#3903FF" uuid="fb7f4098-a794-446a-a237-9f5a69fc4833"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -354,14 +351,14 @@
 				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="345" y="403" width="50" height="20" uuid="a75b2789-e860-40e4-a9d6-a3fcde19c1c4"/>
+				<reportElement x="345" y="435" width="50" height="20" uuid="a75b2789-e860-40e4-a9d6-a3fcde19c1c4"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Email: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="395" y="400" width="158" height="26" forecolor="#3903FF" uuid="32e37dd9-7432-44e4-8ac1-fbde96791678"/>
+				<reportElement x="397" y="429" width="158" height="26" forecolor="#3903FF" uuid="32e37dd9-7432-44e4-8ac1-fbde96791678"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -371,7 +368,7 @@
 				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="395" y="435" width="158" height="20" forecolor="#3903FF" uuid="7343a22e-2af7-4d75-bf24-9c11cecc228f"/>
+				<reportElement x="395" y="470" width="158" height="20" forecolor="#3903FF" uuid="7343a22e-2af7-4d75-bf24-9c11cecc228f"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -381,7 +378,7 @@
 				<textFieldExpression><![CDATA[$P{expireDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="395" y="460" width="158" height="24" forecolor="#3903FF" uuid="a38ee34a-6318-4f14-92f6-8cac73903e58"/>
+				<reportElement x="395" y="500" width="158" height="24" forecolor="#3903FF" uuid="a38ee34a-6318-4f14-92f6-8cac73903e58"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -391,21 +388,21 @@
 				<textFieldExpression><![CDATA[$P{joinedDate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="295" y="464" width="100" height="20" uuid="670d1732-61b9-4d31-8bf0-91f6316d65f9"/>
+				<reportElement x="295" y="504" width="100" height="20" uuid="670d1732-61b9-4d31-8bf0-91f6316d65f9"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Joined Date:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="295" y="435" width="100" height="20" uuid="c212a73a-44a2-450a-97c1-692419de76dc"/>
+				<reportElement x="295" y="470" width="100" height="20" uuid="c212a73a-44a2-450a-97c1-692419de76dc"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black" size="14"/>
 				</textElement>
 				<text><![CDATA[Expire Date:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="-1" y="302" width="181" height="30" forecolor="#030303" uuid="3d540c1b-b092-4741-9fad-9e63571357f1">
+				<reportElement x="-1" y="320" width="181" height="30" forecolor="#030303" uuid="3d540c1b-b092-4741-9fad-9e63571357f1">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -420,119 +417,13 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="20" splitType="Stretch">
-			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="166" y="0" width="69" height="20" forecolor="#000000" backcolor="#03FBFF" uuid="364a5bf0-c30e-41bd-8354-537589d2f29f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6b45ffed-541b-41ad-9839-fb799ede99c2"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Arial Black" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Rent ID]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="300" y="0" width="90" height="20" forecolor="#000000" backcolor="#03FBFF" uuid="c09da2a1-1123-4e36-bdda-e5f09cd1d474">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5ef6385b-d252-4ce0-aca8-919caddecf55"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Arial Black" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Order Date]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="231" y="0" width="69" height="20" forecolor="#000000" backcolor="#03FBFF" uuid="7b4bf0fc-5c62-4e1c-a07b-93c4f96c7bb3">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6b45ffed-541b-41ad-9839-fb799ede99c2"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Arial Black" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Vehicle ID]]></text>
-			</staticText>
-		</band>
+		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="50" splitType="Stretch">
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="166" y="0" width="64" height="50" uuid="064749fa-01b8-43e1-a9ef-9ccaf6966411">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="94010fcc-8912-4341-bbf6-6c77bd7c92cf"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement>
-					<font fontName="Arial Black" size="12" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{rentId}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="231" y="0" width="69" height="50" uuid="6dced457-a604-44e5-bf73-e07809d019b3">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e092448c-1e62-473a-ae96-519d3f920e5f"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement>
-					<font fontName="Arial Black" size="12" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{VID}]]></textFieldExpression>
-			</textField>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="300" y="0" width="90" height="50" uuid="c0340776-3ef0-4f90-ac03-edc9f314200d">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="44e34f56-fa1b-40fc-bc8f-4a944c450586"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement>
-					<font fontName="Arial Black" size="12" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{orderDate}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band splitType="Stretch"/>
 	</detail>
 	<columnFooter>
-		<band height="30" splitType="Stretch">
-			<staticText>
-				<reportElement x="166" y="0" width="224" height="30" uuid="ce88e233-6d59-47a1-b5fd-3ec39b336a1a"/>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Black"/>
-				</textElement>
-				<text><![CDATA[Last 10 Rent Orders]]></text>
-			</staticText>
-		</band>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band splitType="Stretch"/>

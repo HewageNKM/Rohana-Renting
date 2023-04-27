@@ -21,7 +21,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lk.hnkm.rohanarenting.dto.Insurance;
 import lk.hnkm.rohanarenting.dto.Tool;
-import lk.hnkm.rohanarenting.dto.tm.JasperReportToolTM;
 import lk.hnkm.rohanarenting.dto.tm.ToolTM;
 import lk.hnkm.rohanarenting.model.EmployeeModel;
 import lk.hnkm.rohanarenting.model.ToolModel;
@@ -37,6 +36,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class ToolFormController {
@@ -214,10 +214,7 @@ public class ToolFormController {
             params.put("email",insurance.getEmail());
             params.put("expireDate", Date.valueOf(insurance.getExpireDate()));
             params.put("joinedDate",Date.valueOf(insurance.getJoinedDate()));
-
-            ArrayList<JasperReportToolTM> jasperToolTMS = ToolModel.getJasperToolTM(toolTM.getTID());
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jasperToolTMS);
-
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(Collections.singleton(toolTM));
 
             JasperReport compileReport = JasperCompileManager.compileReport(
                     JRXmlLoader.load(

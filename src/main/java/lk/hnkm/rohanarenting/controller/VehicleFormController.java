@@ -24,7 +24,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lk.hnkm.rohanarenting.dto.Insurance;
 import lk.hnkm.rohanarenting.dto.Vehicle;
-import lk.hnkm.rohanarenting.dto.tm.JasperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
 import lk.hnkm.rohanarenting.model.VehicleModel;
 import lk.hnkm.rohanarenting.notification.TopUpNotifications;
@@ -41,6 +40,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -240,19 +240,18 @@ public class VehicleFormController {
         });
     }
 
-    private void printVehicleReport(VehicleTM selectedItem) {
+    private void printVehicleReport(VehicleTM vehicleTM) {
         try {
-            ArrayList<JasperReportVehicleTM> jasperReportVehicleTMS = VehicleModel.jesperReportVehicleTMS(selectedItem.getVID());
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(jasperReportVehicleTMS);
-            Insurance insurance = VehicleModel.getInsuranceDetails(selectedItem.getVID());
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(Collections.singleton(vehicleTM));
+            Insurance insurance = VehicleModel.getInsuranceDetails(vehicleTM.getVID());
             Map<String, Object> params = new HashMap<>();
-            params.put("VID",selectedItem.getVID());
-            params.put("manufacturer",selectedItem.getManufacturer());
-            params.put("modelName",selectedItem.getModelName());
-            params.put("description",selectedItem.getDescription());
-            params.put("rate",selectedItem.getRate());
-            params.put("Availability",selectedItem.getAvailability());
-            params.put("codeNumber",selectedItem.getVID());
+            params.put("VID",vehicleTM.getVID());
+            params.put("manufacturer",vehicleTM.getManufacturer());
+            params.put("modelName",vehicleTM.getModelName());
+            params.put("description",vehicleTM.getDescription());
+            params.put("rate",vehicleTM.getRate());
+            params.put("Availability",vehicleTM.getAvailability());
+            params.put("codeNumber",vehicleTM.getVID());
             params.put("IID",insurance.getIID());
             params.put("insuranceName",insurance.getName());
             params.put("iPName",insurance.getInsuranceProvider());
