@@ -31,7 +31,6 @@ public class DashboardController {
     public BarChart barChart;
     public PieChart pieChart;
     public Label employeeIdFld;
-    public Label userNameFld;
     public Label lastLoginFld;
 
     public void initialize() {
@@ -76,7 +75,13 @@ public class DashboardController {
     }
 
     private void setSaleDetails() {
-
+        try {
+            InvoiceCount.setText(DashboardModel.getInvoicesCount());
+            totalSaleLabel.setText(DashboardModel.getTotalSaleValue());
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
+            e.printStackTrace();
+        }
     }
 
     private void rentalCounts() {

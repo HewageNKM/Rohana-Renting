@@ -168,4 +168,30 @@ public class DashboardModel {
        }
        return userLogin;
     }
+
+    public static String getInvoicesCount() throws SQLException {
+        int count = 0;
+        ResultSet resultSet = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM vehicle_rent_order");
+        if(resultSet.next()){
+            count += resultSet.getInt(1);
+        }
+        ResultSet resultSet1 = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM tool_rent_order");
+        if(resultSet1.next()){
+            count += resultSet1.getInt(1);
+        }
+        return String.valueOf(count);
+    }
+
+    public static String getTotalSaleValue() throws SQLException {
+        Double totalValue = 0.0;
+        ResultSet resultSet = CruidUtil.execute("SELECT SUM(Total) FROM vehicle_rent_order_detail");
+        if(resultSet.next()){
+            totalValue += resultSet.getDouble(1);
+        }
+        ResultSet resultSet1 = CruidUtil.execute("SELECT SUM(Total) FROM tool_rent_order_detail");
+        if(resultSet1.next()){
+            totalValue += resultSet1.getDouble(1);
+        }
+        return String.valueOf(totalValue);
+    }
 }

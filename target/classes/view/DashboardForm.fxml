@@ -58,7 +58,7 @@
                         <Image url="@../img/dashboardSale.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="InvoiceCount" alignment="CENTER" layoutX="89.0" layoutY="33.0" prefHeight="31.0" prefWidth="189.0" styleClass="dashboardTitleLabel" />
+                  <Label fx:id="InvoiceCount" alignment="CENTER" layoutX="108.0" layoutY="31.0" prefHeight="31.0" prefWidth="189.0" styleClass="dashboardTitleLabel" />
                   <Label fx:id="totalSaleLabel" alignment="CENTER" layoutX="113.0" layoutY="117.0" prefHeight="30.0" prefWidth="179.0" styleClass="dashboardTitleLabel" />
                   <Label layoutX="14.0" layoutY="117.0" prefHeight="30.0" prefWidth="97.0" styleClass="formTextFieldLabel" text="Value : Rs." />
                </children>
