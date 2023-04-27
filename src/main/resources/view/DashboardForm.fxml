@@ -18,7 +18,7 @@
   ~
   -->
 
-<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css"  xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.DashboardController">
+<BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.DashboardController">
    <center>
       <AnchorPane prefHeight="590.0" prefWidth="943.0">
          <children>
@@ -72,18 +72,12 @@
                      </image>
                   </ImageView>
                   <Label fx:id="employeeIdFld" alignment="CENTER" layoutX="84.0" layoutY="33.0" prefHeight="31.0" prefWidth="189.0" styleClass="dashboardTitleLabel" />
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/dashboardUserName.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="userNameFld" alignment="CENTER" layoutX="89.0" layoutY="95.0" prefHeight="30.0" prefWidth="179.0" styleClass="dashboardTitleLabel" />
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/dashboardLastLogin.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lastLoginFld" alignment="CENTER" layoutX="89.0" layoutY="150.0" prefHeight="30.0" prefWidth="179.0" styleClass="dashboardTitleLabel" />
+                  <Label fx:id="lastLoginFld" alignment="CENTER" layoutX="89.0" layoutY="118.0" prefHeight="30.0" prefWidth="179.0" styleClass="dashboardTitleLabel" />
                </children>
             </AnchorPane>
             <Label layoutX="1197.0" layoutY="39.0" styleClass="FormTitleLabel" text="User" />

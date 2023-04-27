@@ -164,11 +164,7 @@ public class DashboardModel {
        ResultSet resultSet = CruidUtil.execute("SELECT * FROM user_login_history ORDER BY Log_Time  DESC LIMIT 1");
        UserLogin userLogin = null;
        if(resultSet.next()){
-          userLogin = new UserLogin(resultSet.getString(1),null,resultSet.getDate(2).toLocalDate(),resultSet.getTime(4).toLocalTime(),resultSet.getTime(4).toLocalTime());
-       }
-       ResultSet resultSet1 = CruidUtil.execute("SELECT 'UName' FROM user WHERE `Employee ID` = ?",userLogin.getEID());
-       if(resultSet1.next()){
-           userLogin.setUserName(resultSet1.getString(1));
+          userLogin = new UserLogin(resultSet.getString(1),resultSet.getDate(2).toLocalDate(),resultSet.getTime(4).toLocalTime(),resultSet.getTime(4).toLocalTime());
        }
        return userLogin;
     }

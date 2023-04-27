@@ -98,8 +98,8 @@ public class DashboardController {
             }else {
                 employeeIdFld.setText("No Data");
                 lastLoginFld.setText("No Data");
-                userNameFld.setText("No Data");
             }
+
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();

@@ -21,7 +21,6 @@ import java.time.LocalTime;
 @Getter
 public class UserLogin {
     private String EID;
-    private String userName;
     private LocalDate date;
     private LocalTime logTime;
     private LocalTime logoutTime;
