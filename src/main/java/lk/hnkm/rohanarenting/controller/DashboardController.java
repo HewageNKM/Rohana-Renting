@@ -14,7 +14,6 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import lk.hnkm.rohanarenting.dto.UserLogin;
 import lk.hnkm.rohanarenting.model.DashboardModel;
 import lombok.SneakyThrows;
 
@@ -31,7 +30,6 @@ public class DashboardController {
     public BarChart barChart;
     public PieChart pieChart;
     public Label employeeIdFld;
-    public Label userNameFld;
     public Label lastLoginFld;
 
     public void initialize() {
@@ -76,7 +74,13 @@ public class DashboardController {
     }
 
     private void setSaleDetails() {
-
+        try {
+            InvoiceCount.setText(DashboardModel.getInvoicesCount());
+            totalSaleLabel.setText(DashboardModel.getTotalSaleValue());
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
+            e.printStackTrace();
+        }
     }
 
     private void rentalCounts() {
@@ -91,14 +95,8 @@ public class DashboardController {
     }
     public void setUserDetails() {
         try {
-            UserLogin userLogin = DashboardModel.getLastLogin();
-            if(userLogin != null){
-                employeeIdFld.setText(userLogin.getEID());
-                lastLoginFld.setText(userLogin.getLogTime().toString());
-            }else {
-                employeeIdFld.setText("No Data");
-                lastLoginFld.setText("No Data");
-            }
+            employeeIdFld.setText(DashboardModel.getEmployeeId());
+            lastLoginFld.setText(DashboardModel.getLastLogin());
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();

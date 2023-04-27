@@ -365,7 +365,7 @@ public class VehicleFormController {
                 if(isExist){
                     orderStatusLabel.setStyle("-fx-text-fill: red");
                     orderStatusLabel.setText("This Vehicle is in an Order");
-                    if (vehicle.getAvailability() == 1) {
+                    if (vehicle.getAvailability().equals("Available")) {
                         availableRadiBtn.setSelected(true);
                     } else {
                         nAvailableRadioBtn.setSelected(true);
@@ -373,13 +373,13 @@ public class VehicleFormController {
                     nAvailableRadioBtn.setDisable(true);
                     availableRadiBtn.setDisable(true);
                 }else {
-                    if (vehicle.getAvailability() == 1) {
+                    if (vehicle.getAvailability().equals("Available")) {
                         availableRadiBtn.setSelected(true);
                     } else {
                         nAvailableRadioBtn.setSelected(true);
                     }
                 }
-                if (vehicle.getAvailability() == 1) {
+                if (vehicle.getAvailability().equals("Available")) {
                     availableRadiBtn.setSelected(true);
                 } else {
                     nAvailableRadioBtn.setSelected(true);
@@ -456,9 +456,9 @@ public class VehicleFormController {
                             vehicle.setDescription(descriptionFld.getText());
                             vehicle.setRate(Double.valueOf(rentalRateFld.getText()));
                            if(availableRadiBtn.isSelected()){
-                               vehicle.setAvailability(1);
+                               vehicle.setAvailability("Available");
                            }else {
-                               vehicle.setAvailability(0);
+                               vehicle.setAvailability("Not Available");
                             }
                            vehicle.setCategory(categoryComboBox.getSelectionModel().getSelectedItem().toString());
                             Boolean isExist = VehicleModel.checkOrderStatus(licenseFld.getText());
@@ -503,9 +503,9 @@ public class VehicleFormController {
                             vehicle.setDescription(descriptionFld.getText());
                             vehicle.setRate(Double.valueOf(rentalRateFld.getText()));
                             if(availableRadiBtn.isSelected()){
-                                vehicle.setAvailability(1);
+                                vehicle.setAvailability("Available");
                             }else {
-                                vehicle.setAvailability(0);
+                                vehicle.setAvailability("Not Available");
                             }
                             vehicle.setCategory(categoryComboBox.getSelectionModel().getSelectedItem());
                             if(VehicleModel.saveVehicle(vehicle)){

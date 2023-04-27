@@ -22,4 +22,8 @@ public class BoardModel {
       }
       return "User";
     }
+
+    public static void insertUserLogout() throws SQLException {
+        CruidUtil.execute("UPDATE user_login_history SET Logout_Time = ? WHERE Logout_Time IS NULL", java.time.LocalTime.now());
+    }
 }

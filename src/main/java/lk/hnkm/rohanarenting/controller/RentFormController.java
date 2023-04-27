@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -143,6 +144,12 @@ public class RentFormController {
         setVehicleRID();
         setVehicleCellValues();
         setToolCellValues();
+        try {
+            RentModel.checkInsuranceTable();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            e.printStackTrace();
+        }
     }
 
 
@@ -570,14 +577,16 @@ public class RentFormController {
 
     public void newToolBtnOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
-        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/ToolForm.fxml"))));
-        stage.setTitle("Tool Form");
+        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/ToolViewForm.fxml"))));
+        stage.setTitle("Tool View Form");
+        stage.getIcons().add(new Image("/img/search.png"));
         stage.show();
     }
 
     public void newVehicleBtnOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/VehicleViewForm.fxml"))));
+        stage.getIcons().add(new Image("/img/search.png"));
         stage.setTitle("Vehicle View Form");
         stage.show();
     }

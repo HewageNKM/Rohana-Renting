@@ -29,7 +29,7 @@ public class VehicleModel {
               vehicle.setManufacturer(resultSet.getString(2));
               vehicle.setModelName(resultSet.getString(3));
               vehicle.setDescription(resultSet.getString(4));
-              vehicle.setAvailability(resultSet.getInt(5));
+              vehicle.setAvailability(resultSet.getString(5));
               vehicle.setRate(resultSet.getDouble(6));
               vehicle.setCategory(resultSet.getString(7));
               return vehicle;
@@ -66,7 +66,7 @@ public class VehicleModel {
            deleteBtn.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
            showBtn.setStyle("-fx-background-image: url('img/show.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
 
-           vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),(0<resultSet.getInt(5))? "Available" : "Not Available",resultSet.getDouble(6),resultSet.getString(7),showBtn,editBtn,deleteBtn));
+           vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6),resultSet.getString(7),showBtn,editBtn,deleteBtn));
        }
        return vehicleTMS;
     }
@@ -99,7 +99,7 @@ public class VehicleModel {
             editBtn.setStyle("-fx-background-image: url('img/edit.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
             deleteBtn.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
             showBtn.setStyle("-fx-background-image: url('img/show.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
-            vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),(0<resultSet.getInt(5))? "Available" : "Not Available",resultSet.getDouble(6),resultSet.getString(7),showBtn,editBtn,deleteBtn));
+            vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6),resultSet.getString(7),showBtn,editBtn,deleteBtn));
         }
         return vehicleTMS;
     }

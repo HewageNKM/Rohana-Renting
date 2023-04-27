@@ -21,7 +21,7 @@ public class VehicleViewModel {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle");
         ArrayList <VehicleTM> vehicleTMS = new ArrayList<>();
         while (resultSet.next()){
-            vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),(0<resultSet.getInt(5))? "Available" : "Not Available",resultSet.getDouble(6),resultSet.getString(7),new JFXButton(),new JFXButton(),new JFXButton()));
+            vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6),resultSet.getString(7),new JFXButton(),new JFXButton(),new JFXButton()));
         }
         return vehicleTMS;
     }
@@ -30,7 +30,7 @@ public class VehicleViewModel {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle WHERE VID LIKE ? OR Manufacturer LIKE ? OR Model_Name LIKE ? OR Description LIKE ? OR Availability LIKE ? OR Rate_Per_Day LIKE ? OR Category LIKE ?;",searchPhrase,searchPhrase,searchPhrase,searchPhrase,searchPhrase,searchPhrase,searchPhrase);
         ArrayList <VehicleTM> vehicleTMS = new ArrayList<>();
         while (resultSet.next()){
-            vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),(0<resultSet.getInt(5))? "Available" : "Not Available",resultSet.getDouble(6),resultSet.getString(7),new JFXButton(),new JFXButton(),new JFXButton()));
+            vehicleTMS.add(new VehicleTM(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6),resultSet.getString(7),new JFXButton(),new JFXButton(),new JFXButton()));
         }
         return vehicleTMS;
     }

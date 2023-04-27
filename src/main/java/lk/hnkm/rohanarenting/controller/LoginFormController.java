@@ -70,6 +70,7 @@ public class LoginFormController {
             try {
                 Boolean isExist = LoginModel.verifyEmployeeId(employeeIdFld.getText(), passwordFld.getText());
                 if (Boolean.TRUE.equals(isExist)) {
+                    LoginModel.InsertUserEntry(employeeIdFld.getText().toUpperCase());
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/BoardForm.fxml"));
                     Parent parent = loader.load();
                     BoardFormController boardController = loader.getController();
@@ -83,12 +84,10 @@ public class LoginFormController {
                     dashboardStage.getIcons().add(new Image("/img/dashboard.png"));
                     dashboardStage.setTitle("Dashboard");
                     dashboardStage.show();
-                    System.out.println("Login Success");
                     TopUpNotifications.logIn(employeeIdFld.getText().toUpperCase());
                 } else {
                     notifyLabel.setTextFill(Color.RED);
                     notifyLabel.setText("Invalid Employee ID or Password");
-                    System.out.println("Login Failed");
                 }
             } catch (SQLException | NoSuchAlgorithmException | IOException e) {
                 new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();

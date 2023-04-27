@@ -22,7 +22,7 @@ public class Vehicle {
   private String manufacturer;
   private String modelName;
   private String description;
-  private Integer Availability;
+  private String Availability;
   private Double rate;
   private String category;
 }

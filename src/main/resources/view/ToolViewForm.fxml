@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<!--
+  ~ Copyright (c) 2023, All right reserved.
+  ~ Author: Nadun Kawishika
+  ~ Project Name: RohanaRenting
+  ~ Date and Time: 3/29/23, 8:08 PM
+  ~
+  -->
+
+<BorderPane prefHeight="753.0" prefWidth="1136.0" style="-fx-background-color: #FFFFFFFF;" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.ToolViewFormController">
+   <center>
+      <AnchorPane prefHeight="960.0" prefWidth="1700.0" style="-fx-background-color: #FFFFFFFF;">
+         <children>
+            <TableView fx:id="toolsTable" layoutX="-1.0" layoutY="178.0" prefHeight="647.0" prefWidth="1083.0" style="-fx-background-color: #FFFFFFFF;">
+              <columns>
+                <TableColumn fx:id="columnID" prefWidth="116.0" text="Tool ID" />
+                <TableColumn fx:id="columnName" prefWidth="275.0" text="Name" />
+                  <TableColumn fx:id="columnBrandName" prefWidth="202.0" text="Brand Name" />
+                  <TableColumn fx:id="columnRentalRate" minWidth="0.0" prefWidth="293.0" text="Rental Rate(Rs)" />
+                  <TableColumn fx:id="columnAvailability" prefWidth="196.0" text="Availability" />
+              </columns>
+            </TableView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="340.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/search.png" />
+               </image></ImageView>
+            <TextField fx:id="searchFld" layoutX="370.0" layoutY="121.0" onKeyReleased="#searchFldOnAction" prefHeight="40.0" prefWidth="300.0" promptText="Search . . . . . . . " />
+            <Label layoutX="370.0" layoutY="100.0" styleClass="formTextFieldLabel" text="Search" />
+            <Label layoutX="494.0" layoutY="14.0" styleClass="FormTitleLabel" text="Tool View" />
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

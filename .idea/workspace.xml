@@ -4,11 +4,73 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="" />
+    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="Merge remote-tracking branch 'main/master'">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/ToolViewFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/ToolViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/ToolViewForm.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/BoardFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/BoardFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/LoginFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/LoginFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RentFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/VehicleFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/VehicleFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/UserLogin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/Vehicle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/BoardModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/BoardModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/DashboardModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/DashboardModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/LoginModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/LoginModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/RentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/RentModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/VehicleModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/VehicleModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/VehicleViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/VehicleViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/CustomerForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/CustomerForm.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/BoardFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/BoardFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/DashboardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/LoginFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/LoginFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RentFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RentFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/VehicleFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/VehicleFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/UserLogin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/Vehicle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/Vehicle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/BoardModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/BoardModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/DashboardModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/DashboardModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/LoginModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/LoginModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/RentModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/RentModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/VehicleModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/VehicleModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/VehicleViewModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/VehicleViewModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/CustomerForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/CustomerForm.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="main/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SWAP_SIDES_IN_COMPARE_BRANCHES" value="true" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -17,12 +79,22 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProjectId" id="2P0DeopNCCoikO80BMyo5qpoNmc" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "last_opened_file_path": "D:/GDSE/JavaProject/RohanaRenting/target/classes/view",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/GDSE/JavaProject/RohanaRenting/src/main/resources/view",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -30,11 +102,21 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="lk.hnkm.rohanarenting.model" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GDSE\JavaProject\RohanaRenting\src\main\resources\view" />
       <recent name="D:\GDSE\JavaProject\RohanaRenting\target\classes\view" />
     </key>
   </component>
@@ -58,7 +140,49 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="" />
+      <created>1682585207834</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682585207834</updated>
+      <workItem from="1682585210356" duration="9136000" />
+    </task>
+    <task id="LOCAL-00001" summary="Merge remote-tracking branch 'main/master'">
+      <created>1682585310957</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682585310957</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Merge remote-tracking branch 'main/master'">
+      <created>1682585761660</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682585761660</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge remote-tracking branch 'main/master'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'main/master'" />
   </component>
 </project>

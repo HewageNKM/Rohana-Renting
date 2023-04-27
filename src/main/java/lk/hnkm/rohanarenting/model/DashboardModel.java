@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import lk.hnkm.rohanarenting.dto.UserLogin;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
 import java.sql.ResultSet;
@@ -160,12 +159,45 @@ public class DashboardModel {
         return pieChartData;
     }
 
-    public static UserLogin getLastLogin() throws SQLException {
-       ResultSet resultSet = CruidUtil.execute("SELECT * FROM user_login_history ORDER BY Log_Time  DESC LIMIT 1");
-       UserLogin userLogin = null;
+    public static String getLastLogin() throws SQLException {
+       ResultSet resultSet = CruidUtil.execute("SELECT Log_Time FROM user_login_history ORDER BY Log_Time  DESC LIMIT 1;");
        if(resultSet.next()){
-          userLogin = new UserLogin(resultSet.getString(1),resultSet.getDate(2).toLocalDate(),resultSet.getTime(4).toLocalTime(),resultSet.getTime(4).toLocalTime());
+            return String.valueOf(resultSet.getTime(1).toLocalTime());
        }
-       return userLogin;
+       return "No Data";
+    }
+
+    public static String getInvoicesCount() throws SQLException {
+        int count = 0;
+        ResultSet resultSet = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM vehicle_rent_order");
+        if(resultSet.next()){
+            count += resultSet.getInt(1);
+        }
+        ResultSet resultSet1 = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM tool_rent_order");
+        if(resultSet1.next()){
+            count += resultSet1.getInt(1);
+        }
+        return String.valueOf(count);
+    }
+
+    public static String getTotalSaleValue() throws SQLException {
+        Double totalValue = 0.0;
+        ResultSet resultSet = CruidUtil.execute("SELECT SUM(Total) FROM vehicle_rent_order_detail");
+        if(resultSet.next()){
+            totalValue += resultSet.getDouble(1);
+        }
+        ResultSet resultSet1 = CruidUtil.execute("SELECT SUM(Total) FROM tool_rent_order_detail");
+        if(resultSet1.next()){
+            totalValue += resultSet1.getDouble(1);
+        }
+        return String.valueOf(totalValue);
+    }
+
+    public static String getEmployeeId() throws SQLException {
+        ResultSet resultSet = CruidUtil.execute("SELECT EID FROM user_login_history ORDER BY Log_Time  DESC LIMIT 1;");
+        if(resultSet.next()){
+            return resultSet.getString(1).toUpperCase();
+        }
+        return "No Data";
     }
 }

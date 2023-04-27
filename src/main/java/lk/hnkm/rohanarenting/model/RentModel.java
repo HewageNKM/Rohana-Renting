@@ -49,7 +49,7 @@ public class RentModel {
     public static VehicleCartTM getVehicleCartModel(VehicleOrder vehicleOrder) throws SQLException {
        ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle WHERE VID=? AND (Availability > 0)", vehicleOrder.getVehicleId());
        if(resultSet.next()){
-            Vehicle vehicle = new Vehicle(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getInt(5),resultSet.getDouble(6),resultSet.getString(7));
+            Vehicle vehicle = new Vehicle(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6),resultSet.getString(7));
             Double total= vehicleOrder.getRentDays()*vehicle.getRate();
             return new VehicleCartTM(vehicleOrder.getRentalOrderId(), vehicleOrder.getVehicleId(),vehicle.getManufacturer(),vehicle.getModelName(), vehicleOrder.getCustomerID(),vehicle.getDescription(),vehicle.getCategory(),vehicle.getRate(), vehicleOrder.getRentDays(),total,0,new JFXButton("Remove"));
        } else {
@@ -215,5 +215,24 @@ public class RentModel {
             ));
         }
         return toolRentOrderJesperReportDetailTMS;
+    }
+
+    public static void checkInsuranceTable() throws SQLException {
+       ArrayList<String> vehicleIds = new ArrayList<>();
+       ArrayList<String> toolIds = new ArrayList<>();
+       ResultSet resultSet = CruidUtil.execute("SELECT VID FROM vehicle LEFT JOIN vehicle_insurance vi on vehicle.VID = vi.IID WHERE vi.Expire_Date < CURDATE() OR vi.Expire_Date IS NULL;");
+         while (resultSet.next()){
+             vehicleIds.add(resultSet.getString(1));
+         }
+         for (String vehicleId:vehicleIds) {
+             CruidUtil.execute("UPDATE vehicle SET Availability = 'Not Available' WHERE VID = ?", vehicleId);
+         }
+       ResultSet resultSet1 = CruidUtil.execute("SELECT TID FROM tool LEFT JOIN tool_insurance ti on tool.TID = ti.IID WHERE ti.Expire_Date < CURDATE() OR ti.Expire_Date IS NULL;");
+       while (resultSet1.next()){
+           toolIds.add(resultSet1.getString(1));
+       }
+       for (String toolId:toolIds) {
+           CruidUtil.execute("UPDATE tool SET Availability = 'Not Available' WHERE TID = ?", toolId);
+       }
     }
 }
