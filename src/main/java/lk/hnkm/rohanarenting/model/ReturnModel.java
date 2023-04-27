@@ -147,7 +147,7 @@ public class ReturnModel {
     public static Boolean updateTool(ObservableList<ReturnTM> returnList) throws SQLException {
         int count = 0;
         for (ReturnTM returnTM:returnList) {
-            Boolean isUpdated  = CruidUtil.execute("UPDATE tool SET Availability = 1 WHERE TID = ?",returnTM.getProductId());
+            Boolean isUpdated  = CruidUtil.execute("UPDATE tool SET Availability = 'Available' WHERE TID = ?",returnTM.getProductId());
             if(isUpdated){
                 count++;
             }
@@ -158,7 +158,7 @@ public class ReturnModel {
     public static Boolean updateVehicle(ObservableList<ReturnTM> returnList) throws SQLException {
         int count = 0;
         for (ReturnTM returnTM:returnList) {
-            Boolean isUpdated  = CruidUtil.execute("UPDATE vehicle SET Availability = 1 WHERE VID = ?",returnTM.getProductId());
+            Boolean isUpdated  = CruidUtil.execute("UPDATE vehicle SET Availability = 'Available' WHERE VID = ?",returnTM.getProductId());
             if(isUpdated){
                 count++;
             }

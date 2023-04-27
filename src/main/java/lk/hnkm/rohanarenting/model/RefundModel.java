@@ -136,7 +136,7 @@ public class RefundModel {
     public static Boolean updateToolRentTable(ObservableList<RefundTM> refundTMS) throws SQLException {
         int count = 0;
         for (RefundTM refundTM:refundTMS) {
-            Boolean isUpdated = CruidUtil.execute("UPDATE tool_rent_order_detail SET Refund_Status = 1 WHERE TID = ?",refundTM.getProductId());
+            Boolean isUpdated = CruidUtil.execute("UPDATE tool_rent_order_detail SET Refund_Status = 1,Return_Status = 1 WHERE TID = ?",refundTM.getProductId());
             if(isUpdated){
                 count++;
             }
@@ -147,7 +147,7 @@ public class RefundModel {
     public static Boolean updateToolTable(ObservableList<RefundTM> refundTMS) throws SQLException {
         int count = 0;
         for (RefundTM refundTM:refundTMS) {
-            Boolean isUpdated = CruidUtil.execute("UPDATE tool SET Availability = 1 WHERE TID = ?",refundTM.getProductId());
+            Boolean isUpdated = CruidUtil.execute("UPDATE tool SET Availability = 'Available' WHERE TID = ?",refundTM.getProductId());
             if(isUpdated){
                 count++;
             }
@@ -173,7 +173,7 @@ public class RefundModel {
     public static Boolean updateVehicleRentTable(ObservableList<RefundTM> refundTMS) throws SQLException {
         int count = 0;
         for (RefundTM refundTM:refundTMS) {
-            Boolean isUpdated = CruidUtil.execute("UPDATE vehicle_rent_order_detail SET Refund_Status = 1 WHERE VID = ?",refundTM.getProductId());
+            Boolean isUpdated = CruidUtil.execute("UPDATE vehicle_rent_order_detail SET Refund_Status = 1,Return_Status = 1 WHERE VID = ?",refundTM.getProductId());
             if(isUpdated){
                 count++;
             }
@@ -184,7 +184,7 @@ public class RefundModel {
     public static Boolean updateVehicleTable(ObservableList<RefundTM> refundTMS) throws SQLException {
         int count = 0;
         for (RefundTM refundTM:refundTMS) {
-            Boolean isUpdated = CruidUtil.execute("UPDATE vehicle SET Availability = 1 WHERE VID = ?",refundTM.getProductId());
+            Boolean isUpdated = CruidUtil.execute("UPDATE vehicle SET Availability = 'Available' WHERE VID = ?",refundTM.getProductId());
             if(isUpdated){
                 count++;
             }

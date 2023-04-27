@@ -12,10 +12,14 @@ import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import lk.hnkm.rohanarenting.db.DBConnection;
 import lk.hnkm.rohanarenting.dto.tm.RefundOrderTM;
 import lk.hnkm.rohanarenting.dto.tm.RefundTM;
@@ -23,6 +27,7 @@ import lk.hnkm.rohanarenting.model.RefundModel;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,6 +50,7 @@ public class RefundController {
     public Label totalRefundLabel;
     private ObservableList<RefundOrderTM> refundOrderTMS = FXCollections.observableArrayList();
     private ObservableList<RefundTM> refundTMS = FXCollections.observableArrayList();
+    private Stage stage = new Stage();
 
     public void initialize() {
         setRefundOrderTableCellValueFactory();
@@ -279,5 +285,13 @@ public class RefundController {
         }else {
             new Alert(Alert.AlertType.ERROR,"Please Select Row !").show();
         }
+    }
+
+    public void orderListBtnOnAction(ActionEvent actionEvent) throws IOException {
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/OrderViewForm.fxml"))));
+        stage.setTitle("Order View");
+        stage.centerOnScreen();
+        stage.getIcons().add(new Image("/img/search.png"));
+        stage.show();
     }
 }

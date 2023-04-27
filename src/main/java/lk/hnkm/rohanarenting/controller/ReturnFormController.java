@@ -12,10 +12,14 @@ import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import lk.hnkm.rohanarenting.db.DBConnection;
 import lk.hnkm.rohanarenting.dto.tm.ReturnOrderTM;
 import lk.hnkm.rohanarenting.dto.tm.ReturnTM;
@@ -23,6 +27,7 @@ import lk.hnkm.rohanarenting.model.ReturnModel;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,6 +48,7 @@ public class ReturnFormController {
     public TableColumn returnColumnReturnedDate;
     public JFXButton processedBtn;
     public TableView returnOrderTable;
+    Stage stage = new Stage();
     ObservableList<ReturnOrderTM> orderList = FXCollections.observableArrayList();
     ObservableList<ReturnTM> returnList = FXCollections.observableArrayList();
 
@@ -278,5 +284,13 @@ public class ReturnFormController {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             throw new RuntimeException(e);
         }
+    }
+
+    public void orderListViewBtnOnAction(ActionEvent actionEvent) throws IOException {
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/OrderViewForm.fxml"))));
+        stage.setTitle("Order View");
+        stage.centerOnScreen();
+        stage.getIcons().add(new Image("/img/search.png"));
+        stage.show();
     }
 }
