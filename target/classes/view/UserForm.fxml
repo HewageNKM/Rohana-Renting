@@ -38,7 +38,7 @@
                <font>
                   <Font name="System Bold" size="30.0" />
                </font></JFXRadioButton>
-            <Label layoutX="1347.0" layoutY="63.0" styleClass="Displaylabel" text="Permission">
+            <Label layoutX="1353.0" layoutY="79.0" styleClass="Displaylabel" text="Permission">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -81,7 +81,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="1455.0" layoutY="232.0" onAction="#clearBtnOnAction" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #c4a484;" styleClass="formButton" text="Save">
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="1455.0" layoutY="232.0" onAction="#clearBtnOnAction" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #c4a484;" styleClass="formButton" text="Save">
                <font>
                   <Font name="Times New Roman Bold" size="15.0" />
                </font>

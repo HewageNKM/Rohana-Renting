@@ -63,6 +63,7 @@ public class DashboardModel {
         if(resultSet1.next()){
             totalValue += resultSet1.getDouble(1);
         }
+        System.out.println(totalValue);
         return totalValue;
     }
 
@@ -169,11 +170,11 @@ public class DashboardModel {
 
     public static String getInvoicesCount() throws SQLException {
         int count = 0;
-        ResultSet resultSet = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM vehicle_rent_order");
+        ResultSet resultSet = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM vehicle_rent_order WHERE Date = CURDATE()");
         if(resultSet.next()){
             count += resultSet.getInt(1);
         }
-        ResultSet resultSet1 = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM tool_rent_order");
+        ResultSet resultSet1 = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM tool_rent_order WHERE Date = CURDATE()");
         if(resultSet1.next()){
             count += resultSet1.getInt(1);
         }
@@ -182,11 +183,11 @@ public class DashboardModel {
 
     public static String getTotalSaleValue() throws SQLException {
         Double totalValue = 0.0;
-        ResultSet resultSet = CruidUtil.execute("SELECT SUM(Total) FROM vehicle_rent_order_detail");
+        ResultSet resultSet = CruidUtil.execute("SELECT SUM(vehicle_rent_order_detail.Total) FROM vehicle_rent_order_detail LEFT JOIN vehicle_rent_order vro on vehicle_rent_order_detail.Rent_ID = vro.Rent_ID WHERE Date = CURDATE()");
         if(resultSet.next()){
             totalValue += resultSet.getDouble(1);
         }
-        ResultSet resultSet1 = CruidUtil.execute("SELECT SUM(Total) FROM tool_rent_order_detail");
+        ResultSet resultSet1 = CruidUtil.execute("SELECT SUM(tool_rent_order_detail.Total) FROM tool_rent_order_detail LEFT JOIN tool_rent_order tro on tool_rent_order_detail.Rent_ID = tro.Rent_ID WHERE Date = CURDATE()");
         if(resultSet1.next()){
             totalValue += resultSet1.getDouble(1);
         }

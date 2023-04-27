@@ -102,11 +102,15 @@ public class RefundController {
     public void proceedBtnOnAction(ActionEvent actionEvent) {
         new Alert(Alert.AlertType.CONFIRMATION,"Amount Will Be Refund !",ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(ButtonType->{
             if(ButtonType == ButtonType.OK){
-                Connection connection=null;
+                Connection connection = null;
+                try {
+                    connection = DBConnection.getInstance().getConnection();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 if(Regex.validateToolRentId(rentIdFld.getText())){
                     try {
-                        connection = DBConnection.getInstance().getConnection();
-                        connection.setAutoCommit(false);
+
                         Boolean  isRefundTableUpdated= RefundModel.updateToolRefundTable(refundIdLabel.getText(),rentIdFld.getText());
                         if(isRefundTableUpdated){
                             Boolean isRefundDetailTableUpdated = RefundModel.updateToolRefundDetailTable(refundTMS,refundIdLabel.getText());
@@ -186,9 +190,10 @@ public class RefundController {
         refundOrderTable.setItems(refundOrderTMS);
         setRefundId();
         rentIdFld.setStyle(null);
-        totalRefundLabel.setText("0.0");
+        totalRefundLabel.setText("Total : 0.0");
         processedBtn.setDisable(true);
         changeBtn.setDisable(true);
+        rentIdFld.setDisable(false);
     }
 
     private void loadRefundOrderTable() {
@@ -275,7 +280,7 @@ public class RefundController {
                 refundTable.setItems(refundTMS);
                 Double total = RefundModel.getTotal(refundTMS);
                 totalRefundLabel.setStyle("-fx-text-fill: red");
-                totalRefundLabel.setText(String.valueOf(total));
+                totalRefundLabel.setText("Total : "+String.valueOf(total));
                 refundOrderTMS.remove(refundOrderTM);
                 processedBtn.setDisable(false);
             } catch (SQLException e) {

@@ -13,11 +13,15 @@ import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import lk.hnkm.rohanarenting.dto.User;
 import lk.hnkm.rohanarenting.dto.tm.UserTM;
 import lk.hnkm.rohanarenting.model.UserAccountsModel;
@@ -25,6 +29,7 @@ import lk.hnkm.rohanarenting.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Regex;
 import lk.hnkm.rohanarenting.utill.TableUtil;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,6 +53,7 @@ public class UserFormController {
     public TableColumn deleteColumn;
     public TextField userNameFld;
     public TableColumn passwordColumn;
+    private Stage stage = new Stage();
     ObservableList<UserTM> usersList = FXCollections.observableArrayList();
 
     public void initialize() {
@@ -310,5 +316,13 @@ public class UserFormController {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void loginHistoryBtnOnAction(ActionEvent actionEvent) throws IOException {
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/LoginHistoryView.fxml"))));
+        stage.setTitle("Login History");
+        stage.centerOnScreen();
+        stage.getIcons().add(new Image("/img/search.png"));
+        stage.show();
     }
 }

@@ -150,11 +150,9 @@ public class ReturnFormController {
             if(ReturnModel.verifyVehicleRentId(idFld.getText())||Regex.validateVehicleRentId(idFld.getText())) {
                 idFld.setStyle("-fx-border-color: green");
                 changeBtn.setDisable(false);
-                processedBtn.setDisable(false);
             }else if(ReturnModel.verifyToolRentID(idFld.getText())||Regex.validateToolRentId(idFld.getText())){
                 idFld.setStyle("-fx-border-color: green");
                 changeBtn.setDisable(false);
-                processedBtn.setDisable(false);
             }else{
                 idFld.setStyle("-fx-border-color: red");
                 changeBtn.setDisable(true);

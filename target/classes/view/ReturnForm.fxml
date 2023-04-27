@@ -60,9 +60,14 @@
             <TextField fx:id="idFld" layoutX="667.0" layoutY="100.0" onAction="#enterOnAction" onKeyReleased="#idValidate" prefHeight="40.0" prefWidth="400.0" promptText="RV/RTXXXXXXXX" />
             <Label layoutX="678.0" layoutY="77.0" prefHeight="19.0" prefWidth="154.0" styleClass="formTextFieldLabel" text="Order ID/Rent ID" />
             <Label layoutX="678.0" layoutY="31.0" prefHeight="19.0" prefWidth="101.0" styleClass="formTextFieldLabel" text="Return ID : " />
-            <Label fx:id="returnIdLabel" layoutX="772.0" layoutY="31.0" prefHeight="16.0" prefWidth="294.0" styleClass="formTextFieldLabel" />
+            <Label fx:id="returnIdLabel" layoutX="756.0" layoutY="31.0" prefHeight="21.0" prefWidth="293.0" styleClass="formTextFieldLabel" />
             <Label fx:id="fineLabel" alignment="CENTER_RIGHT" layoutX="1352.0" layoutY="186.0" prefHeight="16.0" prefWidth="294.0" styleClass="FormTitleLabel" />
             <JFXButton fx:id="processedBtn" contentDisplay="CENTER" layoutX="992.0" layoutY="170.0" onAction="#procceedBtnOnAction" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #E6BC15FF;" styleClass="formButton" text="Procceed &gt;&gt;&gt;">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton contentDisplay="CENTER" layoutX="1466.0" layoutY="52.0" onAction="#orderListViewBtnOnAction" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #E6BC15FF;" styleClass="formButton" text="Order List">
                <font>
                   <Font name="Times New Roman Bold" size="15.0" />
                </font>
