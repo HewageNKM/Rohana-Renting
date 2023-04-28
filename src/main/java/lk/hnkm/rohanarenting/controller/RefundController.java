@@ -18,19 +18,25 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lk.hnkm.rohanarenting.db.DBConnection;
+import lk.hnkm.rohanarenting.dto.Customer;
 import lk.hnkm.rohanarenting.dto.tm.RefundOrderTM;
 import lk.hnkm.rohanarenting.dto.tm.RefundTM;
 import lk.hnkm.rohanarenting.model.RefundModel;
+import lk.hnkm.rohanarenting.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RefundController {
     public TableColumn columnProductId;
@@ -91,12 +97,8 @@ public class RefundController {
         columnPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("purchaseDate"));
     }
 
-    public void refreshOnClick(MouseEvent mouseEvent) {
-
-    }
-
     public void clearBtnOnAction(ActionEvent actionEvent) {
-
+        clearFields();
     }
 
     public void proceedBtnOnAction(ActionEvent actionEvent) {
@@ -121,7 +123,8 @@ public class RefundController {
                                     Boolean isToolTableUpdated = RefundModel.updateToolTable(refundTMS);
                                     if(isToolTableUpdated){
                                         connection.commit();
-                                        new Alert(Alert.AlertType.INFORMATION,"Refund Request Processed !").show();
+                                        printRefundInvoice();
+                                        TopUpNotifications.success("Refund Request Success !");
                                         clearFields();
                                     }else {
                                         connection.rollback();
@@ -155,7 +158,8 @@ public class RefundController {
                                     Boolean isEquipTableUpdated = RefundModel.updateVehicleTable(refundTMS);
                                     if(isEquipTableUpdated){
                                         connection.commit();
-                                        new Alert(Alert.AlertType.INFORMATION,"Refund Request Processed !").show();
+                                        printRefundInvoice();
+                                        TopUpNotifications.success("Refund Request Success !");
                                         clearFields();
                                     }else {
                                         connection.rollback();
@@ -183,6 +187,34 @@ public class RefundController {
         });
     }
 
+    private void printRefundInvoice() {
+        try {
+            HashMap<String,Object> params = new HashMap<>();
+            Customer customer = RefundModel.getCustomer(rentIdFld.getText());
+            params.put("refundId",refundIdLabel.getText());
+            params.put("name",customer.getFistName()+" "+customer.getLastName());
+            params.put("street",customer.getStreet());
+            params.put("zip",customer.getZipCode());
+            params.put("city",customer.getCity());
+            params.put("mobile",customer.getMobileNumber());
+            params.put("email",customer.getEmail());
+            params.put("subTotal",RefundModel.getTotal(refundTMS));
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(refundTMS);
+            JasperReport compileReport = JasperCompileManager.compileReport(
+                    JRXmlLoader.load(
+                            getClass().getResourceAsStream(
+                                    "/reports/refund_Invoice.jrxml"
+                            )
+                    )
+            );
+            JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, params, dataSource);
+            JasperViewer.viewReport(jasperPrint,false);
+        } catch (JRException | SQLException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            e.printStackTrace();
+        }
+    }
+
     private void clearFields() {
         rentIdFld.clear();
         refundOrderTMS.clear();
@@ -194,6 +226,7 @@ public class RefundController {
         totalRefundLabel.setText("Total : 0.0");
         processedBtn.setDisable(true);
         changeBtn.setDisable(true);
+        rentIdFld.setDisable(false);
         rentIdFld.setDisable(false);
     }
 
@@ -298,6 +331,7 @@ public class RefundController {
         stage.setTitle("Order View");
         stage.centerOnScreen();
         stage.getIcons().add(new Image("/img/search.png"));
+        stage.setResizable(false);
         stage.show();
     }
 }

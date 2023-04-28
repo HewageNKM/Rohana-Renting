@@ -116,6 +116,11 @@
             <Label layoutX="52.0" layoutY="125.0" styleClass="formTextFieldLabel" text="User Name" />
             <Label layoutX="871.0" layoutY="39.0" styleClass="formTextFieldLabel" text="Password" />
             <Label layoutX="50.0" layoutY="224.0" styleClass="formTextFieldLabel" text="Search" />
+            <JFXButton contentDisplay="CENTER" layoutX="1389.0" layoutY="19.0" onAction="#loginHistoryViewBtnOnAction" prefHeight="40.0" prefWidth="199.0" style="-fx-background-color: #E6BC15FF;" styleClass="formButton" text="Login History View">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
    </center>

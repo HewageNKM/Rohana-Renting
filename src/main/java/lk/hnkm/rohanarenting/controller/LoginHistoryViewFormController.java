@@ -2,6 +2,7 @@ package lk.hnkm.rohanarenting.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -45,6 +46,16 @@ public class LoginHistoryViewFormController {
     }
 
     public void searchOnAction(KeyEvent keyEvent) {
-
+        if(searchFld.getText().isEmpty()){
+            loadAllLoginHistory();
+        }else {
+            try {
+                ArrayList<LoginHistoryTM> searchLoginHistory = LoginHistoryModel.searchLoginHistory("%"+searchFld.getText()+"%");
+                loginHistoryTable.setItems(FXCollections.observableArrayList(searchLoginHistory));
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
+                e.printStackTrace();
+            }
+        }
     }
 }

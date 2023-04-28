@@ -288,6 +288,7 @@ public class ReturnFormController {
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/OrderViewForm.fxml"))));
         stage.setTitle("Order View");
         stage.centerOnScreen();
+        stage.setResizable(false);
         stage.getIcons().add(new Image("/img/search.png"));
         stage.show();
     }

@@ -22,7 +22,7 @@
 
 <BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.RefundController">
    <center>
-      <AnchorPane onMouseClicked="#refreshOnClick" prefHeight="590.0">
+      <AnchorPane  prefHeight="590.0">
          <children>
             <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="799.0" layoutY="158.0" onAction="#clearBtnOnAction" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #C4A484;" styleClass="formButton" text="Save">
                <font>

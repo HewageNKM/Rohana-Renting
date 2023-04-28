@@ -124,7 +124,7 @@
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement x="400" y="10" width="50" height="20" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
+				<reportElement x="380" y="11" width="50" height="20" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black"/>
@@ -132,14 +132,14 @@
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="450" y="10" width="65" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
+				<reportElement x="430" y="11" width="65" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial Black"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="400" y="31" width="50" height="20" uuid="0b3f9342-da78-4cfa-9fc5-2301c4749678"/>
+				<reportElement x="380" y="31" width="50" height="20" uuid="0b3f9342-da78-4cfa-9fc5-2301c4749678"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial Black"/>
@@ -283,17 +283,26 @@
 				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement mode="Transparent" x="450" y="33" width="100" height="17" forecolor="#11678C" uuid="86a6a9cb-782b-4640-8652-216ed3507752"/>
+				<reportElement mode="Transparent" x="430" y="33" width="100" height="17" forecolor="#11678C" uuid="86a6a9cb-782b-4640-8652-216ed3507752"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$P{barCodeNumber}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 			<textField>
-				<reportElement x="440" y="40" width="116" height="19" uuid="10d34d64-7175-49f1-aeeb-0b45bdfc97ee"/>
+				<reportElement x="420" y="40" width="116" height="19" uuid="10d34d64-7175-49f1-aeeb-0b45bdfc97ee"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial Black"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{barCodeNumber}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="495" y="11" width="61" height="20" uuid="d8c6d13e-5d49-4ccf-9b3e-a225567792e3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

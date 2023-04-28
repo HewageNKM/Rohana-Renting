@@ -29,4 +29,24 @@ public class LoginHistoryModel {
         }
         return loginHistoryTMS;
     }
+
+    public static ArrayList<LoginHistoryTM> searchLoginHistory(String searchPhrase) throws SQLException {
+        ResultSet resultSet = CruidUtil.execute("SELECT * FROM user_login_history WHERE EID LIKE ? OR Date LIKE ? OR Log_Time LIKE ? OR Logout_Time LIKE ?", searchPhrase, searchPhrase, searchPhrase, searchPhrase);
+        ArrayList<LoginHistoryTM> loginHistoryTMS = new ArrayList<>();
+        while (resultSet.next()){
+            LoginHistoryTM loginHistoryTM=new LoginHistoryTM(
+                    resultSet.getString(1),
+                    resultSet.getDate(2).toString(),
+                    resultSet.getTime(3).toString(),
+                    null
+            );
+            try {
+                loginHistoryTM.setLogoutTime(resultSet.getTime(4).toString().toString());
+            }catch (NullPointerException e) {
+                loginHistoryTM.setLogoutTime("Not Logout Data");
+            }
+            loginHistoryTMS.add(loginHistoryTM);
+        }
+        return loginHistoryTMS;
+    }
 }

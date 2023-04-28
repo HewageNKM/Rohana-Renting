@@ -317,6 +317,7 @@ public class RentFormController {
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerForm.fxml"))));
         stage.centerOnScreen();
         stage.setMaximized(false);
+        stage.setResizable(false);
         stage.setTitle("Customer Form");
         stage.show();
     }
@@ -358,6 +359,8 @@ public class RentFormController {
         Stage stage =new Stage();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerForm.fxml"))));
         stage.centerOnScreen();
+        stage.setResizable(false);
+        stage.setMaximized(false);
         stage.setTitle("Customer Form");
         stage.show();
     }
@@ -621,6 +624,7 @@ public class RentFormController {
         stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/ToolViewForm.fxml"))));
         stage.setTitle("Tool View Form");
         stage.getIcons().add(new Image("/img/search.png"));
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -629,6 +633,7 @@ public class RentFormController {
         stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/VehicleViewForm.fxml"))));
         stage.getIcons().add(new Image("/img/search.png"));
         stage.setTitle("Vehicle View Form");
+        stage.setResizable(false);
         stage.show();
     }
 }

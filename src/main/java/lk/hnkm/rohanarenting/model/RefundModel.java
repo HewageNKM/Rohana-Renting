@@ -9,6 +9,7 @@
 package lk.hnkm.rohanarenting.model;
 
 import javafx.collections.ObservableList;
+import lk.hnkm.rohanarenting.dto.Customer;
 import lk.hnkm.rohanarenting.dto.tm.RefundOrderTM;
 import lk.hnkm.rohanarenting.dto.tm.RefundTM;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
@@ -190,5 +191,29 @@ public class RefundModel {
             }
         }
         return count == refundTMS.size();
+    }
+
+    public static Customer getCustomer(String rentId) throws SQLException {
+        ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool_rent_order WHERE Rent_ID=?",rentId);
+        if(resultSet.next()){
+            String customerId = resultSet.getString(2);
+            ResultSet resultSet1 = CruidUtil.execute("SELECT * FROM customer WHERE CID=?",customerId);
+            if(resultSet1.next()){
+                return new Customer(resultSet1.getString(1),resultSet1.getString(2),resultSet1.getString(3),resultSet1.getString(4),resultSet1.getDate(5).toLocalDate(),resultSet1.getString(6),resultSet1.getString(7),resultSet1.getString(8),resultSet1.getString(9),resultSet1.getInt(10));
+            }else {
+                return new Customer();
+            }
+        }
+        ResultSet resultSet1 = CruidUtil.execute("SELECT * FROM vehicle_rent_order WHERE Rent_ID=?",rentId);
+        if(resultSet1.next()) {
+            String customerId = resultSet1.getString(2);
+            ResultSet resultSet2 = CruidUtil.execute("SELECT * FROM customer WHERE CID=?", customerId);
+            if (resultSet2.next()) {
+                return new Customer(resultSet2.getString(1), resultSet2.getString(2), resultSet2.getString(3), resultSet2.getString(4), resultSet2.getDate(5).toLocalDate(), resultSet2.getString(6), resultSet2.getString(7), resultSet2.getString(8), resultSet2.getString(9), resultSet2.getInt(10));
+            } else {
+                return new Customer();
+            }
+        }
+        return new Customer();
     }
 }
