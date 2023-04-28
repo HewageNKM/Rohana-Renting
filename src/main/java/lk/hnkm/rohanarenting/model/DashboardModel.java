@@ -24,14 +24,14 @@ import java.util.HashMap;
 public class DashboardModel {
     public static ArrayList<Integer> getRentalCounts(Label carRentalCountLabel) throws SQLException {
         LocalDate date = LocalDate.now();
-        ResultSet vehicleRentCount = CruidUtil.execute("SELECT COUNT(vehicle_rent_order_detail.Rent_ID) FROM vehicle_rent_order_detail  RIGHT JOIN vehicle_rent_order ON vehicle_rent_order.Rent_ID = vehicle_rent_order_detail.Rent_ID  WHERE vehicle_rent_order.DATE = ? AND vehicle_rent_order_detail.Refund_Status = 0;", date);
+        ResultSet vehicleRentCount = CruidUtil.execute("SELECT COUNT(vehicle_rent_order_detail.Rent_ID) FROM vehicle_rent_order_detail  RIGHT JOIN vehicle_rent_order ON vehicle_rent_order.Rent_ID = vehicle_rent_order_detail.Rent_ID  WHERE vehicle_rent_order.DATE = ? AND vehicle_rent_order_detail.Return_Status = 0;", date);
         ArrayList<Integer> counts = new ArrayList<>();
         if (vehicleRentCount.next()) {
             counts.add(vehicleRentCount.getInt(1));
         } else {
             counts.add(0);
         }
-        ResultSet toolRentCount = CruidUtil.execute("SELECT COUNT(tool_rent_order_detail.Rent_ID) FROM tool_rent_order_detail  RIGHT JOIN tool_rent_order ON tool_rent_order.Rent_ID = tool_rent_order_detail.Rent_ID  WHERE tool_rent_order.DATE = ? AND tool_rent_order_detail.Refund_Status = 0;", date);
+        ResultSet toolRentCount = CruidUtil.execute("SELECT COUNT(tool_rent_order_detail.Rent_ID) FROM tool_rent_order_detail  RIGHT JOIN tool_rent_order ON tool_rent_order.Rent_ID = tool_rent_order_detail.Rent_ID  WHERE tool_rent_order.DATE = ? AND tool_rent_order_detail.Return_Status = 0;", date);
         if (toolRentCount.next()) {
             counts.add(toolRentCount.getInt(1));
         } else {
@@ -170,13 +170,21 @@ public class DashboardModel {
 
     public static String getInvoicesCount() throws SQLException {
         int count = 0;
-        ResultSet resultSet = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM vehicle_rent_order WHERE Date = CURDATE()");
+        ResultSet resultSet = CruidUtil.execute("SELECT COUNT(vehicle_rent_order_detail.Rent_ID) FROM vehicle_rent_order_detail RIGHT JOIN vehicle_rent_order vro on vro.Rent_ID = vehicle_rent_order_detail.Rent_ID WHERE vro.Date = CURDATE();");
         if(resultSet.next()){
             count += resultSet.getInt(1);
         }
-        ResultSet resultSet1 = CruidUtil.execute("SELECT COUNT(Rent_ID) FROM tool_rent_order WHERE Date = CURDATE()");
+        ResultSet resultSet1 = CruidUtil.execute("SELECT COUNT(tool_rent_order_detail.Rent_ID) FROM tool_rent_order_detail LEFT JOIN tool_rent_order tro on tro.Rent_ID = tool_rent_order_detail.Rent_ID WHERE tro.Date = CURDATE()");
         if(resultSet1.next()){
             count += resultSet1.getInt(1);
+        }
+        ResultSet resultSet2 = CruidUtil.execute("SELECT COUNT(vehicle_refund_detail.Refund_ID) FROM vehicle_refund_detail left outer join vehicle_refund vr on vr.Refund_ID = vehicle_refund_detail.Refund_ID WHERE vr.Date = CURDATE()");
+        if(resultSet2.next()){
+            count -= resultSet2.getInt(1);
+        }
+        ResultSet resultSet3 = CruidUtil.execute("SELECT COUNT(tool_refund_detail.Refund_ID) FROM tool_refund_detail LEFT JOIN tool_refund tr on tr.Refund_ID = tool_refund_detail.Refund_ID WHERE tr.Date = CURDATE()");
+        if(resultSet3.next()){
+            count -= resultSet3.getInt(1);
         }
         return String.valueOf(count);
     }
@@ -190,6 +198,14 @@ public class DashboardModel {
         ResultSet resultSet1 = CruidUtil.execute("SELECT SUM(tool_rent_order_detail.Total) FROM tool_rent_order_detail LEFT JOIN tool_rent_order tro on tool_rent_order_detail.Rent_ID = tro.Rent_ID WHERE Date = CURDATE()");
         if(resultSet1.next()){
             totalValue += resultSet1.getDouble(1);
+        }
+        ResultSet resultSet2 = CruidUtil.execute("SELECT SUM(vehicle_refund_detail.Total) FROM vehicle_refund_detail LEFT JOIN vehicle_refund vr on vehicle_refund_detail.Refund_ID = vr.Refund_ID WHERE Date = CURDATE()");
+        if(resultSet2.next()){
+            totalValue -= resultSet2.getDouble(1);
+        }
+        ResultSet resultSet3 = CruidUtil.execute("SELECT SUM(tool_refund_detail.Total) FROM tool_refund_detail LEFT JOIN tool_refund tr on tool_refund_detail.Refund_ID = tr.Refund_ID WHERE Date = CURDATE()");
+        if(resultSet3.next()){
+            totalValue -= resultSet3.getDouble(1);
         }
         return String.valueOf(totalValue);
     }

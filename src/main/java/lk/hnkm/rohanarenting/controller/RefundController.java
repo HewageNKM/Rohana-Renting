@@ -105,6 +105,7 @@ public class RefundController {
                 Connection connection = null;
                 try {
                     connection = DBConnection.getInstance().getConnection();
+                    connection.setAutoCommit(false);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
