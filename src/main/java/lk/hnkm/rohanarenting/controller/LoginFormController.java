@@ -83,6 +83,7 @@ public class LoginFormController {
                     dashboardStage.setScene(new Scene(parent));
                     dashboardStage.getIcons().add(new Image("/img/dashboard.png"));
                     dashboardStage.setTitle("Dashboard");
+                    dashboardStageSetAction(dashboardStage);
                     dashboardStage.show();
                     TopUpNotifications.logIn(employeeIdFld.getText().toUpperCase());
                 } else {
@@ -94,6 +95,39 @@ public class LoginFormController {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void dashboardStageSetAction(Stage stage) {
+        stage.setOnCloseRequest(event -> {
+            try {
+                new Alert(Alert.AlertType.INFORMATION, "User Will Be Log out !",ButtonType.OK,ButtonType.NO).showAndWait().ifPresent(ButtonType-> {
+                    if (ButtonType == ButtonType.OK) {
+                        stage.close();
+                        try {
+                            LoginModel.setUserLogoutEntry();
+                            loadLoginForm();
+                            TopUpNotifications.logOut(employeeIdFld.getText().toUpperCase());
+                        } catch (IOException | SQLException e) {
+                            e.printStackTrace();
+                            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
+                        }
+                    }else {
+                        event.consume();
+                    }
+                });
+                event.consume();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void loadLoginForm() throws IOException {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LoginForm.fxml")))));
+        stage.getIcons().add(new Image("/img/login.png"));
+        stage.setResizable(false);
+        stage.show();
     }
 
     //Validate user name

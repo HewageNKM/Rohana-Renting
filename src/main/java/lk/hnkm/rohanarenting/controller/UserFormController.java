@@ -325,4 +325,13 @@ public class UserFormController {
         stage.getIcons().add(new Image("/img/search.png"));
         stage.show();
     }
+
+    public void loginHistoryViewBtnOnAction(ActionEvent actionEvent) throws IOException {
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/LoginHistoryViewForm.fxml"))));
+        stage.setTitle("Login History");
+        stage.centerOnScreen();
+        stage.getIcons().add(new Image("/img/search.png"));
+        stage.setResizable(false);
+        stage.show();
+    }
 }

@@ -25,4 +25,8 @@ public class LoginModel {
     public static void InsertUserEntry(String employeeId) throws SQLException {
         CruidUtil.execute("INSERT INTO  user_login_history(EID,Date,Log_Time) VALUES(?,?,?)",employeeId, LocalDate.now(), LocalTime.now());
     }
+
+    public static void setUserLogoutEntry() throws SQLException {
+        CruidUtil.execute("UPDATE user_login_history SET Logout_Time = ? WHERE Logout_Time IS NULL", LocalTime.now());
+    }
 }

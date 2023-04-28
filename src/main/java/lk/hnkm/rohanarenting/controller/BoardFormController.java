@@ -110,19 +110,11 @@ public class BoardFormController {
 
     @FXML
     void logoutBtnOnAction(ActionEvent event) {
-        Stage stage;
-        stage = (Stage) root.getScene().getWindow();
-        stage.setOnCloseRequest(event1 -> {
-            event1.consume();
-            logOut(stage);
-        });
-        logOut(stage);
-    }
-
-    private void logOut(Stage stage)  {
         new Alert(Alert.AlertType.CONFIRMATION,"User Will Be Logout !", ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(ButtonType->{
             if(ButtonType == ButtonType.OK){
                 try {
+                    Stage stage;
+                    stage = (Stage) root.getScene().getWindow();
                     stage.close();
                     Stage loginFormStage = new Stage();
                     loginFormStage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LoginForm.fxml")))));
@@ -140,10 +132,6 @@ public class BoardFormController {
         });
     }
 
-    @FXML
-    void printBtnOnAction(ActionEvent event) {
-
-    }
 
     @FXML
     void refundBtnOnAction(ActionEvent event) throws IOException {
