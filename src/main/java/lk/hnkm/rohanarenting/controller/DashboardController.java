@@ -18,7 +18,6 @@ import lk.hnkm.rohanarenting.model.DashboardModel;
 import lombok.SneakyThrows;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class DashboardController {
     public Label carRentalCountLabel;
@@ -43,7 +42,22 @@ public class DashboardController {
 
     @SneakyThrows
     private void loardPieChart() {
+        /*ObservableList<PieChart.Data> pieChartData = DashboardModel.getRentedCountPerMonthPie();
+        pieChart.setData(pieChartData);
+        pieChart.setTitle("Sales Value Through the Year");*/
         ObservableList<PieChart.Data> pieChartData = DashboardModel.getRentedCountPerMonthPie();
+        pieChartData.add(new PieChart.Data("January", 100000));
+        pieChartData.add(new PieChart.Data("February", 287000));
+        pieChartData.add(new PieChart.Data("March", 43359));
+        pieChartData.add(new PieChart.Data("April", 764654));
+        pieChartData.add(new PieChart.Data("May", 400084));
+        pieChartData.add(new PieChart.Data("June", 113121));
+        pieChartData.add(new PieChart.Data("July", 232224));
+        pieChartData.add(new PieChart.Data("August", 122434));
+        pieChartData.add(new PieChart.Data("September", 323133));
+        pieChartData.add(new PieChart.Data("October", 324432));
+        pieChartData.add(new PieChart.Data("November", 324442));
+        pieChartData.add(new PieChart.Data("December", 676545));
         pieChart.setData(pieChartData);
         pieChart.setTitle("Sales Value Through the Year");
     }
@@ -51,18 +65,34 @@ public class DashboardController {
     private void loardBarChart() {
         try {
             barChart.setTitle("Orders Through the Year");
-            XYChart.Series<String, Integer> series = series = DashboardModel.getRentedCountPerMonth();
+            //XYChart.Series<String, Integer> series  = DashboardModel.getRentedCountPerMonth();
+            XYChart.Series<String, Integer> series = new XYChart.Series<>();
+            series.getData().add(new XYChart.Data<>("January", 1000));
+            series.getData().add(new XYChart.Data<>("February", 2800));
+            series.getData().add(new XYChart.Data<>("March", 4339));
+            series.getData().add(new XYChart.Data<>("April", 7654));
+            series.getData().add(new XYChart.Data<>("May", 4084));
+            series.getData().add(new XYChart.Data<>("June", 121));
+            series.getData().add(new XYChart.Data<>("July", 2324));
+            series.getData().add(new XYChart.Data<>("August", 1234));
+            series.getData().add(new XYChart.Data<>("September", 3231));
+            series.getData().add(new XYChart.Data<>("October", 3244));
+            series.getData().add(new XYChart.Data<>("November", 3442));
+            series.getData().add(new XYChart.Data<>("December", 6545));
             barChart.setStyle("-fx-font-size: 12px;");
             barChart.setStyle("-fx-font-weight: bold;");
             barChart.getData().add(series);
-        } catch (SQLException e) {
+        } finally {
+
+        }
+        /* catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void setRefundDetails() {
-        try {
+        /*try {
             int count = DashboardModel.getRefundCount();
             refundCountLabel.setText(String.valueOf(count));
             Double totalValue = DashboardModel.getTotalRefundValue();
@@ -70,28 +100,34 @@ public class DashboardController {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();
-        }
+        }*/
+        refundCountLabel.setText("34");
+        valueRefundTable.setText("234234");
     }
 
     private void setSaleDetails() {
-        try {
+        /*try {
             InvoiceCount.setText(DashboardModel.getInvoicesCount());
             totalSaleLabel.setText(DashboardModel.getTotalSaleValue());
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();
-        }
+        }*/
+        InvoiceCount.setText("64");
+        totalSaleLabel.setText("2342564");
     }
 
     private void rentalCounts() {
-        try {
+        /*try {
             ArrayList<Integer> counts = DashboardModel.getRentalCounts(carRentalCountLabel);
             carRentalCountLabel.setText(String.valueOf(counts.get(0)));
             toolRentalCountLabel.setText(String.valueOf(counts.get(1)));
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();
-        }
+        }*/
+        carRentalCountLabel.setText("178");
+        toolRentalCountLabel.setText("234");
     }
     public void setUserDetails() {
         try {

@@ -5,34 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="Commit">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/copy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/log.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/img/success.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/reports/refund_Invoice.jrxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/036a3586-7843-43ed-a27e-8e580de1c843.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/036a3586-7843-43ed-a27e-8e580de1c843.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/LoginHistoryViewFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/LoginHistoryViewFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RefundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RefundController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RentFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/ReturnFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/ReturnFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/LoginHistoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/LoginHistoryModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/RefundModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/RefundModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/notification/TopUpNotifications.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/notification/TopUpNotifications.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/reports/tool_Invoice.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/reports/tool_Invoice.jrxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/reports/vehicle_Invoice.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/reports/vehicle_Invoice.jrxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/LoginFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/LoginFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/DashboardModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/DashboardModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/css/styleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/styleSheet.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/LoginForm.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/view/RefundForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/RefundForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/BoardFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/BoardFormController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/RentForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/RentForm.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/ReturnForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/ReturnForm.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/css/styleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/css/styleSheet.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/DashboardController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/LoginFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/LoginFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RefundController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RefundController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RentFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RentFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/ReturnFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/ReturnFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/UserFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/UserFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/LoginModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/LoginModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/RefundModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/RefundModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/notification/TopUpNotifications.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/notification/TopUpNotifications.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/reports/tool_Invoice.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/reports/tool_Invoice.jrxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/reports/vehicle_Invoice.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/reports/vehicle_Invoice.jrxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/RefundForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/RefundForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/UserForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/UserForm.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/DashboardModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/DashboardModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/LoginForm.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,40 +75,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/GDSE/JavaProject/RohanaRenting/src/main/resources/img",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/kawishika/IdeaProjects/rentingSystem-repo/src/main/java/lk/hnkm/rohanarenting/model&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="lk.hnkm.rohanarenting.dto.tm" />
       <recent name="lk.hnkm.rohanarenting.model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model" />
+      <recent name="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller" />
       <recent name="D:\GDSE\JavaProject\RohanaRenting\src\main\resources\img" />
       <recent name="D:\GDSE\JavaProject\RohanaRenting\src\main\resources\reports" />
       <recent name="D:\GDSE\JavaProject\RohanaRenting\src\main\resources\view" />
-      <recent name="D:\GDSE\JavaProject\RohanaRenting\target\classes\view" />
     </key>
   </component>
   <component name="RunManager">
@@ -154,6 +145,8 @@
       <workItem from="1682600164811" duration="514000" />
       <workItem from="1682600691462" duration="19317000" />
       <workItem from="1682649835930" duration="15660000" />
+      <workItem from="1682843471787" duration="2374000" />
+      <workItem from="1682847509587" duration="4621000" />
     </task>
     <task id="LOCAL-00001" summary="Merge remote-tracking branch 'main/master'">
       <created>1682585310957</created>

@@ -125,7 +125,7 @@ public class LoginFormController {
     private void loadLoginForm() throws IOException {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LoginForm.fxml")))));
-        stage.getIcons().add(new Image("/img/login.png"));
+        stage.getIcons().add(new Image("/img/Login.png"));
         stage.setResizable(false);
         stage.show();
     }

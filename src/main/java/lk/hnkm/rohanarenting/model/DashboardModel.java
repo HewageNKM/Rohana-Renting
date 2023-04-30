@@ -108,10 +108,69 @@ public class DashboardModel {
                 tool.put(i,0);
             }
         }
+        HashMap<Integer,Integer> vehicleRefundCountPerMonth = getVehicleRefundCountPerMonth();
+        HashMap<Integer,Integer> toolRefundCountPerMonth = getToolRefundCountPerMonth();
         for(int i=0;i<12;i++){
-            series.getData().add(new XYChart.Data<>(months.get(i+1),vehicle.get(i+1)+tool.get(i+1)));
+            series.getData().add(new XYChart.Data<>(months.get(i+1),(vehicle.get(i+1)+tool.get(i+1)-vehicleRefundCountPerMonth.get(i+1)-toolRefundCountPerMonth.get(i+1))));
         }
         return series;
+    }
+
+    private static HashMap<Integer, Integer> getToolRefundCountPerMonth() throws SQLException {
+        HashMap<Integer,Integer> toolRefund = new HashMap<>();
+        HashMap<Integer,String> months = new HashMap<>();
+        months.put(1,"January");
+        months.put(2,"February");
+        months.put(3,"March");
+        months.put(4,"April");
+        months.put(5,"May");
+        months.put(6,"June");
+        months.put(7,"July");
+        months.put(8,"August");
+        months.put(9,"September");
+        months.put(10,"October");
+        months.put(11,"November");
+        months.put(12,"December");
+        ArrayList<Integer> toolMonth = new ArrayList<>();
+        ResultSet resultSet = CruidUtil.execute("SELECT MONTH(tool_refund.Date), COUNT( DISTINCT tool_refund.Rent_ID) FROM tool_refund LEFT JOIN vehicle_rent_order tro on tool_refund.Rent_ID = tro.Rent_ID GROUP BY MONTH(tool_refund.Date);");
+        while (resultSet.next()){
+            toolRefund.put(resultSet.getInt(1),resultSet.getInt(2));
+            toolMonth.add(resultSet.getInt(1));
+        }
+        for (int i = 1; i <= 12; i++) {
+            if(!toolMonth.contains(i)){
+                toolRefund.put(i,0);
+            }
+        }
+        return toolRefund;
+    }
+
+    private static HashMap<Integer,Integer> getVehicleRefundCountPerMonth() throws SQLException {
+        HashMap<Integer,Integer> vehicleRefund = new HashMap<>();
+        HashMap<Integer,String> months = new HashMap<>();
+        months.put(1,"January");
+        months.put(2,"February");
+        months.put(3,"March");
+        months.put(4,"April");
+        months.put(5,"May");
+        months.put(6,"June");
+        months.put(7,"July");
+        months.put(8,"August");
+        months.put(9,"September");
+        months.put(10,"October");
+        months.put(11,"November");
+        months.put(12,"December");
+        ArrayList<Integer> vehicleMonth = new ArrayList<>();
+        ResultSet resultSet = CruidUtil.execute("SELECT MONTH(vehicle_refund.Date), COUNT( DISTINCT vehicle_refund.Rent_ID) FROM vehicle_refund LEFT JOIN vehicle_rent_order vro on vehicle_refund.Rent_ID = vro.Rent_ID GROUP BY MONTH(vehicle_refund.Date);");
+        while (resultSet.next()){
+            vehicleRefund.put(resultSet.getInt(1),resultSet.getInt(2));
+            vehicleMonth.add(resultSet.getInt(1));
+        }
+        for (int i = 1; i <= 12; i++) {
+            if(!vehicleMonth.contains(i)){
+                vehicleRefund.put(i,0);
+            }
+        }return vehicleRefund;
     }
 
     public static ObservableList<PieChart.Data> getRentedCountPerMonthPie() throws SQLException {
