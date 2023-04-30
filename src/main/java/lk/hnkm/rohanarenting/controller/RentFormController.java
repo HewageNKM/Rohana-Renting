@@ -326,8 +326,8 @@ public class RentFormController {
     void vehicleCartBtnOnAction(ActionEvent event) {
         try {
             VehicleCartTM vehicleCartTM = RentModel.getVehicleCartModel(new VehicleOrder(vehicleRentOrderLabel.getText(),vehicleCustomerFld.getText(),vehicleFld.getText(),Integer.valueOf(vehicleRentDaysFld.getText())));
-            setActionVehicleBtn(vehicleCartTM.getRemove());
             if(vehicleCartTM!=null){
+                setActionVehicleBtn(vehicleCartTM.getRemove());
                 vehicleCartTMS = vehicleRentTable.getItems();
                 if(RentModel.checkVehicleCartDuplicate(vehicleCartTMS,vehicleFld.getText())){
                     new Alert(Alert.AlertType.ERROR,"Vehicle Already Added !").show();
@@ -442,8 +442,8 @@ public class RentFormController {
     public void toolCartBtnOnAction(ActionEvent actionEvent) {
         try {
             ToolCartTM toolCartTM = RentModel.getToolCartModel(new ToolOrder(toolRentOrderIdLabel.getText(),toolCustomerFld.getText(),toolFld.getText(),Integer.valueOf(toolRentDaysFld.getText())));
-            setActionOnToolBtn(toolCartTM.getRemove());
            if(toolCartTM!=null){
+               setActionOnToolBtn(toolCartTM.getRemove());
                toolCartTMS = toolRentTable.getItems();
                if(RentModel.checkToolCartDuplicate(toolCartTMS,toolFld.getText())){
                    new Alert(Alert.AlertType.ERROR,"Tool Already Added !").show();
