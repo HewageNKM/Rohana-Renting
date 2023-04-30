@@ -22,7 +22,7 @@
 
 <BorderPane prefHeight="960.0" prefWidth="1700.0" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.RefundController">
    <center>
-      <AnchorPane  prefHeight="590.0">
+      <AnchorPane prefHeight="590.0">
          <children>
             <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="799.0" layoutY="158.0" onAction="#clearBtnOnAction" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #C4A484;" styleClass="formButton" text="Save">
                <font>
@@ -60,7 +60,7 @@
             <TextField fx:id="rentIdFld" layoutX="667.0" layoutY="100.0" onAction="#enterOnAction" onKeyReleased="#validateRentId" prefHeight="40.0" prefWidth="400.0" promptText="RV/RTXXXXXXXX" />
             <Label layoutX="678.0" layoutY="77.0" prefHeight="19.0" prefWidth="154.0" styleClass="formTextFieldLabel" text="Order ID/Rent ID" />
             <Label layoutX="678.0" layoutY="31.0" prefHeight="19.0" prefWidth="101.0" styleClass="formTextFieldLabel" text="Refund ID : " />
-            <Label fx:id="refundIdLabel" layoutX="760.0" layoutY="31.0" prefHeight="21.0" prefWidth="289.0" styleClass="formTextFieldLabel" />
+            <Label fx:id="refundIdLabel" layoutX="776.0" layoutY="31.0" prefHeight="21.0" prefWidth="273.0" styleClass="formTextFieldLabel" />
             <Label fx:id="totalRefundLabel" alignment="CENTER_RIGHT" layoutX="1352.0" layoutY="186.0" prefHeight="16.0" prefWidth="294.0" styleClass="FormTitleLabel" />
             <JFXButton fx:id="processedBtn" contentDisplay="CENTER" layoutX="992.0" layoutY="170.0" onAction="#proceedBtnOnAction" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #E6BC15FF;" styleClass="formButton" text="Procceed &gt;&gt;&gt;">
                <font>

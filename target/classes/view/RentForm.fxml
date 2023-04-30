@@ -29,7 +29,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#vehicleOnClickRefresh" prefHeight="650.0" prefWidth="1000.0">
                      <children>
-                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="14.0" prefHeight="25.0" prefWidth="75.0" styleClass="formTextFieldLabel" text="Order ID :">
+                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="14.0" prefHeight="25.0" prefWidth="91.0" styleClass="formTextFieldLabel" text="Order ID :">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -43,7 +43,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton layoutX="966.0" layoutY="77.0" onAction="#vehicleNewBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
+                        <JFXButton layoutX="985.0" layoutY="75.0" onAction="#vehicleNewBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -82,18 +82,18 @@
                            </graphic>
                         </JFXButton>
                         <TextField fx:id="vehicleCustomerFld" layoutX="727.0" layoutY="78.0" onKeyReleased="#vehicleCustomerIdValidate" promptText="CXXXXX" />
-                        <Label fx:id="vehicleRentOrderLabel" alignment="TOP_LEFT" layoutX="801.0" layoutY="14.0" prefHeight="25.0" prefWidth="184.0" styleClass="formTextFieldLabel">
+                        <Label fx:id="vehicleRentOrderLabel" alignment="TOP_LEFT" layoutX="815.0" layoutY="14.0" prefHeight="25.0" prefWidth="170.0" styleClass="formTextFieldLabel">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="54.0" prefHeight="21.0" prefWidth="99.0" text="Customer ID">
+                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="54.0" prefHeight="21.0" prefWidth="117.0" text="Customer ID">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
                         <TextField fx:id="vehicleFld" layoutX="727.0" layoutY="154.0" onKeyReleased="#vehicleIdValidate" promptText="VXXXXX" />
-                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="133.0" prefHeight="21.0" prefWidth="83.0" text="Vehicle ID">
+                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="133.0" prefHeight="21.0" prefWidth="93.0" text="Vehicle ID">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -104,7 +104,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <JFXButton layoutX="966.0" layoutY="153.0" onAction="#newVehicleBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="View" />
+                        <JFXButton layoutX="985.0" layoutY="151.0" onAction="#newVehicleBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="View" />
                      </children>
                   </AnchorPane>
             </content>
@@ -113,7 +113,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#toolOnClickRefresh" prefHeight="650.0" prefWidth="1000.0">
                      <children>
-                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="14.0" prefHeight="21.0" prefWidth="76.0" styleClass="formTextFieldLabel" text="Order ID :">
+                        <Label alignment="TOP_LEFT" layoutX="728.0" layoutY="14.0" prefHeight="21.0" prefWidth="88.0" styleClass="formTextFieldLabel" text="Order ID :">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -127,7 +127,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton layoutX="967.0" layoutY="77.0" onAction="#toolNewBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
+                        <JFXButton layoutX="984.0" layoutY="75.0" onAction="#toolNewBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="New">
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -165,7 +165,7 @@
                            </graphic>
                         </JFXButton>
                         <TextField fx:id="toolCustomerFld" layoutX="727.0" layoutY="78.0" onKeyReleased="#customerIdValidate" promptText="CXXXXX" />
-                        <Label fx:id="toolRentOrderIdLabel" alignment="TOP_LEFT" layoutX="801.0" layoutY="14.0" prefHeight="21.0" prefWidth="142.0" styleClass="formTextFieldLabel">
+                        <Label fx:id="toolRentOrderIdLabel" alignment="TOP_LEFT" layoutX="813.0" layoutY="14.0" prefHeight="21.0" prefWidth="130.0" styleClass="formTextFieldLabel">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -187,7 +187,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <JFXButton layoutX="967.0" layoutY="153.0" onAction="#newToolBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="View" />
+                        <JFXButton layoutX="984.0" layoutY="151.0" onAction="#newToolBtnOnAction" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00ff04;" styleClass="formButton" text="View" />
                      </children>
                   </AnchorPane>
                </content>
