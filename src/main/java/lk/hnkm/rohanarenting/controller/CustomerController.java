@@ -344,6 +344,17 @@ public class CustomerController {
        saveBtn.setDisable(true);
        deleteBtn.setDisable(true);
        customerIdFld.setDisable(false);
+       customerIdFld.setStyle(null);
+       firstNameFld.setStyle(null);
+       lastNameFld.setStyle(null);
+       birthdayDatePicker.setStyle(null);
+       cityFld.setStyle(null);
+       zipCodeFld.setStyle(null);
+       streetFld.setStyle(null);
+       nicFld.setStyle(null);
+       mobileNumberFld.setStyle(null);
+       emailFld.setStyle(null);
+
    }
 
     public void idGenarateOnAction(javafx.event.ActionEvent actionEvent) {

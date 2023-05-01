@@ -2,80 +2,9 @@
 <dataSource name="MySQL">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.48">
     <root id="1">
-      <DefaultCasing>exact</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <Grants>|root||kawishika|localhost|ALTER|G
-|root||kawishika|localhost|ALTER ROUTINE|G
-|root||kawishika|localhost|APPLICATION_PASSWORD_ADMIN|G
-|root||kawishika|localhost|AUDIT_ABORT_EXEMPT|G
-|root||mysql.infoschema|localhost|AUDIT_ABORT_EXEMPT|G
-|root||kawishika|localhost|AUDIT_ADMIN|G
-|root||kawishika|localhost|AUTHENTICATION_POLICY_ADMIN|G
-|root||kawishika|localhost|BACKUP_ADMIN|G
-|root||kawishika|localhost|BINLOG_ADMIN|G
-|root||kawishika|localhost|BINLOG_ENCRYPTION_ADMIN|G
-|root||kawishika|localhost|CLONE_ADMIN|G
-|root||kawishika|localhost|CONNECTION_ADMIN|G
-|root||kawishika|localhost|CREATE|G
-|root||kawishika|localhost|CREATE ROLE|G
-|root||kawishika|localhost|CREATE ROUTINE|G
-|root||kawishika|localhost|CREATE TABLESPACE|G
-|root||kawishika|localhost|CREATE TEMPORARY TABLES|G
-|root||kawishika|localhost|CREATE USER|G
-|root||kawishika|localhost|CREATE VIEW|G
-|root||kawishika|localhost|DELETE|G
-|root||kawishika|localhost|DROP|G
-|root||kawishika|localhost|DROP ROLE|G
-|root||kawishika|localhost|ENCRYPTION_KEY_ADMIN|G
-|root||kawishika|localhost|EVENT|G
-|root||kawishika|localhost|EXECUTE|G
-|root||kawishika|localhost|FILE|G
-|root||kawishika|localhost|FIREWALL_EXEMPT|G
-|root||mysql.infoschema|localhost|FIREWALL_EXEMPT|G
-|root||kawishika|localhost|FLUSH_OPTIMIZER_COSTS|G
-|root||kawishika|localhost|FLUSH_STATUS|G
-|root||kawishika|localhost|FLUSH_TABLES|G
-|root||kawishika|localhost|FLUSH_USER_RESOURCES|G
-|root||kawishika|localhost|GROUP_REPLICATION_ADMIN|G
-|root||kawishika|localhost|GROUP_REPLICATION_STREAM|G
-|root||kawishika|localhost|INDEX|G
-|root||kawishika|localhost|INNODB_REDO_LOG_ARCHIVE|G
-|root||kawishika|localhost|INNODB_REDO_LOG_ENABLE|G
-|root||kawishika|localhost|INSERT|G
-|root||kawishika|localhost|LOCK TABLES|G
-|root||kawishika|localhost|PASSWORDLESS_USER_ADMIN|G
-|root||kawishika|localhost|PERSIST_RO_VARIABLES_ADMIN|G
-|root||kawishika|localhost|PROCESS|G
-|root||kawishika|localhost|REFERENCES|G
-|root||kawishika|localhost|RELOAD|G
-|root||kawishika|localhost|REPLICATION CLIENT|G
-|root||kawishika|localhost|REPLICATION SLAVE|G
-|root||kawishika|localhost|REPLICATION_APPLIER|G
-|root||kawishika|localhost|REPLICATION_SLAVE_ADMIN|G
-|root||kawishika|localhost|RESOURCE_GROUP_ADMIN|G
-|root||kawishika|localhost|RESOURCE_GROUP_USER|G
-|root||kawishika|localhost|ROLE_ADMIN|G
-|root||kawishika|localhost|SELECT|G
-|root||mysql.infoschema|localhost|SELECT|G
-|root||kawishika|localhost|SENSITIVE_VARIABLES_OBSERVER|G
-|root||kawishika|localhost|SERVICE_CONNECTION_ADMIN|G
-|root||kawishika|localhost|SESSION_VARIABLES_ADMIN|G
-|root||kawishika|localhost|SET_USER_ID|G
-|root||kawishika|localhost|SHOW DATABASES|G
-|root||kawishika|localhost|SHOW VIEW|G
-|root||kawishika|localhost|SHOW_ROUTINE|G
-|root||kawishika|localhost|SHUTDOWN|G
-|root||kawishika|localhost|SUPER|G
-|root||kawishika|localhost|SYSTEM_USER|G
-|root||mysql.infoschema|localhost|SYSTEM_USER|G
-|root||kawishika|localhost|SYSTEM_VARIABLES_ADMIN|G
-|root||kawishika|localhost|TABLE_ENCRYPTION_ADMIN|G
-|root||kawishika|localhost|TRIGGER|G
-|root||kawishika|localhost|UPDATE|G
-|root||kawishika|localhost|XA_RECOVER_ADMIN|G
-|root||kawishika|localhost|grant option|G</Grants>
-      <ServerVersion>8.0.32</ServerVersion>
+      <ServerVersion>8.0.33</ServerVersion>
     </root>
     <collation id="2" parent="1" name="armscii8_bin">
       <Charset>armscii8</Charset>
