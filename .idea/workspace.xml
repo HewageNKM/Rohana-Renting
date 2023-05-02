@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="Version 1">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/CustomerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/CustomerController.class" afterDir="false" />
-    </list>
+    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="Version 1" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -138,7 +134,7 @@
       <workItem from="1682945815058" duration="3673000" />
       <workItem from="1682956564249" duration="111000" />
       <workItem from="1682956686809" duration="275000" />
-      <workItem from="1683004670629" duration="752000" />
+      <workItem from="1683004670629" duration="773000" />
     </task>
     <task id="LOCAL-00001" summary="Merge remote-tracking branch 'main/master'">
       <created>1682585310957</created>
@@ -231,7 +227,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682957606506</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Version 1">
+      <created>1683005437690</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1683005437690</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
