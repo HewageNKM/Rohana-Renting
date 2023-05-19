@@ -37,21 +37,22 @@ public class DashboardController {
         setSaleDetails();
         setRefundDetails();
         setUserDetails();
-        loardBarChart();
-        loardPieChart();
+        loadBarChart();
+        loadPieChart();
     }
 
     @SneakyThrows
-    private void loardPieChart() {
+    private void loadPieChart() {
         ObservableList<PieChart.Data> pieChartData = DashboardModel.getRentedCountPerMonthPie();
         pieChart.setData(pieChartData);
         pieChart.setTitle("Sales Value Through the Year");
     }
 
-    private void loardBarChart() {
+    private void loadBarChart() {
         try {
             barChart.setTitle("Orders Through the Year");
             XYChart.Series<String, Integer> series  = DashboardModel.getRentedCountPerMonth();
+            barChart.getData().add(series);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();
