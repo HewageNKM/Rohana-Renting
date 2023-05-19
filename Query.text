@@ -1,0 +1,326 @@
+
+ create table customer
+(
+CID           char(5)     not null
+primary key,
+First_Name    varchar(50) not null,
+Last_Name     char(50)    not null,
+NIC           char(12)    not null,
+Birthday      date        not null,
+Mobile_Number char(12)    not null,
+Email         varchar(50) not null,
+Street        char(50)    not null,
+City          char(50)    not null,
+Zip_Code      int         not null
+);
+
+create table employee
+(
+EID           char(5)     not null
+primary key,
+First_Name    varchar(50) not null,
+Last_Name     char(50)    null,
+NIC           char(12)    not null,
+Gender        char(10)    null,
+Date_Of_Birth date        null,
+Mobile_Number char(12)    not null,
+Email         varchar(50) not null,
+ZIP           int         null,
+City          char(50)    null,
+Street        char(50)    null,
+State         char(50)    null,
+Joined_Date   date        null,
+Position      char(50)    null
+);
+
+create table tool
+(
+TID          char(5)       not null
+primary key,
+Brand        varchar(100)  not null,
+Name         varchar(100)  not null,
+Description  varchar(1000) null,
+Availability char(20)      not null,
+Rate_Per_Day int           not null
+);
+
+create table tool_insurance
+(
+IID           char(8)   not null,
+Name          char(100) not null,
+Provider      char(100) not null,
+Agent_Name    char(50)  not null,
+Agent_Contact char(10)  not null,
+Email         char(50)  not null,
+Address       char(50)  not null,
+Fax           char(12)  not null,
+Joined_Date   date      not null,
+Expire_Date   date      not null,
+constraint tool_insurance_tool_TID_fk
+foreign key (IID) references tool (TID)
+on update cascade on delete cascade
+);
+
+create table tool_rent_order
+(
+Rent_ID char(10) not null
+primary key,
+CID     char(5)  null,
+Date    date     not null,
+Time    time     not null,
+constraint tool_rent_order_customer_CID_fk
+foreign key (CID) references customer (CID)
+on update cascade on delete cascade
+);
+
+create table tool_refund
+(
+Refund_ID char(10) not null
+primary key,
+Rent_ID   char(10) not null,
+Date      date     null,
+Time      time     not null,
+constraint tool_refund_tool_rent_order_Rent_ID_fk
+foreign key (Rent_ID) references tool_rent_order (Rent_ID)
+on update cascade on delete cascade
+);
+
+create index tool_refund_tool_rent_order_RT_fk
+on tool_refund (Rent_ID);
+
+create table tool_refund_detail
+(
+Refund_ID     char(10) not null,
+Tool_ID       char(5)  not null,
+Total         float    not null,
+Refund_Amount float    null,
+constraint tool_refund_detail_tool_TID_fk
+foreign key (Tool_ID) references tool (TID)
+on update cascade on delete cascade,
+constraint tool_refund_detail_tool_refund_Refund_ID_fk
+foreign key (Refund_ID) references tool_refund (Refund_ID)
+on update cascade on delete cascade
+);
+
+create index tool_refund_detail_tool_refund_Rent_ID_fk
+on tool_refund_detail (Refund_ID);
+
+create index toolRent_customer__fk
+on tool_rent_order (CID);
+
+create table tool_rent_order_detail
+(
+Rent_ID       char(10)  not null,
+TID           char(5)   not null,
+Brand         char(100) not null,
+Name          char(100) not null,
+Rent_Days     int       not null,
+Rate          float     not null,
+Total         float     not null,
+Return_Date   date      not null,
+Return_Status int       not null,
+Refund_Status int       not null,
+constraint tool_rent_order_detail_tool_TID_fk
+foreign key (TID) references tool (TID)
+on update cascade on delete cascade,
+constraint tool_rent_order_detail_tool_rent_order_Rent_ID_fk
+foreign key (Rent_ID) references tool_rent_order (Rent_ID)
+on update cascade on delete cascade
+);
+
+create index tool_rent_order_detail_tool_rent_order_RT_fk
+on tool_rent_order_detail (Rent_ID);
+
+create table tool_return
+(
+Return_ID    char(10) not null
+primary key,
+Rent_OrderID char(10) not null,
+Date         date     not null,
+Time         time     not null,
+constraint tool_return_tool_rent_order_Rent_ID_fk
+foreign key (Rent_OrderID) references tool_rent_order (Rent_ID)
+on update cascade on delete cascade
+);
+
+create index tool_return_tool_rent_order_RT_fk
+on tool_return (Rent_OrderID);
+
+create table tool_return_detail
+(
+Return_ID     char(10) not null,
+TID           char(8)  not null,
+Return_Date   date     not null,
+Returned_Date date     null,
+Late_Days     int      not null,
+Fine          float    not null,
+constraint tool_return_detail_tool_TID_fk
+foreign key (TID) references tool (TID)
+on update cascade on delete cascade,
+constraint tool_return_detail_tool_return_Return_ID_fk
+foreign key (Return_ID) references tool_return (Return_ID)
+on update cascade on delete cascade
+);
+
+create index tool_return_detail_tool_return_RID_fk
+on tool_return_detail (Return_ID);
+
+create table user
+(
+`Employee ID`    char(5)          not null
+primary key,
+UName            char(20)         null,
+UPassword        char(128)        not null,
+Permission_Level char default 'B' not null,
+constraint user_ibfk_1
+foreign key (`Employee ID`) references employee (EID)
+on update cascade on delete cascade
+);
+
+create table user_login_history
+(
+EID         char(5) not null,
+Date        date    not null,
+Log_Time    time    not null,
+Logout_Time time    null
+);
+
+create table vehicle
+(
+VID          char(8)      not null
+primary key,
+Manufacturer varchar(100) null,
+Model_Name   varchar(100) null,
+Description  varchar(100) null,
+Availability char(20)     not null,
+Rate_Per_Day float        not null,
+Category     char(3)      not null
+);
+
+create table vehicle_insurance
+(
+IID           char(8)   not null,
+Name          char(100) not null,
+Provider      char(100) not null,
+Agent_Name    char(50)  not null,
+Agent_Contact char(10)  not null,
+Email         char(50)  not null,
+Address       char(50)  not null,
+Fax           char(12)  not null,
+Joined_Date   date      not null,
+Expire_Date   date      not null,
+constraint vehicle_insurance_vehicle_VID_fk
+foreign key (IID) references vehicle (VID)
+on update cascade on delete cascade
+);
+
+create table vehicle_rent_order
+(
+Rent_ID char(10) not null
+primary key,
+CID     char(5)  null,
+Date    date     not null,
+Time    time     not null,
+constraint vehicle_rent_order_vehicle_rent_order_CID_fk
+foreign key (CID) references customer (CID)
+on update cascade on delete set null
+);
+
+create table vehicle_refund
+(
+Refund_ID char(10) not null
+primary key,
+Rent_ID   char(10) not null,
+Date      date     not null,
+Time      time     not null,
+constraint vehicle_refund_vehicle_rent_order_Rent_ID_fk
+foreign key (Rent_ID) references vehicle_rent_order (Rent_ID)
+on update cascade on delete cascade
+);
+
+create index vehicle_refund_vehicle_rent_order_RV_fk
+on vehicle_refund (Rent_ID);
+
+create table vehicle_refund_detail
+(
+Refund_ID     char(10) not null,
+Vehicle_ID    char(8)  not null,
+Total         float    not null,
+Refund_Amount float    not null,
+constraint vehicle_refund_detail_vehicle_refund_Refund_ID_fk
+foreign key (Refund_ID) references vehicle_refund (Refund_ID)
+on update cascade on delete cascade
+);
+
+create index vehicle_refund_detail_vehicle_VID_fk
+on vehicle_refund_detail (Vehicle_ID);
+
+create table vehicle_rent_order_detail
+(
+Rent_ID              char(10)  not null,
+VID                  char(8)   not null,
+Vehicle_Manufacturer char(100) not null,
+Vehicle_Model_Name   char(100) not null,
+Category             char(3)   not null,
+Rent_Days            int       not null,
+Rate                 float     not null,
+Total                float     not null,
+Return_Date          date      not null,
+Return_Status        int       not null,
+Refund_Status        int       not null,
+constraint vehicle_rent_order_detail_vehicle_VID_fk
+foreign key (VID) references vehicle (VID)
+on update cascade on delete cascade,
+constraint vehicle_rent_order_detail_vehicle_rent_order_Rent_ID_fk
+foreign key (Rent_ID) references vehicle_rent_order (Rent_ID)
+on update cascade on delete cascade
+);
+
+create table vehicle_return
+(
+Return_ID    char(10) not null
+primary key,
+Rent_OrderID char(10) not null,
+Date         date     not null,
+Time         time     not null,
+constraint vehicle_return_vehicle_rent_order_Rent_ID_fk
+foreign key (Rent_OrderID) references vehicle_rent_order (Rent_ID)
+on update cascade on delete cascade
+);
+
+create index Rent_OrderID
+on vehicle_return (Rent_OrderID);
+
+create table vehicle_return_detail
+(
+Return_ID     char(10) not null,
+VID           char(8)  not null,
+Return_Date   date     not null,
+Returned_Date date     null,
+Late_Days     int      not null,
+Fine          float    not null,
+constraint vehicle_return_detail_vehicle_VID_fk
+foreign key (VID) references vehicle (VID)
+on update cascade on delete cascade,
+constraint vehicle_return_detail_vehicle_return_Return_ID_fk
+foreign key (Return_ID) references vehicle_return (Return_ID)
+on update cascade on delete cascade
+);
+
+create index VID
+on vehicle_return_detail (VID);
+
+create index vehicle_return_detail_vehicle_return_RID_fk
+on vehicle_return_detail (Return_ID);
+
+insert into employee (EID, First_Name, Last_Name, NIC, Gender, Date_Of_Birth, Mobile_Number, Email, ZIP, City, Street,
+State, Joined_Date, "Position")
+values ('E0001','FirstName','LastName','200245674567','Male','1990-01-01','0712345678','email@gmail.com','20000','Colombo','Colombo','Colombo','2019-01-01','Owner');
+
+insert into RohanaRenting.user ("Employee ID", UName, UPassword, Permission_Level)
+values ('E0001','admin','25d55ad283aa400af464c76d713c07ad','A');
+
+### Employee ID is E0001
+### Login Password is 12345678
+
+## After go to db Package and change the JDBC URL As Yours
