@@ -9,9 +9,9 @@
 package lk.hnkm.rohanarenting.model;
 
 import com.jfoenix.controls.JFXButton;
-import lk.hnkm.rohanarenting.dto.User;
+import lk.hnkm.rohanarenting.dto.UserDTO;
 import lk.hnkm.rohanarenting.dto.tm.UserTM;
-import lk.hnkm.rohanarenting.security.Encrypt;
+import lk.hnkm.rohanarenting.utill.security.Encrypt;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
 import java.security.NoSuchAlgorithmException;
@@ -30,24 +30,24 @@ public class UserAccountsModel {
         }
     }
 
-    public static User getUserDetail(String employeeID) throws SQLException{
+    public static UserDTO getUserDetail(String employeeID) throws SQLException{
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM user WHERE `Employee ID` = ?",employeeID);
         if (resultSet.next()){
-            return new User(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4));
+            return new UserDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4));
         }else {
             return null;
         }
     }
 
 
-    public static Boolean updateUser(User user) throws SQLException, NoSuchAlgorithmException {
-        String password = Encrypt.encrypt(user.getUPassword());
-        return CruidUtil.execute("UPDATE user SET `Employee ID`=?,UName = ?,UPassword=?,Permission_Level=? WHERE `Employee ID`=?",user.getEID(),user.getUName(),password,user.getPermissionLevel(),user.getEID());
+    public static Boolean updateUser(UserDTO userDTO) throws SQLException, NoSuchAlgorithmException {
+        String password = Encrypt.encrypt(userDTO.getUPassword());
+        return CruidUtil.execute("UPDATE user SET `Employee ID`=?,UName = ?,UPassword=?,Permission_Level=? WHERE `Employee ID`=?", userDTO.getEID(), userDTO.getUName(),password, userDTO.getPermissionLevel(), userDTO.getEID());
     }
 
-    public static boolean addUser(User user) throws SQLException, NoSuchAlgorithmException {
-        String password = Encrypt.encrypt(user.getUPassword());
-        return CruidUtil.execute("INSERT INTO user VALUES (?,?,?,?)",user.getEID(),user.getUName(),password,user.getPermissionLevel());
+    public static boolean addUser(UserDTO userDTO) throws SQLException, NoSuchAlgorithmException {
+        String password = Encrypt.encrypt(userDTO.getUPassword());
+        return CruidUtil.execute("INSERT INTO user VALUES (?,?,?,?)", userDTO.getEID(), userDTO.getUName(),password, userDTO.getPermissionLevel());
     }
 
     public static Boolean deleteUser(String employeeID) throws SQLException {

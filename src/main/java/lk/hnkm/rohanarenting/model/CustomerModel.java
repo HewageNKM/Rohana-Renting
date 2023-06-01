@@ -8,7 +8,7 @@
 package lk.hnkm.rohanarenting.model;
 
 import com.jfoenix.controls.JFXButton;
-import lk.hnkm.rohanarenting.dto.Customer;
+import lk.hnkm.rohanarenting.dto.CustomerDTO;
 import lk.hnkm.rohanarenting.dto.tm.CustomerTM;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
@@ -22,33 +22,33 @@ public class CustomerModel {
         return !resultSet.next();
     }
 
-    public static Boolean addCustomer(Customer customer) throws SQLException {
-        ResultSet resultSet = CruidUtil.execute("SELECT * FROM customer WHERE NIC = ?",customer.getNIC());
+    public static Boolean addCustomer(CustomerDTO customerDTO) throws SQLException {
+        ResultSet resultSet = CruidUtil.execute("SELECT * FROM customer WHERE NIC = ?", customerDTO.getNIC());
         if(resultSet.next()){
             return false;
         }else {
-            return CruidUtil.execute("INSERT INTO customer VALUES (?,?,?,?,?,?,?,?,?,?)",customer.getCID(),customer.getFistName(),customer.getLastName(),customer.getNIC(),customer.getBirthday(),customer.getMobileNumber(),customer.getEmail(),customer.getStreet(),customer.getCity(),customer.getZipCode());
+            return CruidUtil.execute("INSERT INTO customer VALUES (?,?,?,?,?,?,?,?,?,?)", customerDTO.getCID(), customerDTO.getFistName(), customerDTO.getLastName(), customerDTO.getNIC(), customerDTO.getBirthday(), customerDTO.getMobileNumber(), customerDTO.getEmail(), customerDTO.getStreet(), customerDTO.getCity(), customerDTO.getZipCode());
         }
     }
 
-    public static Boolean updateCustomer(Customer customer) throws SQLException {
+    public static Boolean updateCustomer(CustomerDTO customerDTO) throws SQLException {
         return CruidUtil.execute("UPDATE customer SET First_Name=?,Last_Name=?,NIC=?,Birthday=?,Mobile_Number=?,Email=?,Street=?,City=?,Zip_Code=? WHERE CID=?",
-                customer.getFistName(),
-                customer.getLastName(),
-                customer.getNIC(),
-                customer.getBirthday(),
-                customer.getMobileNumber(),
-                customer.getEmail(),
-                customer.getStreet(),
-                customer.getCity(),
-                customer.getZipCode(),
-                customer.getCID());
+                customerDTO.getFistName(),
+                customerDTO.getLastName(),
+                customerDTO.getNIC(),
+                customerDTO.getBirthday(),
+                customerDTO.getMobileNumber(),
+                customerDTO.getEmail(),
+                customerDTO.getStreet(),
+                customerDTO.getCity(),
+                customerDTO.getZipCode(),
+                customerDTO.getCID());
     }
 
-    public static Customer getCustomer(String customerId) throws SQLException {
+    public static CustomerDTO getCustomer(String customerId) throws SQLException {
         ResultSet resultSet =CruidUtil.execute("SELECT * FROM customer WHERE CID=?",customerId);
         if(resultSet.next()){
-            return new Customer(
+            return new CustomerDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),

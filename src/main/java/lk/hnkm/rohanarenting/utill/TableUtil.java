@@ -13,7 +13,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.input.*;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 
 public class TableUtil {
     static final KeyCodeCombination keyCodeCopy = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_ANY);

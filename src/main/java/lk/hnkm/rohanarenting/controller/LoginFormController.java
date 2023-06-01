@@ -24,9 +24,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import lk.hnkm.rohanarenting.model.LoginModel;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.dto.UserDTO;
+import lk.hnkm.rohanarenting.service.ServiceFactory;
+import lk.hnkm.rohanarenting.service.impl.LoginServiceImpl;
+import lk.hnkm.rohanarenting.service.interfaces.LoginService;
 import lk.hnkm.rohanarenting.utill.Regex;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -45,9 +48,8 @@ public class LoginFormController {
     public ImageView employeeIdViewer;
     public ImageView passwordViewer;
     public TextFlow missionTextFlow;
-
+    private final LoginService loginService = (LoginServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LOGIN_SERVICE);
     public void initialize(){
-        //loginBtn.setDisable(true);
         Text missionText = new Text("To Develop A Highly Successful, Profitable All Round Car Rental Business Which Provides Quality Services In Our Community And To Become A Standard For An Ideal Car Rental Business Not Only In The Colombo But Also Throughout The Sri Lanka Where We Intend Selling Our Franchise.");
         missionText.setStyle("-fx-font-weight: bolder");
         missionText.setStyle("-fx-font-size: 17");
@@ -68,9 +70,8 @@ public class LoginFormController {
     void loginBtnOnAction(ActionEvent event) throws IOException {
         if(Regex.validateEID(employeeIdFld.getText())&&Regex.validatePassword(passwordFld.getText())) {
             try {
-                Boolean isExist = LoginModel.verifyEmployeeId(employeeIdFld.getText(), passwordFld.getText());
-                if (Boolean.TRUE.equals(isExist)) {
-                    LoginModel.InsertUserEntry(employeeIdFld.getText().toUpperCase());
+                if (loginService.verifyUserCredentials(new UserDTO(employeeIdFld.getText().toUpperCase(),null, passwordFld.getText(),null))) {
+                    loginService.insertUserEntry(employeeIdFld.getText().toUpperCase());
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/BoardForm.fxml"));
                     Parent parent = loader.load();
                     BoardFormController boardController = loader.getController();
@@ -104,7 +105,7 @@ public class LoginFormController {
                     if (ButtonType == ButtonType.OK) {
                         stage.close();
                         try {
-                            LoginModel.setUserLogoutEntry();
+                            loginService.setUserLogoutEntry();
                             loadLoginForm();
                             TopUpNotifications.logOut(employeeIdFld.getText().toUpperCase());
                         } catch (IOException | SQLException e) {
@@ -133,7 +134,7 @@ public class LoginFormController {
     //Validate user name
     public void employeeIdValidate(KeyEvent keyEvent) {
         loginBtn.setDisable(true);
-        if (Regex.validateEID(employeeIdFld.getText())) {
+        if (loginService.employeeIdValidate(employeeIdFld.getText())) {
             employeeIdViewer.setImage(new Image("/img/checkmark.png"));
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Employee ID !");
@@ -146,7 +147,7 @@ public class LoginFormController {
     //Validate password
     public void passwordValidate(KeyEvent keyEvent) {
         loginBtn.setDisable(true);
-        if (Regex.validatePassword(passwordFld.getText())) {
+        if (loginService.passwordValidate(passwordFld.getText())) {
             passwordViewer.setImage(new Image("/img/checkmark.png"));
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Password !");
@@ -158,7 +159,7 @@ public class LoginFormController {
     }
 
     public void refreshOnAction(MouseEvent mouseEvent) {
-        if(Regex.validatePassword(passwordFld.getText())&&Regex.validateEID(employeeIdFld.getText())){
+        if(loginService.passwordValidate(passwordFld.getText())&&loginService.employeeIdValidate(employeeIdFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("All Set !");
             loginBtn.setDisable(false);

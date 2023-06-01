@@ -22,11 +22,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import lk.hnkm.rohanarenting.dto.Insurance;
-import lk.hnkm.rohanarenting.dto.Vehicle;
+import lk.hnkm.rohanarenting.dto.InsuranceDTO;
+import lk.hnkm.rohanarenting.dto.VehicleDTO;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
 import lk.hnkm.rohanarenting.model.VehicleModel;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Regex;
 import lk.hnkm.rohanarenting.utill.TableUtil;
 import net.sf.jasperreports.engine.*;
@@ -243,7 +243,7 @@ public class VehicleFormController {
     private void printVehicleReport(VehicleTM vehicleTM) {
         try {
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(Collections.singleton(vehicleTM));
-            Insurance insurance = VehicleModel.getInsuranceDetails(vehicleTM.getVID());
+            InsuranceDTO insuranceDTO = VehicleModel.getInsuranceDetails(vehicleTM.getVID());
             Map<String, Object> params = new HashMap<>();
             params.put("VID",vehicleTM.getVID());
             params.put("manufacturer",vehicleTM.getManufacturer());
@@ -252,16 +252,16 @@ public class VehicleFormController {
             params.put("rate",vehicleTM.getRate());
             params.put("Availability",vehicleTM.getAvailability());
             params.put("codeNumber",vehicleTM.getVID());
-            params.put("IID",insurance.getIID());
-            params.put("insuranceName",insurance.getName());
-            params.put("iPName",insurance.getInsuranceProvider());
-            params.put("fax",insurance.getFax());
-            params.put("email",insurance.getEmail());
-            params.put("agentContact",insurance.getAgentContact());
-            params.put("agentName",insurance.getAgentName());
-            params.put("expireDate", Date.valueOf(insurance.getExpireDate()));
-            params.put("joinedDate",Date.valueOf(insurance.getJoinedDate()));
-            params.put("address",insurance.getAddress());
+            params.put("IID", insuranceDTO.getIID());
+            params.put("insuranceName", insuranceDTO.getName());
+            params.put("iPName", insuranceDTO.getInsuranceProvider());
+            params.put("fax", insuranceDTO.getFax());
+            params.put("email", insuranceDTO.getEmail());
+            params.put("agentContact", insuranceDTO.getAgentContact());
+            params.put("agentName", insuranceDTO.getAgentName());
+            params.put("expireDate", Date.valueOf(insuranceDTO.getExpireDate()));
+            params.put("joinedDate",Date.valueOf(insuranceDTO.getJoinedDate()));
+            params.put("address", insuranceDTO.getAddress());
             try {
                 JasperReport compileReport = JasperCompileManager.compileReport(
                         JRXmlLoader.load(
@@ -350,13 +350,13 @@ public class VehicleFormController {
     @FXML
     void enterOnAction(ActionEvent event) {
         try {
-            Vehicle vehicle = VehicleModel.getVehicleDetail(licenseFld.getText());
-            if(vehicle!= null){
-                modelNameFld.setText(vehicle.getModelName());
+            VehicleDTO vehicleDTO = VehicleModel.getVehicleDetail(licenseFld.getText());
+            if(vehicleDTO != null){
+                modelNameFld.setText(vehicleDTO.getModelName());
                 System.out.println(modelNameFld.getText());
-                descriptionFld.setText(vehicle.getDescription());
-                rentalRateFld.setText(vehicle.getRate().toString());
-                manufacturerFld.setText(vehicle.getManufacturer());
+                descriptionFld.setText(vehicleDTO.getDescription());
+                rentalRateFld.setText(vehicleDTO.getRate().toString());
+                manufacturerFld.setText(vehicleDTO.getManufacturer());
                 System.out.println(manufacturerFld.getText());
                 saveBtn.setDisable(false);
                 deleteBtn.setDisable(false);
@@ -364,7 +364,7 @@ public class VehicleFormController {
                 if(isExist){
                     orderStatusLabel.setStyle("-fx-text-fill: red");
                     orderStatusLabel.setText("This Vehicle is in an Order");
-                    if (vehicle.getAvailability().equals("Available")) {
+                    if (vehicleDTO.getAvailability().equals("Available")) {
                         availableRadiBtn.setSelected(true);
                     } else {
                         nAvailableRadioBtn.setSelected(true);
@@ -372,18 +372,18 @@ public class VehicleFormController {
                     nAvailableRadioBtn.setDisable(true);
                     availableRadiBtn.setDisable(true);
                 }else {
-                    if (vehicle.getAvailability().equals("Available")) {
+                    if (vehicleDTO.getAvailability().equals("Available")) {
                         availableRadiBtn.setSelected(true);
                     } else {
                         nAvailableRadioBtn.setSelected(true);
                     }
                 }
-                if (vehicle.getAvailability().equals("Available")) {
+                if (vehicleDTO.getAvailability().equals("Available")) {
                     availableRadiBtn.setSelected(true);
                 } else {
                     nAvailableRadioBtn.setSelected(true);
                 }
-                categoryComboBox.getSelectionModel().select(vehicle.getCategory());
+                categoryComboBox.getSelectionModel().select(vehicleDTO.getCategory());
                 licenseFld.setDisable(true);
             }else {
                 new Alert(Alert.AlertType.ERROR,"No Vehicle Found !").show();
@@ -443,27 +443,27 @@ public class VehicleFormController {
 
     @FXML
     void saveBtnOnAction(ActionEvent event) {
-        Vehicle vehicle = new Vehicle();
+        VehicleDTO vehicleDTO = new VehicleDTO();
         try {
             if(VehicleModel.getVehicle(licenseFld.getText())){
                 new Alert(Alert.AlertType.CONFIRMATION,"New Vehicle Data Will Be Updated !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {
-                            vehicle.setVID(licenseFld.getText());
-                            vehicle.setManufacturer(manufacturerFld.getText());
-                            vehicle.setModelName(modelNameFld.getText());
-                            vehicle.setDescription(descriptionFld.getText());
-                            vehicle.setRate(Double.valueOf(rentalRateFld.getText()));
+                            vehicleDTO.setVID(licenseFld.getText());
+                            vehicleDTO.setManufacturer(manufacturerFld.getText());
+                            vehicleDTO.setModelName(modelNameFld.getText());
+                            vehicleDTO.setDescription(descriptionFld.getText());
+                            vehicleDTO.setRate(Double.valueOf(rentalRateFld.getText()));
                            if(availableRadiBtn.isSelected()){
-                               vehicle.setAvailability("Available");
+                               vehicleDTO.setAvailability("Available");
                            }else {
-                               vehicle.setAvailability("Not Available");
+                               vehicleDTO.setAvailability("Not Available");
                             }
-                           vehicle.setCategory(categoryComboBox.getSelectionModel().getSelectedItem().toString());
+                           vehicleDTO.setCategory(categoryComboBox.getSelectionModel().getSelectedItem().toString());
                             Boolean isExist = VehicleModel.checkOrderStatus(licenseFld.getText());
                             if(isExist){
                                 new Alert(Alert.AlertType.WARNING,"Due to Ongoing Order On This Vehicle Manual Availability Will Not Be Effect !").showAndWait();
-                                Boolean isUpdated =VehicleModel.updateVehicleWithoutAvailability(vehicle);
+                                Boolean isUpdated =VehicleModel.updateVehicleWithoutAvailability(vehicleDTO);
                                 if(isUpdated){
                                     TopUpNotifications.success("Vehicle Data Updated !");
                                     clearFields();
@@ -475,7 +475,7 @@ public class VehicleFormController {
                                 }
 
                             }else {
-                                Boolean isUpdated =VehicleModel.updateVehicle(vehicle);
+                                Boolean isUpdated =VehicleModel.updateVehicle(vehicleDTO);
                                 if(isUpdated){
                                     TopUpNotifications.success("Vehicle Data Updated !");
                                     clearFields();
@@ -496,18 +496,18 @@ public class VehicleFormController {
                 new Alert(Alert.AlertType.CONFIRMATION,"New Vehicle Data Will Be Saved !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {
-                            vehicle.setVID(licenseFld.getText());
-                            vehicle.setManufacturer(manufacturerFld.getText());
-                            vehicle.setModelName(modelNameFld.getText());
-                            vehicle.setDescription(descriptionFld.getText());
-                            vehicle.setRate(Double.valueOf(rentalRateFld.getText()));
+                            vehicleDTO.setVID(licenseFld.getText());
+                            vehicleDTO.setManufacturer(manufacturerFld.getText());
+                            vehicleDTO.setModelName(modelNameFld.getText());
+                            vehicleDTO.setDescription(descriptionFld.getText());
+                            vehicleDTO.setRate(Double.valueOf(rentalRateFld.getText()));
                             if(availableRadiBtn.isSelected()){
-                                vehicle.setAvailability("Available");
+                                vehicleDTO.setAvailability("Available");
                             }else {
-                                vehicle.setAvailability("Not Available");
+                                vehicleDTO.setAvailability("Not Available");
                             }
-                            vehicle.setCategory(categoryComboBox.getSelectionModel().getSelectedItem());
-                            if(VehicleModel.saveVehicle(vehicle)){
+                            vehicleDTO.setCategory(categoryComboBox.getSelectionModel().getSelectedItem());
+                            if(VehicleModel.saveVehicle(vehicleDTO)){
                                 TopUpNotifications.success("Vehicle Data Saved !");
                                 clearFields();
                                 loadAllVehicles();

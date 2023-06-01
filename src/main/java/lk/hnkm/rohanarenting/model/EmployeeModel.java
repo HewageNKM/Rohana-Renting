@@ -8,7 +8,7 @@
 package lk.hnkm.rohanarenting.model;
 
 import com.jfoenix.controls.JFXButton;
-import lk.hnkm.rohanarenting.dto.Employee;
+import lk.hnkm.rohanarenting.dto.EmployeeDTO;
 import lk.hnkm.rohanarenting.dto.tm.EmployeeTM;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
@@ -35,48 +35,48 @@ public class EmployeeModel {
         return !resultSet.next();
     }
 
-    public static Boolean addEmployee(Employee employee) throws SQLException {
+    public static Boolean addEmployee(EmployeeDTO employeeDTO) throws SQLException {
       return  CruidUtil.execute("INSERT INTO employee VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                employee.getEID(),
-                employee.getFistName(),
-                employee.getLastName(),
-                employee.getNic(),
-                employee.getGender(),
-                employee.getDateOfBirth(),
-                employee.getMobileNumber(),
-                employee.getEmail(),
-                employee.getZip(),
-                employee.getCity(),
-                employee.getStreet(),
-                employee.getState(),
-                employee.getJoinedDate(),
-                employee.getPosition()
+                employeeDTO.getEID(),
+                employeeDTO.getFistName(),
+                employeeDTO.getLastName(),
+                employeeDTO.getNic(),
+                employeeDTO.getGender(),
+                employeeDTO.getDateOfBirth(),
+                employeeDTO.getMobileNumber(),
+                employeeDTO.getEmail(),
+                employeeDTO.getZip(),
+                employeeDTO.getCity(),
+                employeeDTO.getStreet(),
+                employeeDTO.getState(),
+                employeeDTO.getJoinedDate(),
+                employeeDTO.getPosition()
                 );
     }
 
-    public static Boolean updateEmployee(Employee employee) throws SQLException {
+    public static Boolean updateEmployee(EmployeeDTO employeeDTO) throws SQLException {
       return  CruidUtil.execute("UPDATE employee SET First_Name=?,Last_Name=?,NIC=?,Gender=?,Date_Of_Birth=?,Mobile_Number=?,Email=?,Zip=?,City=?,Street=?,State=?,Joined_Date=?,Position=? WHERE EID=?",
-                employee.getFistName(),
-                employee.getLastName(),
-                employee.getNic(),
-                employee.getGender(),
-                employee.getDateOfBirth(),
-                employee.getMobileNumber(),
-                employee.getEmail(),
-                employee.getZip(),
-                employee.getCity(),
-                employee.getStreet(),
-                employee.getState(),
-                employee.getJoinedDate(),
-                employee.getPosition(),
-                employee.getEID()
+                employeeDTO.getFistName(),
+                employeeDTO.getLastName(),
+                employeeDTO.getNic(),
+                employeeDTO.getGender(),
+                employeeDTO.getDateOfBirth(),
+                employeeDTO.getMobileNumber(),
+                employeeDTO.getEmail(),
+                employeeDTO.getZip(),
+                employeeDTO.getCity(),
+                employeeDTO.getStreet(),
+                employeeDTO.getState(),
+                employeeDTO.getJoinedDate(),
+                employeeDTO.getPosition(),
+                employeeDTO.getEID()
         );
     }
 
-    public static Employee getEmployee(String employeeID) throws SQLException {
+    public static EmployeeDTO getEmployee(String employeeID) throws SQLException {
         ResultSet resultSet =CruidUtil.execute("SELECT * FROM employee WHERE EID=?",employeeID);
         if(resultSet.next()){
-          return new Employee(
+          return new EmployeeDTO(
                   resultSet.getString(1),
                   resultSet.getString(2),
                   resultSet.getString(3),

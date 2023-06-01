@@ -18,10 +18,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
 import javafx.scene.paint.Color;
-import lk.hnkm.rohanarenting.dto.Insurance;
+import lk.hnkm.rohanarenting.dto.InsuranceDTO;
 import lk.hnkm.rohanarenting.dto.tm.InsuranceTM;
 import lk.hnkm.rohanarenting.model.InsuranceModel;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Regex;
 import lk.hnkm.rohanarenting.utill.TableUtil;
 
@@ -159,18 +159,18 @@ public class InsuranceFormController {
     void enterOnAction(ActionEvent event) {
         if(Regex.validateVehicleID(insuranceIdFld.getText())) {
             try {
-                Insurance insurance = InsuranceModel.getVehicleInsurance(insuranceIdFld.getText());
-                if(insurance !=null){
-                    insuranceIdFld.setText(insurance.getIID());
-                    insuranceNameFld.setText(insurance.getName());
-                    insuranceProviderFld.setText(insurance.getInsuranceProvider());
-                    agentNameFld.setText(insurance.getAgentName());
-                    agentContactFld.setText(insurance.getAgentContact());
-                    addressFld.setText(insurance.getAddress());
-                    emailFld.setText(insurance.getEmail());
-                    faxFld.setText(insurance.getFax());
-                    joingDatePicker.setValue(insurance.getJoinedDate());
-                    expireDatePicker.setValue(insurance.getExpireDate());
+                InsuranceDTO insuranceDTO = InsuranceModel.getVehicleInsurance(insuranceIdFld.getText());
+                if(insuranceDTO !=null){
+                    insuranceIdFld.setText(insuranceDTO.getIID());
+                    insuranceNameFld.setText(insuranceDTO.getName());
+                    insuranceProviderFld.setText(insuranceDTO.getInsuranceProvider());
+                    agentNameFld.setText(insuranceDTO.getAgentName());
+                    agentContactFld.setText(insuranceDTO.getAgentContact());
+                    addressFld.setText(insuranceDTO.getAddress());
+                    emailFld.setText(insuranceDTO.getEmail());
+                    faxFld.setText(insuranceDTO.getFax());
+                    joingDatePicker.setValue(insuranceDTO.getJoinedDate());
+                    expireDatePicker.setValue(insuranceDTO.getExpireDate());
                     insuranceIdFld.setDisable(true);
                 }else {
                     new Alert(Alert.AlertType.ERROR,"Insurance Details  Not Found !").show();
@@ -181,18 +181,18 @@ public class InsuranceFormController {
             }
         }else {
             try {
-                Insurance insurance = InsuranceModel.getToolInsurance(insuranceIdFld.getText());
-                if(insurance !=null){
-                    insuranceIdFld.setText(insurance.getIID());
-                    insuranceNameFld.setText(insurance.getName());
-                    insuranceProviderFld.setText(insurance.getInsuranceProvider());
-                    agentNameFld.setText(insurance.getAgentName());
-                    agentContactFld.setText(insurance.getAgentContact());
-                    addressFld.setText(insurance.getAddress());
-                    emailFld.setText(insurance.getEmail());
-                    faxFld.setText(insurance.getFax());
-                    joingDatePicker.setValue(insurance.getJoinedDate());
-                    expireDatePicker.setValue(insurance.getExpireDate());
+                InsuranceDTO insuranceDTO = InsuranceModel.getToolInsurance(insuranceIdFld.getText());
+                if(insuranceDTO !=null){
+                    insuranceIdFld.setText(insuranceDTO.getIID());
+                    insuranceNameFld.setText(insuranceDTO.getName());
+                    insuranceProviderFld.setText(insuranceDTO.getInsuranceProvider());
+                    agentNameFld.setText(insuranceDTO.getAgentName());
+                    agentContactFld.setText(insuranceDTO.getAgentContact());
+                    addressFld.setText(insuranceDTO.getAddress());
+                    emailFld.setText(insuranceDTO.getEmail());
+                    faxFld.setText(insuranceDTO.getFax());
+                    joingDatePicker.setValue(insuranceDTO.getJoinedDate());
+                    expireDatePicker.setValue(insuranceDTO.getExpireDate());
                     insuranceIdFld.setDisable(true);
                 }else {
                     new Alert(Alert.AlertType.ERROR,"Insurance Details  Not Found !").show();
@@ -234,7 +234,7 @@ public class InsuranceFormController {
                                 new Alert(Alert.AlertType.CONFIRMATION, "New Vehicle Insurance Data Will Be Updated ! ", javafx.scene.control.ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(Button -> {
                                     if (Button == javafx.scene.control.ButtonType.OK) {
                                         try {
-                                            Boolean isUpdated = InsuranceModel.updateVehicleInsuranceDetails(new Insurance(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
+                                            Boolean isUpdated = InsuranceModel.updateVehicleInsuranceDetails(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
                                             if (isUpdated) {
                                                 TopUpNotifications.success("Vehicle Insurance Details Updated ! ");
                                                 clearFields();
@@ -252,7 +252,7 @@ public class InsuranceFormController {
                                 new Alert(Alert.AlertType.CONFIRMATION, "New Vehicle Insurance Data Will Be Saved !", ButtonType.OK, ButtonType.CANCEL).showAndWait().ifPresent(Btn -> {
                                     if (Btn == ButtonType.OK) {
                                         try {
-                                            Boolean isUpdated = InsuranceModel.addVehicleInsuranceDetails(new Insurance(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
+                                            Boolean isUpdated = InsuranceModel.addVehicleInsuranceDetails(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
                                             if (isUpdated) {
                                                 TopUpNotifications.success("Vehicle Insurance Details Saved ! ");
                                                 clearFields();
@@ -277,7 +277,7 @@ public class InsuranceFormController {
                                 new Alert(Alert.AlertType.CONFIRMATION, "New Tool Insurance Data Will Be Updated !", ButtonType.OK, ButtonType.CANCEL).showAndWait().ifPresent(BT -> {
                                     if (BT == javafx.scene.control.ButtonType.OK) {
                                         try {
-                                            Boolean isUpdated = InsuranceModel.updateToolInsuranceDetails(new Insurance(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
+                                            Boolean isUpdated = InsuranceModel.updateToolInsuranceDetails(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
                                             if (isUpdated) {
                                                 TopUpNotifications.success("Tool Insurance Details Updated ! ");
                                                 clearFields();
@@ -295,7 +295,7 @@ public class InsuranceFormController {
                                 new Alert(Alert.AlertType.CONFIRMATION, "New Tool Insurance Data Will Be Saved !", ButtonType.OK, ButtonType.CANCEL).showAndWait().ifPresent(b -> {
                                     if (b == ButtonType.OK) {
                                         try {
-                                            Boolean isUpdated = InsuranceModel.addToolInsuranceDetails(new Insurance(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
+                                            Boolean isUpdated = InsuranceModel.addToolInsuranceDetails(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
                                             if (isUpdated) {
                                                 TopUpNotifications.success("Tool Insurance Details Saved ! ");
                                                 clearFields();

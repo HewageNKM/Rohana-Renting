@@ -22,10 +22,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import lk.hnkm.rohanarenting.dto.User;
+import lk.hnkm.rohanarenting.dto.UserDTO;
 import lk.hnkm.rohanarenting.dto.tm.UserTM;
 import lk.hnkm.rohanarenting.model.UserAccountsModel;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Regex;
 import lk.hnkm.rohanarenting.utill.TableUtil;
 
@@ -137,19 +137,19 @@ public class UserFormController {
 
     // Employee ID Fld Enter Action
     public void enterOnAction(ActionEvent actionEvent) {
-        User user = null;
+        UserDTO userDTO = null;
         try {
-            user = UserAccountsModel.getUserDetail(employeeFld.getText());
-            if(user==null){
+            userDTO = UserAccountsModel.getUserDetail(employeeFld.getText());
+            if(userDTO ==null){
                 new Alert(Alert.AlertType.ERROR,"No User Account Found !").show();
                 clearFields();
             }else {
-                if(user.getPermissionLevel().equals("A")){
+                if(userDTO.getPermissionLevel().equals("A")){
                     aPermission.setSelected(true);
                 }else {
                     bPermission.setSelected(true);
                 }
-                userNameFld.setText(user.getUName());
+                userNameFld.setText(userDTO.getUName());
             }
             employeeFld.setDisable(true);
         } catch (SQLException e) {
@@ -164,7 +164,7 @@ public class UserFormController {
                new Alert(Alert.AlertType.CONFIRMATION,"New User Data Will Be Updated !",ButtonType.YES).showAndWait().ifPresent(buttonType -> {
                    if(buttonType==ButtonType.YES){
                        try {
-                           if(UserAccountsModel.updateUser(new User(employeeFld.getText(),userNameFld.getText(), passwordFld.getText(),aPermission.isSelected()?"A":"B"))) {
+                           if(UserAccountsModel.updateUser(new UserDTO(employeeFld.getText(),userNameFld.getText(), passwordFld.getText(),aPermission.isSelected()?"A":"B"))) {
                                TopUpNotifications.success("User Data Updated !");
                                clearFields();
                                loadTableData();
@@ -178,7 +178,7 @@ public class UserFormController {
                    }
                });
            }else {
-                if(UserAccountsModel.addUser(new User(employeeFld.getText(),userNameFld.getText(),passwordFld.getText(),aPermission.isSelected()?"A":"B"))){
+                if(UserAccountsModel.addUser(new UserDTO(employeeFld.getText(),userNameFld.getText(),passwordFld.getText(),aPermission.isSelected()?"A":"B"))){
                     TopUpNotifications.success("User Data Saved !");
                     loadTableData();
                      clearFields();

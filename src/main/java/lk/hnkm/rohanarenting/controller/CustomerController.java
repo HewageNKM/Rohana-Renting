@@ -10,11 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import lk.hnkm.rohanarenting.dto.Customer;
+import lk.hnkm.rohanarenting.dto.CustomerDTO;
 import lk.hnkm.rohanarenting.dto.tm.CustomerTM;
 import lk.hnkm.rohanarenting.model.CustomerModel;
 import lk.hnkm.rohanarenting.model.EmployeeModel;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
 import lk.hnkm.rohanarenting.utill.TableUtil;
@@ -376,17 +376,17 @@ public class CustomerController {
 
     public void enterOnAction(javafx.event.ActionEvent actionEvent) {
         try {
-            Customer customer = CustomerModel.getCustomer(customerIdFld.getText());
-            if(customer!=null){
-                firstNameFld.setText(customer.getFistName());
-                lastNameFld.setText(customer.getLastName());
-                cityFld.setText(customer.getCity());
-                zipCodeFld.setText(String.valueOf(customer.getZipCode()));
-                streetFld.setText(customer.getStreet());
-                nicFld.setText(customer.getNIC());
-                mobileNumberFld.setText(customer.getMobileNumber());
-                emailFld.setText(customer.getEmail());
-                birthdayDatePicker.setValue(customer.getBirthday());
+            CustomerDTO customerDTO = CustomerModel.getCustomer(customerIdFld.getText());
+            if(customerDTO !=null){
+                firstNameFld.setText(customerDTO.getFistName());
+                lastNameFld.setText(customerDTO.getLastName());
+                cityFld.setText(customerDTO.getCity());
+                zipCodeFld.setText(String.valueOf(customerDTO.getZipCode()));
+                streetFld.setText(customerDTO.getStreet());
+                nicFld.setText(customerDTO.getNIC());
+                mobileNumberFld.setText(customerDTO.getMobileNumber());
+                emailFld.setText(customerDTO.getEmail());
+                birthdayDatePicker.setValue(customerDTO.getBirthday());
             }else {
                 new Alert(Alert.AlertType.ERROR,"Customer ID Not Found !").show();
             }
@@ -402,7 +402,7 @@ public class CustomerController {
                 new Alert(Alert.AlertType.CONFIRMATION,"New Customer Will Be Added !",ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(ButtonType->{
                     if(ButtonType == ButtonType.OK){
                         try {
-                           Boolean isUpdated = CustomerModel.addCustomer(new Customer(customerIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),birthdayDatePicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),streetFld.getText(),cityFld.getText(),Integer.parseInt(zipCodeFld.getText())));
+                           Boolean isUpdated = CustomerModel.addCustomer(new CustomerDTO(customerIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),birthdayDatePicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),streetFld.getText(),cityFld.getText(),Integer.parseInt(zipCodeFld.getText())));
                             if(isUpdated){
                                 new Alert(Alert.AlertType.INFORMATION,customerIdFld.getText()+" Customer Added Successfully").show();
                                 loadAllCustomers();
@@ -421,7 +421,7 @@ public class CustomerController {
                 new Alert(Alert.AlertType.CONFIRMATION,"Customer Details Will Be Updated !",ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(ButtonType->{
                     if(ButtonType == ButtonType.OK){
                         try {
-                            Boolean isUpdated = CustomerModel.updateCustomer(new Customer(customerIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),birthdayDatePicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),streetFld.getText(),cityFld.getText(),Integer.parseInt(zipCodeFld.getText())));
+                            Boolean isUpdated = CustomerModel.updateCustomer(new CustomerDTO(customerIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),birthdayDatePicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),streetFld.getText(),cityFld.getText(),Integer.parseInt(zipCodeFld.getText())));
                             if(isUpdated){
                                 new Alert(Alert.AlertType.INFORMATION,customerIdFld.getText()+" Customer Detail Updated Successfully").show();
                                 loadAllCustomers();

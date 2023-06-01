@@ -46,14 +46,14 @@ public class RentModel {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool WHERE TID = ?",toolId);
         return  resultSet.next();
     }
-    public static VehicleCartTM getVehicleCartModel(VehicleOrder vehicleOrder) throws SQLException {
-       ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle WHERE VID=? AND (Availability = 'Available')", vehicleOrder.getVehicleId());
+    public static VehicleCartTM getVehicleCartModel(VehicleOrderDTO vehicleOrderDTO) throws SQLException {
+       ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle WHERE VID=? AND (Availability = 'Available')", vehicleOrderDTO.getVehicleId());
        if(resultSet.next()){
            JFXButton remove = new JFXButton();
            remove.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
-           Vehicle vehicle = new Vehicle(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6),resultSet.getString(7));
-           Double total= vehicleOrder.getRentDays()*vehicle.getRate();
-           return new VehicleCartTM(vehicleOrder.getRentalOrderId(), vehicleOrder.getVehicleId(),vehicle.getManufacturer(),vehicle.getModelName(), vehicleOrder.getCustomerID(),vehicle.getDescription(),vehicle.getCategory(),vehicle.getRate(), vehicleOrder.getRentDays(),total,0,remove);
+           VehicleDTO vehicleDTO = new VehicleDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6),resultSet.getString(7));
+           Double total= vehicleOrderDTO.getRentDays()* vehicleDTO.getRate();
+           return new VehicleCartTM(vehicleOrderDTO.getRentalOrderId(), vehicleOrderDTO.getVehicleId(), vehicleDTO.getManufacturer(), vehicleDTO.getModelName(), vehicleOrderDTO.getCustomerID(), vehicleDTO.getDescription(), vehicleDTO.getCategory(), vehicleDTO.getRate(), vehicleOrderDTO.getRentDays(),total,0,remove);
        } else {
            return null;
        }
@@ -67,14 +67,14 @@ public class RentModel {
         return subTotal;
     }
 
-    public static ToolCartTM getToolCartModel(ToolOrder toolOrder) throws SQLException {
-       ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool WHERE TID=? AND (Availability = 'Available')",toolOrder.getToolId());
+    public static ToolCartTM getToolCartModel(ToolOrderDTO toolOrderDTO) throws SQLException {
+       ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool WHERE TID=? AND (Availability = 'Available')", toolOrderDTO.getToolId());
         if(resultSet.next()){
             JFXButton remove = new JFXButton();
             remove.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
-            Tool tool = new Tool(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6));
-            Double tolal = toolOrder.getRentDays()*tool.getRate();
-            return new ToolCartTM(toolOrder.getRentalOrderId(),tool.getTID(),tool.getBrand(),tool.getName(),toolOrder.getCustomerId(),tool.getDescription(),tool.getRate(),toolOrder.getRentDays(),tolal,remove);
+            ToolDTO toolDTO = new ToolDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getDouble(6));
+            Double tolal = toolOrderDTO.getRentDays()* toolDTO.getRate();
+            return new ToolCartTM(toolOrderDTO.getRentalOrderId(), toolDTO.getTID(), toolDTO.getBrand(), toolDTO.getName(), toolOrderDTO.getCustomerId(), toolDTO.getDescription(), toolDTO.getRate(), toolOrderDTO.getRentDays(),tolal,remove);
         }else {
              return null;
         }
@@ -88,8 +88,8 @@ public class RentModel {
         return total;
     }
 
-    public static Boolean updateVehicleRentOrderTable(VehicleOrder vehicleOrder) throws SQLException {
-        return CruidUtil.execute("INSERT INTO vehicle_rent_order VALUES (?,?,?,?)",vehicleOrder.getRentalOrderId(),vehicleOrder.getCustomerID(),LocalDate.now(),LocalTime.now());
+    public static Boolean updateVehicleRentOrderTable(VehicleOrderDTO vehicleOrderDTO) throws SQLException {
+        return CruidUtil.execute("INSERT INTO vehicle_rent_order VALUES (?,?,?,?)", vehicleOrderDTO.getRentalOrderId(), vehicleOrderDTO.getCustomerID(),LocalDate.now(),LocalTime.now());
     }
 
     public static Boolean addVehicleRentOrderDetailTable(ObservableList<VehicleCartTM> vehicleCartTMS) throws SQLException {
@@ -123,8 +123,8 @@ public class RentModel {
         }
     }
 
-    public static Boolean updateToolRentOrderTable(ToolOrder toolOrder) throws SQLException {
-       return CruidUtil.execute("INSERT INTO tool_rent_order VALUES (?,?,?,?)",toolOrder.getRentalOrderId(),toolOrder.getCustomerId(),LocalDate.now(),LocalTime.now());
+    public static Boolean updateToolRentOrderTable(ToolOrderDTO toolOrderDTO) throws SQLException {
+       return CruidUtil.execute("INSERT INTO tool_rent_order VALUES (?,?,?,?)", toolOrderDTO.getRentalOrderId(), toolOrderDTO.getCustomerId(),LocalDate.now(),LocalTime.now());
     }
 
     public static Boolean updateToolDetailsTable(ObservableList<ToolCartTM> toolCartTMS) throws SQLException {
@@ -174,11 +174,11 @@ public class RentModel {
         return false;
     }
 
-    public static Customer getCustomer(String customerId) {
+    public static CustomerDTO getCustomer(String customerId) {
         try {
             ResultSet resultSet = CruidUtil.execute("SELECT * FROM customer WHERE CID=?", customerId);
             if(resultSet.next()){
-                return new Customer(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getDate(5).toLocalDate(),resultSet.getString(6),resultSet.getString(7),resultSet.getString(8),resultSet.getString(9),resultSet.getInt(10));
+                return new CustomerDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getDate(5).toLocalDate(),resultSet.getString(6),resultSet.getString(7),resultSet.getString(8),resultSet.getString(9),resultSet.getInt(10));
             }else {
                 return null;
             }

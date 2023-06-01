@@ -9,8 +9,8 @@
 package lk.hnkm.rohanarenting.model;
 
 import com.jfoenix.controls.JFXButton;
-import lk.hnkm.rohanarenting.dto.Insurance;
-import lk.hnkm.rohanarenting.dto.Vehicle;
+import lk.hnkm.rohanarenting.dto.InsuranceDTO;
+import lk.hnkm.rohanarenting.dto.VehicleDTO;
 import lk.hnkm.rohanarenting.dto.tm.JasperReportVehicleTM;
 import lk.hnkm.rohanarenting.dto.tm.VehicleTM;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
@@ -21,18 +21,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class VehicleModel {
-    public static Vehicle getVehicleDetail(String vid) throws SQLException {
+    public static VehicleDTO getVehicleDetail(String vid) throws SQLException {
        ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle  WHERE VID = ?;", vid);
        if(resultSet.next()){
-           Vehicle vehicle = new Vehicle();
-              vehicle.setVID(resultSet.getString(1));
-              vehicle.setManufacturer(resultSet.getString(2));
-              vehicle.setModelName(resultSet.getString(3));
-              vehicle.setDescription(resultSet.getString(4));
-              vehicle.setAvailability(resultSet.getString(5));
-              vehicle.setRate(resultSet.getDouble(6));
-              vehicle.setCategory(resultSet.getString(7));
-              return vehicle;
+           VehicleDTO vehicleDTO = new VehicleDTO();
+              vehicleDTO.setVID(resultSet.getString(1));
+              vehicleDTO.setManufacturer(resultSet.getString(2));
+              vehicleDTO.setModelName(resultSet.getString(3));
+              vehicleDTO.setDescription(resultSet.getString(4));
+              vehicleDTO.setAvailability(resultSet.getString(5));
+              vehicleDTO.setRate(resultSet.getDouble(6));
+              vehicleDTO.setCategory(resultSet.getString(7));
+              return vehicleDTO;
        }
        return null;
     }
@@ -42,13 +42,13 @@ public class VehicleModel {
         return resultSet.next();
     }
 
-    public static Boolean updateVehicle(Vehicle vehicle) throws SQLException {
-        return CruidUtil.execute("UPDATE vehicle SET Manufacturer = ?, Model_Name = ?, Description = ?,Availability = ?,Rate_Per_Day = ?, Category = ? WHERE VID = ?;",vehicle.getManufacturer(),vehicle.getModelName() ,vehicle.getDescription(), vehicle.getAvailability(),vehicle.getRate(), vehicle.getCategory(),vehicle.getVID());
+    public static Boolean updateVehicle(VehicleDTO vehicleDTO) throws SQLException {
+        return CruidUtil.execute("UPDATE vehicle SET Manufacturer = ?, Model_Name = ?, Description = ?,Availability = ?,Rate_Per_Day = ?, Category = ? WHERE VID = ?;", vehicleDTO.getManufacturer(), vehicleDTO.getModelName() , vehicleDTO.getDescription(), vehicleDTO.getAvailability(), vehicleDTO.getRate(), vehicleDTO.getCategory(), vehicleDTO.getVID());
     }
 
-    public static Boolean saveVehicle(Vehicle vehicle) throws SQLException {
-        System.out.println(vehicle.getRate());
-        return CruidUtil.execute("INSERT INTO vehicle VALUES (?,?,?,?,?,?,?);", vehicle.getVID(), vehicle.getManufacturer(), vehicle.getModelName(), vehicle.getDescription(), vehicle.getAvailability(), vehicle.getRate(),vehicle.getCategory());
+    public static Boolean saveVehicle(VehicleDTO vehicleDTO) throws SQLException {
+        System.out.println(vehicleDTO.getRate());
+        return CruidUtil.execute("INSERT INTO vehicle VALUES (?,?,?,?,?,?,?);", vehicleDTO.getVID(), vehicleDTO.getManufacturer(), vehicleDTO.getModelName(), vehicleDTO.getDescription(), vehicleDTO.getAvailability(), vehicleDTO.getRate(), vehicleDTO.getCategory());
     }
 
     public static Boolean deleteVehicle(String vid) throws SQLException {
@@ -76,8 +76,8 @@ public class VehicleModel {
        return resultSet.next();
     }
 
-    public static Boolean updateVehicleWithoutAvailability(Vehicle vehicle) throws SQLException {
-        return CruidUtil.execute("UPDATE vehicle SET Manufacturer = ?, Model_Name = ?, Description = ?, Rate_Per_Day = ?, Category = ? WHERE VID = ?;",vehicle.getManufacturer(),vehicle.getModelName() ,vehicle.getDescription(),vehicle.getRate(), vehicle.getCategory(),vehicle.getVID());
+    public static Boolean updateVehicleWithoutAvailability(VehicleDTO vehicleDTO) throws SQLException {
+        return CruidUtil.execute("UPDATE vehicle SET Manufacturer = ?, Model_Name = ?, Description = ?, Rate_Per_Day = ?, Category = ? WHERE VID = ?;", vehicleDTO.getManufacturer(), vehicleDTO.getModelName() , vehicleDTO.getDescription(), vehicleDTO.getRate(), vehicleDTO.getCategory(), vehicleDTO.getVID());
     }
 
     public static ArrayList<JasperReportVehicleTM> jesperReportVehicleTMS(String vid) throws SQLException {
@@ -104,12 +104,12 @@ public class VehicleModel {
         return vehicleTMS;
     }
 
-    public static Insurance getInsuranceDetails(String vid) throws SQLException {
+    public static InsuranceDTO getInsuranceDetails(String vid) throws SQLException {
             ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle_insurance WHERE IID = ?;",vid);
             if (resultSet.next()){
-                return new Insurance(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getString(6),resultSet.getString(7),resultSet.getString(8),resultSet.getDate(9).toLocalDate(),resultSet.getDate(10).toLocalDate());
+                return new InsuranceDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getString(6),resultSet.getString(7),resultSet.getString(8),resultSet.getDate(9).toLocalDate(),resultSet.getDate(10).toLocalDate());
             }else {
-                return new Insurance("No Details","No Details","No Details","No Details","No Details","No Details","No Details","No Details", LocalDate.now(),LocalDate.now());
+                return new InsuranceDTO("No Details","No Details","No Details","No Details","No Details","No Details","No Details","No Details", LocalDate.now(),LocalDate.now());
             }
 
     }

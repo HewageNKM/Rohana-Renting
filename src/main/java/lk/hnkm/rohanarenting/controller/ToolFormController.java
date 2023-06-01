@@ -19,12 +19,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import lk.hnkm.rohanarenting.dto.Insurance;
-import lk.hnkm.rohanarenting.dto.Tool;
+import lk.hnkm.rohanarenting.dto.InsuranceDTO;
+import lk.hnkm.rohanarenting.dto.ToolDTO;
 import lk.hnkm.rohanarenting.dto.tm.ToolTM;
 import lk.hnkm.rohanarenting.model.EmployeeModel;
 import lk.hnkm.rohanarenting.model.ToolModel;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
 import lk.hnkm.rohanarenting.utill.TableUtil;
@@ -196,7 +196,7 @@ public class ToolFormController {
     private void printToolReport(ToolTM toolTM) {
         HashMap<String,Object> params = new HashMap<>();
         try {
-            Insurance insurance = ToolModel.getInsurance(toolTM.getTID());
+            InsuranceDTO insuranceDTO = ToolModel.getInsurance(toolTM.getTID());
             params.put("TID",toolTM.getTID());
             params.put("codeNumber",toolTM.getTID());
             params.put("brandName",toolTM.getBrandName());
@@ -204,16 +204,16 @@ public class ToolFormController {
             params.put("availability",toolTM.getAvailability());
             params.put("rate",toolTM.getRate());
             params.put("description",toolTM.getDescription());
-            params.put("IID",insurance.getIID());
-            params.put("insuranceName",insurance.getName());
-            params.put("iPName",insurance.getInsuranceProvider());
-            params.put("agentName",insurance.getAgentName());
-            params.put("agentContact",insurance.getAgentContact());
-            params.put("fax",insurance.getFax());
-            params.put("address",insurance.getAddress());
-            params.put("email",insurance.getEmail());
-            params.put("expireDate", Date.valueOf(insurance.getExpireDate()));
-            params.put("joinedDate",Date.valueOf(insurance.getJoinedDate()));
+            params.put("IID", insuranceDTO.getIID());
+            params.put("insuranceName", insuranceDTO.getName());
+            params.put("iPName", insuranceDTO.getInsuranceProvider());
+            params.put("agentName", insuranceDTO.getAgentName());
+            params.put("agentContact", insuranceDTO.getAgentContact());
+            params.put("fax", insuranceDTO.getFax());
+            params.put("address", insuranceDTO.getAddress());
+            params.put("email", insuranceDTO.getEmail());
+            params.put("expireDate", Date.valueOf(insuranceDTO.getExpireDate()));
+            params.put("joinedDate",Date.valueOf(insuranceDTO.getJoinedDate()));
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(Collections.singleton(toolTM));
 
             JasperReport compileReport = JasperCompileManager.compileReport(
@@ -290,19 +290,19 @@ public class ToolFormController {
     @FXML
     void enterOnAction(ActionEvent event) {
         try {
-            Tool tool = ToolModel.getToolDetail(toolIdFld.getText());
-            if(tool!= null){
-                nameFld.setText(tool.getName());
-                drecriptionFld.setText(tool.getDescription());
-                rentalRateFld.setText(tool.getRate().toString());
-                brandNameFld.setText(tool.getBrand());
+            ToolDTO toolDTO = ToolModel.getToolDetail(toolIdFld.getText());
+            if(toolDTO != null){
+                nameFld.setText(toolDTO.getName());
+                drecriptionFld.setText(toolDTO.getDescription());
+                rentalRateFld.setText(toolDTO.getRate().toString());
+                brandNameFld.setText(toolDTO.getBrand());
                 saveBtn.setDisable(false);
                 deleteBtn.setDisable(false);
                 Boolean isExist = ToolModel.checkOrderStatus(toolIdFld.getText());
                 if(isExist){
                     orderStatusLabel.setStyle("-fx-text-fill: red");
                     orderStatusLabel.setText("Tool Is In An Order ");
-                    if (tool.getAvalability().equals("Available")) {
+                    if (toolDTO.getAvalability().equals("Available")) {
                         availableRadiBtn.setSelected(true);
                     } else {
                         nAvailableRadioBtn.setSelected(true);
@@ -310,7 +310,7 @@ public class ToolFormController {
                     availableRadiBtn.setDisable(true);
                     nAvailableRadioBtn.setDisable(true);
                 }else {
-                    if (tool.getAvalability().equals("Available")) {
+                    if (toolDTO.getAvalability().equals("Available")) {
                         availableRadiBtn.setSelected(true);
                     } else {
                         nAvailableRadioBtn.setSelected(true);
@@ -362,26 +362,26 @@ public class ToolFormController {
 
     @FXML
     void saveBtnOnAction(ActionEvent event) {
-        Tool tool = new Tool();
+        ToolDTO toolDTO = new ToolDTO();
         try {
             if(ToolModel.getToolDetail(toolIdFld.getText())!=null){
                 new Alert(Alert.AlertType.CONFIRMATION,"New Tool Data Will Be Updated !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {
-                            tool.setTID(toolIdFld.getText());
-                            tool.setName(nameFld.getText());
-                            tool.setBrand(brandNameFld.getText());
-                            tool.setRate(Double.valueOf(rentalRateFld.getText()));
-                            tool.setDescription(drecriptionFld.getText());
+                            toolDTO.setTID(toolIdFld.getText());
+                            toolDTO.setName(nameFld.getText());
+                            toolDTO.setBrand(brandNameFld.getText());
+                            toolDTO.setRate(Double.valueOf(rentalRateFld.getText()));
+                            toolDTO.setDescription(drecriptionFld.getText());
                             if(availableRadiBtn.isSelected()){
-                                tool.setAvalability("Available");
+                                toolDTO.setAvalability("Available");
                             }else {
-                                tool.setAvalability("Not Available");
+                                toolDTO.setAvalability("Not Available");
                             }
                             Boolean isExist = ToolModel.checkOrderStatus(toolIdFld.getText());
                             if(isExist){
                                 new Alert(Alert.AlertType.ERROR,"Tool Is In On An Order, Manual Availability Adjust Will Not Be Effect !").showAndWait();
-                                if(ToolModel.updateToolWithoutAvailability(tool)){
+                                if(ToolModel.updateToolWithoutAvailability(toolDTO)){
                                     TopUpNotifications.success("Tool Data Updated !");
                                     clearFields();
                                     loadAllTools();
@@ -390,7 +390,7 @@ public class ToolFormController {
                                     new Alert(Alert.AlertType.ERROR,"Tool Data Not Updated !").show();
                                 }
                             }else {
-                                if(ToolModel.updateTool(tool)){
+                                if(ToolModel.updateTool(toolDTO)){
                                     TopUpNotifications.success("Tool Data Updated !");
                                     clearFields();
                                     loadAllTools();
@@ -410,17 +410,17 @@ public class ToolFormController {
                 new Alert(Alert.AlertType.CONFIRMATION,"New Tool Data Will Be Saved !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {
-                            tool.setTID(toolIdFld.getText());
-                            tool.setName(nameFld.getText());
-                            tool.setBrand(brandNameFld.getText());
-                            tool.setDescription(drecriptionFld.getText());
-                            tool.setRate(Double.valueOf(rentalRateFld.getText()));
+                            toolDTO.setTID(toolIdFld.getText());
+                            toolDTO.setName(nameFld.getText());
+                            toolDTO.setBrand(brandNameFld.getText());
+                            toolDTO.setDescription(drecriptionFld.getText());
+                            toolDTO.setRate(Double.valueOf(rentalRateFld.getText()));
                             if(availableRadiBtn.isSelected()){
-                                tool.setAvalability("Available");
+                                toolDTO.setAvalability("Available");
                             }else {
-                                tool.setAvalability("Not Available");
+                                toolDTO.setAvalability("Not Available");
                             }
-                            if(ToolModel.saveTool(tool)){
+                            if(ToolModel.saveTool(toolDTO)){
                                 TopUpNotifications.success("Tool Data Saved !");
                                 loadAllTools();
                                 clearFields();

@@ -9,7 +9,7 @@
 package lk.hnkm.rohanarenting.model;
 
 import com.jfoenix.controls.JFXButton;
-import lk.hnkm.rohanarenting.dto.Insurance;
+import lk.hnkm.rohanarenting.dto.InsuranceDTO;
 import lk.hnkm.rohanarenting.dto.tm.InsuranceTM;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
@@ -18,10 +18,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class InsuranceModel {
-    public static Insurance getVehicleInsurance(String IID) throws SQLException {
+    public static InsuranceDTO getVehicleInsurance(String IID) throws SQLException {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle_insurance WHERE IID = ?", IID);
         if (resultSet.next()) {
-            return new Insurance(
+            return new InsuranceDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -39,10 +39,10 @@ public class InsuranceModel {
 
     }
 
-    public static Insurance getToolInsurance(String IID) throws SQLException {
+    public static InsuranceDTO getToolInsurance(String IID) throws SQLException {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool_insurance WHERE IID = ?", IID);
         if (resultSet.next()) {
-            return new Insurance(
+            return new InsuranceDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -64,12 +64,12 @@ public class InsuranceModel {
         return resultSet.next();
     }
 
-    public static Boolean updateVehicleInsuranceDetails(Insurance insurance) throws SQLException {
-        return CruidUtil.execute("UPDATE vehicle_insurance SET Name =?, Provider = ? ,Agent_Name = ? , Agent_Contact = ? , Email = ? , Address = ? , Fax = ? , Joined_Date = ? ,Expire_Date = ? WHERE IID = ?", insurance.getName(), insurance.getInsuranceProvider(), insurance.getAgentName(), insurance.getAgentContact(), insurance.getEmail(), insurance.getAddress(), insurance.getFax(), insurance.getJoinedDate(), insurance.getExpireDate(), insurance.getIID());
+    public static Boolean updateVehicleInsuranceDetails(InsuranceDTO insuranceDTO) throws SQLException {
+        return CruidUtil.execute("UPDATE vehicle_insurance SET Name =?, Provider = ? ,Agent_Name = ? , Agent_Contact = ? , Email = ? , Address = ? , Fax = ? , Joined_Date = ? ,Expire_Date = ? WHERE IID = ?", insuranceDTO.getName(), insuranceDTO.getInsuranceProvider(), insuranceDTO.getAgentName(), insuranceDTO.getAgentContact(), insuranceDTO.getEmail(), insuranceDTO.getAddress(), insuranceDTO.getFax(), insuranceDTO.getJoinedDate(), insuranceDTO.getExpireDate(), insuranceDTO.getIID());
     }
 
-    public static Boolean addVehicleInsuranceDetails(Insurance insurance) throws SQLException {
-        return CruidUtil.execute("INSERT INTO vehicle_insurance VALUES(?,?,?,?,?,?,?,?,?,?)", insurance.getIID(), insurance.getName(), insurance.getInsuranceProvider(), insurance.getAgentName(), insurance.getAgentContact(), insurance.getEmail(), insurance.getAddress(), insurance.getFax(), insurance.getJoinedDate(), insurance.getExpireDate());
+    public static Boolean addVehicleInsuranceDetails(InsuranceDTO insuranceDTO) throws SQLException {
+        return CruidUtil.execute("INSERT INTO vehicle_insurance VALUES(?,?,?,?,?,?,?,?,?,?)", insuranceDTO.getIID(), insuranceDTO.getName(), insuranceDTO.getInsuranceProvider(), insuranceDTO.getAgentName(), insuranceDTO.getAgentContact(), insuranceDTO.getEmail(), insuranceDTO.getAddress(), insuranceDTO.getFax(), insuranceDTO.getJoinedDate(), insuranceDTO.getExpireDate());
     }
 
     public static Boolean isToolInsuranceDetailsExist(String IID) throws SQLException {
@@ -77,12 +77,12 @@ public class InsuranceModel {
         return resultSet.next();
     }
 
-    public static Boolean addToolInsuranceDetails(Insurance insurance) throws SQLException {
-        return CruidUtil.execute("INSERT INTO tool_insurance VALUES(?,?,?,?,?,?,?,?,?,?)", insurance.getIID(), insurance.getName(), insurance.getInsuranceProvider(), insurance.getAgentName(), insurance.getAgentContact(), insurance.getEmail(), insurance.getAddress(), insurance.getFax(), insurance.getJoinedDate(), insurance.getExpireDate());
+    public static Boolean addToolInsuranceDetails(InsuranceDTO insuranceDTO) throws SQLException {
+        return CruidUtil.execute("INSERT INTO tool_insurance VALUES(?,?,?,?,?,?,?,?,?,?)", insuranceDTO.getIID(), insuranceDTO.getName(), insuranceDTO.getInsuranceProvider(), insuranceDTO.getAgentName(), insuranceDTO.getAgentContact(), insuranceDTO.getEmail(), insuranceDTO.getAddress(), insuranceDTO.getFax(), insuranceDTO.getJoinedDate(), insuranceDTO.getExpireDate());
     }
 
-    public static Boolean updateToolInsuranceDetails(Insurance insurance) throws SQLException {
-        return CruidUtil.execute("UPDATE tool_insurance SET Name =?,Provider = ? ,Agent_Name = ? , Agent_Contact = ? , Email = ? , Address = ? , Fax = ? , Joined_Date = ? ,Expire_Date = ? WHERE IID = ?", insurance.getName(), insurance.getInsuranceProvider(), insurance.getAgentName(), insurance.getAgentContact(), insurance.getEmail(), insurance.getAddress(), insurance.getFax(), insurance.getJoinedDate(), insurance.getExpireDate(), insurance.getIID());
+    public static Boolean updateToolInsuranceDetails(InsuranceDTO insuranceDTO) throws SQLException {
+        return CruidUtil.execute("UPDATE tool_insurance SET Name =?,Provider = ? ,Agent_Name = ? , Agent_Contact = ? , Email = ? , Address = ? , Fax = ? , Joined_Date = ? ,Expire_Date = ? WHERE IID = ?", insuranceDTO.getName(), insuranceDTO.getInsuranceProvider(), insuranceDTO.getAgentName(), insuranceDTO.getAgentContact(), insuranceDTO.getEmail(), insuranceDTO.getAddress(), insuranceDTO.getFax(), insuranceDTO.getJoinedDate(), insuranceDTO.getExpireDate(), insuranceDTO.getIID());
     }
 
     public static ArrayList<InsuranceTM> getAllInsurance() throws SQLException {

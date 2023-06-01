@@ -8,7 +8,7 @@
 
 package lk.hnkm.rohanarenting.model;
 
-import lk.hnkm.rohanarenting.security.Encrypt;
+import lk.hnkm.rohanarenting.utill.security.Encrypt;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
 
 import java.security.NoSuchAlgorithmException;

@@ -20,11 +20,11 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import lk.hnkm.rohanarenting.db.DBConnection;
-import lk.hnkm.rohanarenting.dto.Customer;
+import lk.hnkm.rohanarenting.dto.CustomerDTO;
 import lk.hnkm.rohanarenting.dto.tm.RefundOrderTM;
 import lk.hnkm.rohanarenting.dto.tm.RefundTM;
 import lk.hnkm.rohanarenting.model.RefundModel;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
 import net.sf.jasperreports.engine.*;
@@ -190,14 +190,14 @@ public class RefundController {
     private void printRefundInvoice() {
         try {
             HashMap<String,Object> params = new HashMap<>();
-            Customer customer = RefundModel.getCustomer(rentIdFld.getText());
+            CustomerDTO customerDTO = RefundModel.getCustomer(rentIdFld.getText());
             params.put("refundId",refundIdLabel.getText());
-            params.put("name",customer.getFistName()+" "+customer.getLastName());
-            params.put("street",customer.getStreet());
-            params.put("zip",customer.getZipCode());
-            params.put("city",customer.getCity());
-            params.put("mobile",customer.getMobileNumber());
-            params.put("email",customer.getEmail());
+            params.put("name", customerDTO.getFistName()+" "+ customerDTO.getLastName());
+            params.put("street", customerDTO.getStreet());
+            params.put("zip", customerDTO.getZipCode());
+            params.put("city", customerDTO.getCity());
+            params.put("mobile", customerDTO.getMobileNumber());
+            params.put("email", customerDTO.getEmail());
             params.put("subTotal",RefundModel.getTotal(refundTMS));
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(refundTMS);
             JasperReport compileReport = JasperCompileManager.compileReport(

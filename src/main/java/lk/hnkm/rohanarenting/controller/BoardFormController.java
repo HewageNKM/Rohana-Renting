@@ -25,7 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.hnkm.rohanarenting.model.BoardModel;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 
 import java.io.IOException;
 import java.sql.SQLException;

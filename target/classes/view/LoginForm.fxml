@@ -32,7 +32,7 @@
                </image></ImageView>
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../img/user.png" />
+                  <Image url="@../img/userDTO.png" />
                </image></ImageView>
             <ImageView fx:id="passwordViewer" fitHeight="30.0" fitWidth="30.0" layoutX="379.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true" />
             <Label layoutX="75.0" layoutY="103.0" styleClass="FormTitleLabel" text="Rohana Renting (PVT) LTD" />

@@ -9,7 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import lk.hnkm.rohanarenting.dto.Employee;
+import lk.hnkm.rohanarenting.dto.EmployeeDTO;
 import lk.hnkm.rohanarenting.dto.tm.EmployeeTM;
 import lk.hnkm.rohanarenting.model.EmployeeModel;
 import lk.hnkm.rohanarenting.utill.Genarate;
@@ -311,22 +311,22 @@ public class EmployeeFormController {
 
     public void enterOnAction(javafx.event.ActionEvent actionEvent) {
         try {
-            Employee employee = EmployeeModel.getEmployee(employeeIdFld.getText());
-            if(employee!=null){
-                emailFld.setText(employee.getEID());
-                firstNameFld.setText(employee.getFistName());
-                lastNameFld.setText(employee.getLastName());
-                nicFld.setText(employee.getNic());
-                genderComboBox.getSelectionModel().select(employee.getGender());
-                birthDayPicker.setValue(employee.getDateOfBirth());
-                mobileNumberFld.setText(employee.getMobileNumber());
-                emailFld.setText(employee.getEmail());
-                zipFld.setText(String.valueOf(employee.getZip()));
-                cityFld.setText(employee.getCity());
-                streetFld.setText(employee.getStreet());
-                stateFld.setText(employee.getState());
-                joinedDtePicker.setValue(employee.getJoinedDate());
-                positionFld.setText(employee.getPosition());
+            EmployeeDTO employeeDTO = EmployeeModel.getEmployee(employeeIdFld.getText());
+            if(employeeDTO !=null){
+                emailFld.setText(employeeDTO.getEID());
+                firstNameFld.setText(employeeDTO.getFistName());
+                lastNameFld.setText(employeeDTO.getLastName());
+                nicFld.setText(employeeDTO.getNic());
+                genderComboBox.getSelectionModel().select(employeeDTO.getGender());
+                birthDayPicker.setValue(employeeDTO.getDateOfBirth());
+                mobileNumberFld.setText(employeeDTO.getMobileNumber());
+                emailFld.setText(employeeDTO.getEmail());
+                zipFld.setText(String.valueOf(employeeDTO.getZip()));
+                cityFld.setText(employeeDTO.getCity());
+                streetFld.setText(employeeDTO.getStreet());
+                stateFld.setText(employeeDTO.getState());
+                joinedDtePicker.setValue(employeeDTO.getJoinedDate());
+                positionFld.setText(employeeDTO.getPosition());
                 joinedDtePicker.setDisable(true);
                 employeeIdFld.setDisable(true);
             }else {
@@ -345,7 +345,7 @@ public class EmployeeFormController {
                 new Alert(Alert.AlertType.CONFIRMATION,"New Employee Will Be Added !",ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(buttonType -> {
                     if(buttonType==ButtonType.OK){
                         try {
-                        Boolean  isUpdate = EmployeeModel.addEmployee(new Employee(employeeIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),genderComboBox.getSelectionModel().getSelectedItem(),birthDayPicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),Integer.valueOf(zipFld.getText()),cityFld.getText(),streetFld.getText(),stateFld.getText(),joinedDtePicker.getValue(),positionFld.getText()));
+                        Boolean  isUpdate = EmployeeModel.addEmployee(new EmployeeDTO(employeeIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),genderComboBox.getSelectionModel().getSelectedItem(),birthDayPicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),Integer.valueOf(zipFld.getText()),cityFld.getText(),streetFld.getText(),stateFld.getText(),joinedDtePicker.getValue(),positionFld.getText()));
                         if(isUpdate) {
                             new Alert(Alert.AlertType.INFORMATION, "Employee Added Successfully").show();
                             clearFields();
@@ -363,7 +363,7 @@ public class EmployeeFormController {
                 new Alert(Alert.AlertType.CONFIRMATION,"Employee Details Will Be Updated !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(ButtonType->{
                     if(ButtonType == ButtonType.YES){
                         try {
-                            Boolean  isUpdate = EmployeeModel.updateEmployee(new Employee(employeeIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),genderComboBox.getSelectionModel().getSelectedItem(),birthDayPicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),Integer.valueOf(zipFld.getText()),cityFld.getText(),streetFld.getText(),stateFld.getText(),joinedDtePicker.getValue(),positionFld.getText()));
+                            Boolean  isUpdate = EmployeeModel.updateEmployee(new EmployeeDTO(employeeIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),genderComboBox.getSelectionModel().getSelectedItem(),birthDayPicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),Integer.valueOf(zipFld.getText()),cityFld.getText(),streetFld.getText(),stateFld.getText(),joinedDtePicker.getValue(),positionFld.getText()));
                             if(isUpdate) {
                                 new Alert(Alert.AlertType.INFORMATION, "Employee Detail Updated Successfully").show();
                                 clearFields();

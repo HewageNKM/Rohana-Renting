@@ -10,8 +10,8 @@ package lk.hnkm.rohanarenting.model;
 
 
 import com.jfoenix.controls.JFXButton;
-import lk.hnkm.rohanarenting.dto.Insurance;
-import lk.hnkm.rohanarenting.dto.Tool;
+import lk.hnkm.rohanarenting.dto.InsuranceDTO;
+import lk.hnkm.rohanarenting.dto.ToolDTO;
 import lk.hnkm.rohanarenting.dto.tm.JasperReportToolTM;
 import lk.hnkm.rohanarenting.dto.tm.ToolTM;
 import lk.hnkm.rohanarenting.utill.CruidUtil;
@@ -23,24 +23,24 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ToolModel {
-    public static Boolean saveTool(Tool tool) throws SQLException {
-        return CruidUtil.execute("INSERT INTO tool VALUES(?,?,?,?,?,?)",tool.getTID(),tool.getBrand(),tool.getName(),tool.getDescription(),tool.getAvalability(),tool.getRate());
+    public static Boolean saveTool(ToolDTO toolDTO) throws SQLException {
+        return CruidUtil.execute("INSERT INTO tool VALUES(?,?,?,?,?,?)", toolDTO.getTID(), toolDTO.getBrand(), toolDTO.getName(), toolDTO.getDescription(), toolDTO.getAvalability(), toolDTO.getRate());
     }
-    public static Boolean updateTool(Tool tool) throws SQLException {
-        return CruidUtil.execute("UPDATE tool SET Brand =? , Name = ?, Description = ?, Availability = ?,Rate_Per_Day=? WHERE TID = ? ",tool.getBrand(),tool.getName(),tool.getDescription(),tool.getAvalability(),tool.getRate(),tool.getTID());
+    public static Boolean updateTool(ToolDTO toolDTO) throws SQLException {
+        return CruidUtil.execute("UPDATE tool SET Brand =? , Name = ?, Description = ?, Availability = ?,Rate_Per_Day=? WHERE TID = ? ", toolDTO.getBrand(), toolDTO.getName(), toolDTO.getDescription(), toolDTO.getAvalability(), toolDTO.getRate(), toolDTO.getTID());
     }
 
-    public static Tool getToolDetail(String TID) throws SQLException {
+    public static ToolDTO getToolDetail(String TID) throws SQLException {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool  WHERE TID = ?;",TID);
         if(resultSet.next()){
-            Tool tool = new Tool();
-            tool.setTID(resultSet.getString(1));
-            tool.setBrand(resultSet.getString(2));
-            tool.setName(resultSet.getString(3));
-            tool.setDescription(resultSet.getString(4));
-            tool.setAvalability(resultSet.getString(5));
-            tool.setRate(resultSet.getDouble(6));
-            return tool;
+            ToolDTO toolDTO = new ToolDTO();
+            toolDTO.setTID(resultSet.getString(1));
+            toolDTO.setBrand(resultSet.getString(2));
+            toolDTO.setName(resultSet.getString(3));
+            toolDTO.setDescription(resultSet.getString(4));
+            toolDTO.setAvalability(resultSet.getString(5));
+            toolDTO.setRate(resultSet.getDouble(6));
+            return toolDTO;
         }
         return null;
     }
@@ -102,16 +102,16 @@ public class ToolModel {
 
     }
 
-    public static Insurance getInsurance(String tid) throws SQLException {
+    public static InsuranceDTO getInsurance(String tid) throws SQLException {
         ResultSet resultSet =CruidUtil.execute("SELECT * FROM tool_insurance WHERE IID = ?",tid);
-        Insurance insurance = null;
+        InsuranceDTO insuranceDTO = null;
         if (resultSet.next()){
-           insurance =  new Insurance(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getString(6),resultSet.getString(7),resultSet.getString(8),resultSet.getDate(9).toLocalDate(),resultSet.getDate(10).toLocalDate());
+           insuranceDTO =  new InsuranceDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),resultSet.getString(5),resultSet.getString(6),resultSet.getString(7),resultSet.getString(8),resultSet.getDate(9).toLocalDate(),resultSet.getDate(10).toLocalDate());
         }
-        if(insurance != null){
-            return  insurance;
+        if(insuranceDTO != null){
+            return insuranceDTO;
         }else {
-            return new Insurance("No Details","No Details","No Details","No Details","No Details","No Details","No Details","No Details",LocalDate.now(), LocalDate.now());
+            return new InsuranceDTO("No Details","No Details","No Details","No Details","No Details","No Details","No Details","No Details",LocalDate.now(), LocalDate.now());
         }
     }
 
@@ -129,7 +129,7 @@ public class ToolModel {
         }
     }
 
-    public static boolean updateToolWithoutAvailability(Tool tool) throws SQLException {
-        return CruidUtil.execute("UPDATE tool SET Brand = ?,Name = ?,Description = ?,Rate_Per_Day = ? WHERE TID = ?",tool.getBrand(),tool.getName(),tool.getDescription(),tool.getRate(),tool.getTID());
+    public static boolean updateToolWithoutAvailability(ToolDTO toolDTO) throws SQLException {
+        return CruidUtil.execute("UPDATE tool SET Brand = ?,Name = ?,Description = ?,Rate_Per_Day = ? WHERE TID = ?", toolDTO.getBrand(), toolDTO.getName(), toolDTO.getDescription(), toolDTO.getRate(), toolDTO.getTID());
     }
 }

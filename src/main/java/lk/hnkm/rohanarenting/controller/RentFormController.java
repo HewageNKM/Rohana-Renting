@@ -18,7 +18,7 @@ import lk.hnkm.rohanarenting.db.DBConnection;
 import lk.hnkm.rohanarenting.dto.*;
 import lk.hnkm.rohanarenting.dto.tm.*;
 import lk.hnkm.rohanarenting.model.RentModel;
-import lk.hnkm.rohanarenting.notification.TopUpNotifications;
+import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Genarate;
 import lk.hnkm.rohanarenting.utill.Regex;
 import net.sf.jasperreports.engine.*;
@@ -212,7 +212,7 @@ public class RentFormController {
                 try {
                     connection = DBConnection.getInstance().getConnection();
                     connection.setAutoCommit(false);
-                    Boolean isOrderAdded= RentModel.updateVehicleRentOrderTable(new VehicleOrder(vehicleRentOrderLabel.getText(),vehicleCustomerFld.getText(),vehicleFld.getText(),Integer.getInteger(vehicleRentDaysFld.getText())));
+                    Boolean isOrderAdded= RentModel.updateVehicleRentOrderTable(new VehicleOrderDTO(vehicleRentOrderLabel.getText(),vehicleCustomerFld.getText(),vehicleFld.getText(),Integer.getInteger(vehicleRentDaysFld.getText())));
                     if(isOrderAdded){
                         Boolean isDetailsAdded = RentModel.addVehicleRentOrderDetailTable(vehicleCartTMS);
                         if(isDetailsAdded){
@@ -253,15 +253,15 @@ public class RentFormController {
     }
 
     private void printVehicleInvoice() {
-        Customer customer =RentModel.getCustomer(vehicleCustomerFld.getText());
+        CustomerDTO customerDTO =RentModel.getCustomer(vehicleCustomerFld.getText());
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("subTotal",RentModel.getVehicleTotal(vehicleCartTMS));
-        params.put("name",customer.getFistName()+" "+customer.getLastName());
-        params.put("street",customer.getStreet());
-        params.put("city",customer.getCity());
-        params.put("zip",customer.getZipCode());
-        params.put("mobileNumber",customer.getMobileNumber());
-        params.put("email",customer.getEmail());
+        params.put("name", customerDTO.getFistName()+" "+ customerDTO.getLastName());
+        params.put("street", customerDTO.getStreet());
+        params.put("city", customerDTO.getCity());
+        params.put("zip", customerDTO.getZipCode());
+        params.put("mobileNumber", customerDTO.getMobileNumber());
+        params.put("email", customerDTO.getEmail());
         params.put("barCodeNumber",vehicleRentOrderLabel.getText());
         ArrayList<VehicleRentOrderJesperReportDetailTM> vehicleRentOrderJesperReportDetailTMS = RentModel.getVehicleJesperReport(vehicleCartTMS);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(vehicleRentOrderJesperReportDetailTMS);
@@ -325,7 +325,7 @@ public class RentFormController {
     @FXML
     void vehicleCartBtnOnAction(ActionEvent event) {
         try {
-            VehicleCartTM vehicleCartTM = RentModel.getVehicleCartModel(new VehicleOrder(vehicleRentOrderLabel.getText(),vehicleCustomerFld.getText(),vehicleFld.getText(),Integer.valueOf(vehicleRentDaysFld.getText())));
+            VehicleCartTM vehicleCartTM = RentModel.getVehicleCartModel(new VehicleOrderDTO(vehicleRentOrderLabel.getText(),vehicleCustomerFld.getText(),vehicleFld.getText(),Integer.valueOf(vehicleRentDaysFld.getText())));
             if(vehicleCartTM!=null){
                 setActionVehicleBtn(vehicleCartTM.getRemove());
                 vehicleCartTMS = vehicleRentTable.getItems();
@@ -441,7 +441,7 @@ public class RentFormController {
 
     public void toolCartBtnOnAction(ActionEvent actionEvent) {
         try {
-            ToolCartTM toolCartTM = RentModel.getToolCartModel(new ToolOrder(toolRentOrderIdLabel.getText(),toolCustomerFld.getText(),toolFld.getText(),Integer.valueOf(toolRentDaysFld.getText())));
+            ToolCartTM toolCartTM = RentModel.getToolCartModel(new ToolOrderDTO(toolRentOrderIdLabel.getText(),toolCustomerFld.getText(),toolFld.getText(),Integer.valueOf(toolRentDaysFld.getText())));
            if(toolCartTM!=null){
                setActionOnToolBtn(toolCartTM.getRemove());
                toolCartTMS = toolRentTable.getItems();
@@ -553,7 +553,7 @@ public class RentFormController {
                 try {
                     connection = DBConnection.getInstance().getConnection();
                     connection.setAutoCommit(false);
-                 Boolean isRentOrderTableUpdated =  RentModel.updateToolRentOrderTable(new ToolOrder(toolRentOrderIdLabel.getText(), toolCustomerFld.getText(),toolFld.getText(),Integer.getInteger(toolRentDaysFld.getText())));
+                 Boolean isRentOrderTableUpdated =  RentModel.updateToolRentOrderTable(new ToolOrderDTO(toolRentOrderIdLabel.getText(), toolCustomerFld.getText(),toolFld.getText(),Integer.getInteger(toolRentDaysFld.getText())));
                  if(isRentOrderTableUpdated){
                      Boolean isToolDetailsTableUpdated = RentModel.updateToolDetailsTable(toolCartTMS);
                      if(isToolDetailsTableUpdated){
@@ -591,15 +591,15 @@ public class RentFormController {
     }
 
     private void printToolInvoice() {
-        Customer customer =RentModel.getCustomer(toolCustomerFld.getText());
+        CustomerDTO customerDTO =RentModel.getCustomer(toolCustomerFld.getText());
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("subTotal",RentModel.getToolTotal(toolCartTMS));
-        params.put("name",customer.getFistName()+" "+customer.getLastName());
-        params.put("street",customer.getStreet());
-        params.put("city",customer.getCity());
-        params.put("zip",customer.getZipCode());
-        params.put("mobileNumber",customer.getMobileNumber());
-        params.put("email",customer.getEmail());
+        params.put("name", customerDTO.getFistName()+" "+ customerDTO.getLastName());
+        params.put("street", customerDTO.getStreet());
+        params.put("city", customerDTO.getCity());
+        params.put("zip", customerDTO.getZipCode());
+        params.put("mobileNumber", customerDTO.getMobileNumber());
+        params.put("email", customerDTO.getEmail());
         params.put("barCodeNumber",toolRentOrderIdLabel.getText());
         ArrayList<ToolRentOrderJesperReportDetailTM> toolRentOrderJesperReportDetailTM = RentModel.getToolJesperReport(toolCartTMS);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(toolRentOrderJesperReportDetailTM);
