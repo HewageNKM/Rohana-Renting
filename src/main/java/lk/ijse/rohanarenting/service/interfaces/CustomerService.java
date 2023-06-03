@@ -24,6 +24,6 @@ public interface CustomerService extends SuperService {
     boolean validateCustomerLastName(String customerLastName);
     boolean validateCustomerStreet(String customerStreet);
     boolean validateCustomerCity(String customerCity);
-    String generateId();
+    String generateId() throws SQLException, NoSuchAlgorithmException;
     boolean isCustomerExists(String customerId) throws SQLException, NoSuchAlgorithmException;
 }

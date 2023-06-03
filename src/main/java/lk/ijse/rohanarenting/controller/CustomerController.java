@@ -12,11 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lk.ijse.rohanarenting.dto.CustomerDTO;
 import lk.ijse.rohanarenting.dto.tm.CustomerTM;
-import lk.ijse.rohanarenting.model.EmployeeModel;
 import lk.ijse.rohanarenting.service.ServiceFactory;
 import lk.ijse.rohanarenting.service.impl.CustomerServiceImpl;
 import lk.ijse.rohanarenting.service.interfaces.CustomerService;
-import lk.ijse.rohanarenting.utill.Genarate;
 import lk.ijse.rohanarenting.utill.TableUtil;
 import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
 import net.sf.jasperreports.engine.*;
@@ -95,7 +93,7 @@ public class CustomerController {
         deleteBtn.setDisable(true);
         setCellValueFromTableToTextFields();
         loadAllCustomers();
-        generateId();
+        idGenarateOnAction();
         TableUtil.installCopy(customerTable);
     }
 
@@ -126,7 +124,7 @@ public class CustomerController {
                             boolean isDeleted = customerService.deleteCustomer(new CustomerDTO(customerTM.getCID(),customerTM.getFirstName(),customerTM.getLastName(),customerTM.getNIC(),customerTM.getBirthday(),customerTM.getMobileNumber(),customerTM.getEmail(),customerTM.getStreet(),customerTM.getCity(),customerTM.getZipCode()));
                             if(isDeleted){
                                 loadAllCustomers();
-                                generateId();
+                                idGenarateOnAction();
                                 TopUpNotifications.success("Customer Deleted Successfully !");
                                 clearFields();
                             }else {
@@ -369,22 +367,14 @@ public class CustomerController {
 
    }
 
-    public void idGenarateOnAction(javafx.event.ActionEvent actionEvent) {
-        customerIdFld.setText(customerService.generateId());
-    }
-
-    private void generateId() {
-        String id = Genarate.generateCustomerId();
+    public void idGenarateOnAction() {
         try {
-            while (EmployeeModel.verifyId(id)) {
-                id = Genarate.generateCustomerId();
-            }
-            customerIdFld.setText(id);
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
-
+            customerIdFld.setText(customerService.generateId());
+        } catch (SQLException | NoSuchAlgorithmException e) {
+            new Alert(Alert.AlertType.ERROR,"Something Went Wrong !").show();
         }
     }
+
 
     public void enterOnAction(javafx.event.ActionEvent actionEvent) {
         try {
@@ -421,7 +411,7 @@ public class CustomerController {
                                 new Alert(Alert.AlertType.INFORMATION,customerIdFld.getText()+" Customer Added Successfully").show();
                                 loadAllCustomers();
                                 clearFields();
-                                generateId();
+                                idGenarateOnAction();
                             }else {
                                 new Alert(Alert.AlertType.ERROR,"Customer Not Added Or Same NIC Used!").show();
                             }
@@ -440,7 +430,7 @@ public class CustomerController {
                                 new Alert(Alert.AlertType.INFORMATION,customerIdFld.getText()+" Customer Detail Updated Successfully").show();
                                 loadAllCustomers();
                                 clearFields();
-                                generateId();
+                                idGenarateOnAction();
                             }else {
                                 new Alert(Alert.AlertType.INFORMATION,customerIdFld.getText()+" Customer Detail Update Fails !").show();
                             }
@@ -467,7 +457,7 @@ public class CustomerController {
                         new Alert(Alert.AlertType.INFORMATION, "Customer Deleted Successfully !").show();
                         loadAllCustomers();
                         clearFields();
-                        generateId();
+                        idGenarateOnAction();
                     } else {
                         new Alert(Alert.AlertType.ERROR, "Customer Not Found !").show();
                     }

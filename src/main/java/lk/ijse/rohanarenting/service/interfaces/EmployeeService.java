@@ -12,9 +12,9 @@ public interface EmployeeService extends SuperService {
     EmployeeDTO getEmployee(EmployeeDTO dto) throws SQLException, NoSuchAlgorithmException;
     boolean updateEmployee(EmployeeDTO dto) throws SQLException, NoSuchAlgorithmException;
     boolean addEmployee(EmployeeDTO dto) throws SQLException, NoSuchAlgorithmException;
-    boolean deleteCustomer(EmployeeDTO dto) throws SQLException;
+    boolean deleteEmployee(EmployeeDTO dto) throws SQLException;
     ArrayList<EmployeeTM> getAllEmployees() throws SQLException;
-    ArrayList<EmployeeTM> searchEmployee(String searchPhrase) throws SQLException;
+    ArrayList<EmployeeTM> searchEmployee(String searchPhrase) throws SQLException, NoSuchAlgorithmException;
     boolean validateEmployeeId(String EmployeeId);
     boolean validateEmployeeNIC(String EmployeeNIC);
     boolean validateEmployeeMobileNumber(String employeeMobileNumber);
@@ -24,6 +24,6 @@ public interface EmployeeService extends SuperService {
     boolean validateEmployeeLastName(String employeeLastName);
     boolean validateEmployeeStreet(String employeeStreet);
     boolean validateEmployeeCity(String employeeCity);
-    String generateId();
+    String generateId() throws SQLException, NoSuchAlgorithmException;
     boolean isEmployeeExists(String employeeId) throws SQLException, NoSuchAlgorithmException;
 }

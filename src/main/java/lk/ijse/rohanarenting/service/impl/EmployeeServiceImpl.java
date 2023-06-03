@@ -8,6 +8,7 @@ import lk.ijse.rohanarenting.dto.EmployeeDTO;
 import lk.ijse.rohanarenting.dto.tm.EmployeeTM;
 import lk.ijse.rohanarenting.entity.Employee;
 import lk.ijse.rohanarenting.service.interfaces.EmployeeService;
+import lk.ijse.rohanarenting.utill.Genarate;
 import lk.ijse.rohanarenting.utill.Regex;
 
 import java.security.NoSuchAlgorithmException;
@@ -33,18 +34,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean deleteCustomer(EmployeeDTO dto) throws SQLException {
+    public boolean deleteEmployee(EmployeeDTO dto) throws SQLException {
         return employeeDAO.delete(new Employee(dto.getEID(),dto.getFistName(),dto.getLastName(),dto.getNic(),dto.getGender(),dto.getDateOfBirth(),dto.getMobileNumber(),dto.getEmail(),dto.getZip(),dto.getCity(),dto.getStreet(),dto.getState(),dto.getJoinedDate(),dto.getPosition()));
     }
 
     @Override
     public ArrayList<EmployeeTM> getAllEmployees() throws SQLException {
-        return null;
+        return getEmployeesTMS(employeeDAO.getAll());
     }
 
     @Override
-    public ArrayList<EmployeeTM> searchEmployee(String searchPhrase) throws SQLException {
-        return null;
+    public ArrayList<EmployeeTM> searchEmployee(String searchPhrase) throws SQLException, NoSuchAlgorithmException {
+        return getEmployeesTMS(employeeDAO.search(searchPhrase));
     }
 
     @Override
@@ -93,18 +94,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String generateId() {
-        return null;
+    public String generateId() throws SQLException, NoSuchAlgorithmException {
+        String id = Genarate.generateEmployeeId();
+        while (employeeDAO.verify(new Employee(id,null,null,null,null,null,null,null,null,null,null,null,null,null))) {
+            id = Genarate.generateEmployeeId();
+        }
+        return id;
     }
 
     @Override
     public boolean isEmployeeExists(String employeeId) throws SQLException, NoSuchAlgorithmException {
         return employeeDAO.verify(new Employee(employeeId,null,null,null,null,null,null,null,null,null,null,null,null,null));
     }
-    private ArrayList<EmployeeTM> getCustomerTMS() throws SQLException {
-        ArrayList<Employee> employees =  employeeDAO.getAll();
+    private ArrayList<EmployeeTM> getEmployeesTMS(ArrayList<Employee> employees) throws SQLException {
         ArrayList<EmployeeTM> employeeTMS = new ArrayList<>();
-        for ( Employee employee : employees) {
+        for (Employee employee : employees) {
             JFXButton showBtn = new JFXButton();
             JFXButton editBtn = new JFXButton();
             JFXButton deleteBtn = new JFXButton();

@@ -11,15 +11,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lk.ijse.rohanarenting.dto.EmployeeDTO;
 import lk.ijse.rohanarenting.dto.tm.EmployeeTM;
-import lk.ijse.rohanarenting.model.EmployeeModel;
-import lk.ijse.rohanarenting.utill.Genarate;
-import lk.ijse.rohanarenting.utill.Regex;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.EmployeeServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.EmployeeService;
 import lk.ijse.rohanarenting.utill.TableUtil;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -95,11 +96,13 @@ public class EmployeeFormController {
     private ObservableList <EmployeeTM> employees = FXCollections.observableArrayList();
     private final ObservableList<String> genders = FXCollections.observableArrayList("Male","Female");
 
+    private final EmployeeService employeeService = (EmployeeServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.EMPLOYEE_SERVICE);
+
     public void initialize() {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
         genderComboBox.setItems(genders);
-        getId();
+        idGenarateOnAction();
         setCellValueFactory();
         loadAllEmployees();
         TableUtil.installCopy(employeeTable);
@@ -107,7 +110,7 @@ public class EmployeeFormController {
 
     private void loadAllEmployees() {
         try {
-            ArrayList<EmployeeTM> allEmployees = EmployeeModel.getAllEmployees();
+            ArrayList<EmployeeTM> allEmployees = employeeService.getAllEmployees();
             for (EmployeeTM employeeTM:allEmployees) {
                 setActionsOnBtn(employeeTM.getShowBtn(),employeeTM.getEdit(),employeeTM.getDelete());
             }
@@ -143,7 +146,7 @@ public class EmployeeFormController {
     void nicValidate(KeyEvent event) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateNIC(nicFld.getText())) {
+        if (employeeService.validateEmployeeNIC(nicFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid NIC !");
             nicFld.setStyle("-fx-border-color: Green");
@@ -158,7 +161,7 @@ public class EmployeeFormController {
     void streetValidate(KeyEvent event) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateName(streetFld.getText())) {
+        if (employeeService.validateEmployeeStreet(streetFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Address !");
             streetFld.setStyle("-fx-border-color: Green");
@@ -172,7 +175,7 @@ public class EmployeeFormController {
     void emailValidate(KeyEvent event) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateEmail(emailFld.getText())) {
+        if (employeeService.validateEmployeeEmail(emailFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Email !");
             emailFld.setStyle("-fx-border-color: Green");
@@ -186,7 +189,7 @@ public class EmployeeFormController {
     void employeeIdValidate(KeyEvent event) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateEID(employeeIdFld.getText())) {
+        if (employeeService.validateEmployeeId(employeeIdFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Employee ID");
             employeeIdFld.setStyle("-fx-border-color: Green");
@@ -201,7 +204,7 @@ public class EmployeeFormController {
     void mobileNumberValidate(KeyEvent event) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateMobile(mobileNumberFld.getText())) {
+        if (employeeService.validateEmployeeMobileNumber(mobileNumberFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Mobile Number !");
             mobileNumberFld.setStyle("-fx-border-color: Green");
@@ -216,7 +219,7 @@ public class EmployeeFormController {
     void firstNameValidate(KeyEvent event) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateName(firstNameFld.getText())) {
+        if (employeeService.validateEmployeeFirstName(firstNameFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Name !");
             firstNameFld.setStyle("-fx-border-color: Green");
@@ -230,20 +233,17 @@ public class EmployeeFormController {
     @FXML
     void refreshOnClick(MouseEvent event) {
         if(
-                Regex.validateName(firstNameFld.getText()) &&
-                        Regex.validateName(lastNameFld.getText())&&
-                        Regex.validateNIC(nicFld.getText()) &&
-                        Regex.validateMobile(mobileNumberFld.getText()) &&
-                        Regex.validateEmail(emailFld.getText()) &&
-                        Regex.validateName(streetFld.getText()) &&
-                        Regex.validateName(cityFld.getText()) &&
-                        Regex.validateName(stateFld.getText())&&
-                       Regex.validateZIP(zipFld.getText())&&
-                        Regex.validateEID(employeeIdFld.getText()) &&
-                        (genderComboBox.getSelectionModel().getSelectedItem()!=null) &&
-                        (birthDayPicker.getValue()!=null)&&
-                        (joinedDtePicker.getValue()!=null)&&
-                        Regex.validateName(positionFld.getText())
+                employeeService.validateEmployeeCity(cityFld.getText())&&
+                        employeeService.validateEmployeeEmail(emailFld.getText())&&
+                        employeeService.validateEmployeeFirstName(firstNameFld.getText())&&
+                        employeeService.validateEmployeeLastName(lastNameFld.getText())&&
+                        employeeService.validateEmployeeMobileNumber(mobileNumberFld.getText())&&
+                        employeeService.validateEmployeeNIC(nicFld.getText())&&
+                        employeeService.validateEmployeeFirstName(positionFld.getText())&&
+                        employeeService.validateEmployeeLastName(stateFld.getText())&&
+                        employeeService.validateEmployeeStreet(streetFld.getText())&&
+                        employeeService.validateEmployeeZipCode(zipFld.getText())&&
+                        employeeService.validateEmployeeId(employeeIdFld.getText())
 
         ){
             employeeIdFld.setText(employeeIdFld.getText().toUpperCase());
@@ -293,25 +293,18 @@ public class EmployeeFormController {
         employeeIdFld.setDisable(false);
    }
 
-    public void idGenarateOnAction(javafx.event.ActionEvent actionEvent) {
-        getId();
-    }
-
-    private void getId() {
-        String id = Genarate.generateEmployeeId();
+    public void idGenarateOnAction() {
         try {
-            while (EmployeeModel.verifyId(id)) {
-                id = Genarate.generateEmployeeId();
-            }
-            employeeIdFld.setText(id);
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+            employeeIdFld.setText(employeeService.generateId());
+        } catch (SQLException | NoSuchAlgorithmException e) {
+            new Alert(Alert.AlertType.ERROR,"Something went wrong, Please contact IT Team").show();
         }
     }
 
+
     public void enterOnAction(javafx.event.ActionEvent actionEvent) {
         try {
-            EmployeeDTO employeeDTO = EmployeeModel.getEmployee(employeeIdFld.getText());
+            EmployeeDTO employeeDTO = employeeService.getEmployee(new EmployeeDTO(employeeIdFld.getText(), null, null, null, null, null, null, null, null, null, null, null, null, null));
             if(employeeDTO !=null){
                 emailFld.setText(employeeDTO.getEID());
                 firstNameFld.setText(employeeDTO.getFistName());
@@ -333,7 +326,7 @@ public class EmployeeFormController {
                 new Alert(Alert.AlertType.ERROR,"Employee Details Not Found !").show();
                 emailFld.clear();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
@@ -341,29 +334,29 @@ public class EmployeeFormController {
 
     public void saveBtnOnAction(javafx.event.ActionEvent actionEvent) {
         try {
-            if(EmployeeModel.isIdExist(employeeIdFld.getText())){
+            if(!employeeService.isEmployeeExists(employeeIdFld.getText())){
                 new Alert(Alert.AlertType.CONFIRMATION,"New Employee Will Be Added !",ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(buttonType -> {
                     if(buttonType==ButtonType.OK){
                         try {
-                        Boolean  isUpdate = EmployeeModel.addEmployee(new EmployeeDTO(employeeIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),genderComboBox.getSelectionModel().getSelectedItem(),birthDayPicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),Integer.valueOf(zipFld.getText()),cityFld.getText(),streetFld.getText(),stateFld.getText(),joinedDtePicker.getValue(),positionFld.getText()));
+                        boolean isUpdate = employeeService.addEmployee(new EmployeeDTO(employeeIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),genderComboBox.getSelectionModel().getSelectedItem(),birthDayPicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),Integer.valueOf(zipFld.getText()),cityFld.getText(),streetFld.getText(),stateFld.getText(),joinedDtePicker.getValue(),positionFld.getText()));
                         if(isUpdate) {
                             new Alert(Alert.AlertType.INFORMATION, "Employee Added Successfully").show();
                             clearFields();
                             loadAllEmployees();
-                            getId();
+                            idGenarateOnAction();
                         }else {
                             new Alert(Alert.AlertType.ERROR, "Employee Added Failed !").show();
                         }
-                        }catch (SQLException e){
+                        }catch (SQLException | NoSuchAlgorithmException e){
                             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                         }
                     }
                 });
             }else {
                 new Alert(Alert.AlertType.CONFIRMATION,"Employee Details Will Be Updated !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(ButtonType->{
-                    if(ButtonType == ButtonType.YES){
+                    if(ButtonType == javafx.scene.control.ButtonType.YES){
                         try {
-                            Boolean  isUpdate = EmployeeModel.updateEmployee(new EmployeeDTO(employeeIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),genderComboBox.getSelectionModel().getSelectedItem(),birthDayPicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),Integer.valueOf(zipFld.getText()),cityFld.getText(),streetFld.getText(),stateFld.getText(),joinedDtePicker.getValue(),positionFld.getText()));
+                            boolean isUpdate = employeeService.updateEmployee(new EmployeeDTO(employeeIdFld.getText(),firstNameFld.getText(),lastNameFld.getText(),nicFld.getText(),genderComboBox.getSelectionModel().getSelectedItem(),birthDayPicker.getValue(),mobileNumberFld.getText(),emailFld.getText(),Integer.valueOf(zipFld.getText()),cityFld.getText(),streetFld.getText(),stateFld.getText(),joinedDtePicker.getValue(),positionFld.getText()));
                             if(isUpdate) {
                                 new Alert(Alert.AlertType.INFORMATION, "Employee Detail Updated Successfully").show();
                                 clearFields();
@@ -371,13 +364,13 @@ public class EmployeeFormController {
                             }else {
                                 new Alert(Alert.AlertType.ERROR, "Employee Detail Updated Failed !").show();
                             }
-                        }catch (SQLException e){
+                        }catch (SQLException | NoSuchAlgorithmException e){
                             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                         }
                     }
                 });
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
         }
     }
@@ -386,7 +379,7 @@ public class EmployeeFormController {
             new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure Want to Delete Employee ?", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(ButtonType->{
                 if(ButtonType == ButtonType.YES){
                     try {
-                     Boolean  isDeleted = EmployeeModel.deleteEmployee(employeeIdFld.getText());
+                     Boolean  isDeleted = employeeService.deleteEmployee(new EmployeeDTO(employeeIdFld.getText(),null,null,null,null,null,null,null,0,null,null,null,null,null));
                         if (isDeleted) {
                             new Alert(Alert.AlertType.INFORMATION, "Employee Deleted Successfully !").show();
                             clearFields();
@@ -411,7 +404,7 @@ public class EmployeeFormController {
             loadAllEmployees();
         }else {
             try {
-                ArrayList<EmployeeTM> filteredList = EmployeeModel.searchEmployee("%"+searchFld.getText()+"%");
+                ArrayList<EmployeeTM> filteredList = employeeService.searchEmployee("%"+searchFld.getText()+"%");
                 for (EmployeeTM employeeTM:filteredList) {
                     setActionsOnBtn(employeeTM.getShowBtn(),employeeTM.getEdit(),employeeTM.getDelete());
                 }
@@ -421,7 +414,7 @@ public class EmployeeFormController {
                 }else {
                     employeeTable.getSelectionModel().clearSelection();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }
@@ -464,9 +457,9 @@ public class EmployeeFormController {
             EmployeeTM employeeTM = employeeTable.getSelectionModel().getSelectedItem();
             if(employeeTM != null){
                 new Alert(Alert.AlertType.CONFIRMATION,"Are You sure Want to Delete Employee ?", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(ButtonType->{
-                    if(ButtonType == ButtonType.YES){
+                    if(ButtonType == javafx.scene.control.ButtonType.YES){
                         try {
-                            Boolean isDeleted = EmployeeModel.deleteEmployee(employeeTM.getEID());
+                            boolean isDeleted = employeeService.deleteEmployee(new EmployeeDTO(employeeTM.getEID(),null,null,null,null,null,null,null,0,null,null,null,null,null));
                             if (isDeleted) {
                                 new Alert(Alert.AlertType.INFORMATION, "Employee Deleted Successfully !").show();
                                 clearFields();
@@ -523,7 +516,7 @@ public class EmployeeFormController {
         public void lastNameValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateName(lastNameFld.getText())) {
+        if (employeeService.validateEmployeeLastName(lastNameFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Last Name !");
             lastNameFld.setStyle("-fx-border-color: Green");
@@ -537,7 +530,7 @@ public class EmployeeFormController {
     public void cityValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateName(cityFld.getText())) {
+        if (employeeService.validateEmployeeCity(cityFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid City Name !");
             cityFld.setStyle("-fx-border-color: Green");
@@ -551,7 +544,7 @@ public class EmployeeFormController {
     public void zipValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateZIP(zipFld.getText())) {
+        if (employeeService.validateEmployeeZipCode(zipFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid ZIP Code !");
             zipFld.setStyle("-fx-border-color: Green");
@@ -565,7 +558,7 @@ public class EmployeeFormController {
     public void stateValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateName(stateFld.getText())) {
+        if (employeeService.validateEmployeeStreet(stateFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid State Name !");
             stateFld.setStyle("-fx-border-color: Green");
@@ -579,7 +572,7 @@ public class EmployeeFormController {
     public void positionValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateName(positionFld.getText())) {
+        if (employeeService.validateEmployeeLastName(positionFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Position Name !");
             positionFld.setStyle("-fx-border-color: Green");

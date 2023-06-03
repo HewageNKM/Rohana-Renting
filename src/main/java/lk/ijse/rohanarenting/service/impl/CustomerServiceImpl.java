@@ -1,14 +1,12 @@
 package lk.ijse.rohanarenting.service.impl;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.scene.control.Alert;
 import lk.ijse.rohanarenting.dao.DAOFactory;
 import lk.ijse.rohanarenting.dao.impl.CustomerDAOImpl;
 import lk.ijse.rohanarenting.dao.interfaces.CustomerDAO;
 import lk.ijse.rohanarenting.dto.CustomerDTO;
 import lk.ijse.rohanarenting.dto.tm.CustomerTM;
 import lk.ijse.rohanarenting.entity.Customer;
-import lk.ijse.rohanarenting.model.EmployeeModel;
 import lk.ijse.rohanarenting.service.interfaces.CustomerService;
 import lk.ijse.rohanarenting.utill.Genarate;
 import lk.ijse.rohanarenting.utill.Regex;
@@ -42,11 +40,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ArrayList<CustomerTM> getAllCustomers() throws SQLException {
-        ArrayList<Customer> customers =  customerDAO.getAll();
-        return getCustomerTMS(customers);
+        return getCustomerTMS(customerDAO.getAll());
     }
 
-    private ArrayList<CustomerTM> getCustomerTMS(ArrayList<Customer> customers) throws SQLException {
+    private ArrayList<CustomerTM> getCustomerTMS(ArrayList<Customer> customers){
         ArrayList<CustomerTM> customerTMS = new ArrayList<>();
         for (Customer customer : customers) {
             JFXButton showBtn = new JFXButton();
@@ -62,8 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ArrayList<CustomerTM> searchCustomer(String searchPhrase) throws SQLException, NoSuchAlgorithmException {
-        ArrayList<Customer> customers = customerDAO.search(searchPhrase);
-        return getCustomerTMS(customers);
+        return getCustomerTMS(customerDAO.search(searchPhrase));
     }
 
     @Override
@@ -113,16 +109,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String generateId() {
+    public String generateId() throws SQLException, NoSuchAlgorithmException {
         String id = Genarate.generateCustomerId();
-        try {
-            while (EmployeeModel.verifyId(id)) {
-                id = Genarate.generateCustomerId();
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
-
+        while (customerDAO.verify(new Customer(id,null,null,null,null,null,null,null,null,null))) {
+            id = Genarate.generateCustomerId();
         }
+
         return id;
     }
 

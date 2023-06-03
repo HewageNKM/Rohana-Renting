@@ -22,12 +22,10 @@ import javafx.scene.paint.Color;
 import lk.ijse.rohanarenting.dto.InsuranceDTO;
 import lk.ijse.rohanarenting.dto.ToolDTO;
 import lk.ijse.rohanarenting.dto.tm.ToolTM;
-import lk.ijse.rohanarenting.model.EmployeeModel;
 import lk.ijse.rohanarenting.model.ToolModel;
-import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
-import lk.ijse.rohanarenting.utill.Genarate;
 import lk.ijse.rohanarenting.utill.Regex;
 import lk.ijse.rohanarenting.utill.TableUtil;
+import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -333,15 +331,15 @@ public class ToolFormController {
     }
 
     private void generateID() {
-        String id = Genarate.generateToolId();
+        /*String id = Genarate.generateToolId();
         try {
-            while (EmployeeModel.verifyId(id)) {
+            while (.verifyId(id)) {
                 id = Genarate.generateToolId();
             }
             toolIdFld.setText(id);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
-        }
+        }*/
     }
 
     @FXML
