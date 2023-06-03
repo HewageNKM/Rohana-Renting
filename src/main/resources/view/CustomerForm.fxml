@@ -20,7 +20,7 @@
   ~
   -->
 
-<BorderPane prefHeight="960.0" prefWidth="1700.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hnkm.rohanarenting.controller.CustomerController">
+<BorderPane prefHeight="960.0" prefWidth="1700.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.rohanarenting.controller.CustomerController">
    <center>
       <AnchorPane onMouseClicked="#refreshOnClick" prefHeight="590.0" prefWidth="943.0">
          <ImageView fx:id="CustomerIdImgViewer" fitHeight="30.0" fitWidth="30.0" layoutX="37.0" layoutY="351.0" pickOnBounds="true" preserveRatio="true">
