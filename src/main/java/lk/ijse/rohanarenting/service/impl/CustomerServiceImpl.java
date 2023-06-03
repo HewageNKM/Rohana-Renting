@@ -42,11 +42,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ArrayList<CustomerTM> getAllCustomers() throws SQLException {
-        return getCustomerTMS();
+        ArrayList<Customer> customers =  customerDAO.getAll();
+        return getCustomerTMS(customers);
     }
 
-    private ArrayList<CustomerTM> getCustomerTMS() throws SQLException {
-        ArrayList<Customer> customers =  customerDAO.getAll();
+    private ArrayList<CustomerTM> getCustomerTMS(ArrayList<Customer> customers) throws SQLException {
         ArrayList<CustomerTM> customerTMS = new ArrayList<>();
         for (Customer customer : customers) {
             JFXButton showBtn = new JFXButton();
@@ -61,8 +61,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ArrayList<CustomerTM> searchCustomer(String searchPhrase) throws SQLException {
-        return getCustomerTMS();
+    public ArrayList<CustomerTM> searchCustomer(String searchPhrase) throws SQLException, NoSuchAlgorithmException {
+        ArrayList<Customer> customers = customerDAO.search(searchPhrase);
+        return getCustomerTMS(customers);
     }
 
     @Override

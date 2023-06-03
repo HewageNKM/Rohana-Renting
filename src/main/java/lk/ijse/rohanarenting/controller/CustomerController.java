@@ -493,7 +493,7 @@ public class CustomerController {
                  setActionOnBtn(customerTM.getEditBtn(),customerTM.getDeleteBtn(),customerTM.getShowBtn());
                 }
                 customerTable.setItems(FXCollections.observableArrayList(filterList));
-            } catch (SQLException e) {
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }

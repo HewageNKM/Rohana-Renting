@@ -14,7 +14,7 @@ public interface CustomerService extends SuperService {
     boolean addCustomer(CustomerDTO dto) throws SQLException, NoSuchAlgorithmException;
     boolean deleteCustomer(CustomerDTO dto) throws SQLException;
     ArrayList<CustomerTM> getAllCustomers() throws SQLException;
-    ArrayList<CustomerTM> searchCustomer(String searchPhrase) throws SQLException;
+    ArrayList<CustomerTM> searchCustomer(String searchPhrase) throws SQLException, NoSuchAlgorithmException;
     boolean validateCustomerId(String customerId);
     boolean validateCustomerNIC(String customerNIC);
     boolean validateCustomerMobileNumber(String customerMobileNumber);
