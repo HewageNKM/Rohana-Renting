@@ -4,109 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="Remove License Add New One">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/CruidDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/DAOFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/SuperDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/impl/ForgotPasswordDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/impl/LoginDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/interfaces/ForgotPasswordDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/interfaces/LoginDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/ServiceFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/SuperService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/impl/ForgotPasswordServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/impl/LoginServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/interfaces/ForgotPasswordService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/interfaces/LoginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c5da684d-33d2-418d-ac46-cd49ac4f6e6d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c5da684d-33d2-418d-ac46-cd49ac4f6e6d.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="Factory Design Pattern Added, Login and Forgot Complete">
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/impl/UserAccountDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/interfaces/UserAccountDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/impl/UserAccountServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/interfaces/UserAccountService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Query.text" beforeDir="false" afterPath="$PROJECT_DIR$/Query.text" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/BoardFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/BoardFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/EmployeeFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/EmployeeFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/ForgotPasswordFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/ForgotPasswordFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/InsuranceFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/InsuranceFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/JasperReportEmployeeTM.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/LoginFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/LoginFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RefundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RefundController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RentFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/RentFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/ToolFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/ToolFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/UserFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/UserFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/VehicleFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/controller/VehicleFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/db/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/db/DBConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/CustomerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/EmployeeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/Insurance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/InsuranceDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/Tool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/ToolDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/ToolOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/ToolOrderDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/VehicleDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/VehicleOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dto/VehicleOrderDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/CustomerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/CustomerModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/EmployeeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/EmployeeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/ForgotPasswordModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/ForgotPasswordModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/InsuranceModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/InsuranceModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/LoginModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/RefundModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/RefundModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/RentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/RentModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/ToolModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/ToolModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/UserAccountsModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/UserAccountsModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/UserVerifyModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/UserVerifyModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/VehicleModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/VehicleModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/notification/TopUpNotifications.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/utill/notification/TopUpNotifications.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/security/Encrypt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/utill/security/Encrypt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/utill/TableUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/utill/TableUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/html/guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/html/guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/BoardForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/BoardForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/DashboardForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/DashboardForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/LoginForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/UserVerifyForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/UserVerifyForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/html/guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/html/guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/BoardFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/BoardFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/CustomerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/CustomerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/EmployeeFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/EmployeeFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/ForgotPasswordFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/ForgotPasswordFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/InsuranceFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/InsuranceFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/JasperReportEmployeeTM.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/CruidDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/CruidDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/DAOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/impl/ForgotPasswordDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/impl/ForgotPasswordDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/impl/LoginDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/impl/LoginDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/interfaces/LoginDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/dao/interfaces/LoginDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/model/UserAccountsModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/ServiceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/ServiceFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/impl/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/impl/LoginServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/interfaces/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/hnkm/rohanarenting/service/interfaces/LoginService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/LoginFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/LoginFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RefundController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RefundController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RentFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/RentFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/ToolFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/ToolFormController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/UserFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/UserFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/VehicleFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/controller/VehicleFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/db/DBConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/db/DBConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/Customer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/Employee.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/Insurance.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/Tool.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/ToolOrder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/Vehicle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/dto/VehicleOrder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/CustomerModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/CustomerModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/EmployeeModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/EmployeeModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/ForgotPasswordModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/ForgotPasswordModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/InsuranceModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/InsuranceModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/LoginModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/RefundModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/RefundModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/RentModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/RentModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/ToolModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/ToolModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/UserAccountsModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/UserAccountsModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/UserVerifyModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/UserVerifyModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/VehicleModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/VehicleModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/notification/TopUpNotifications.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/security/Encrypt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/utill/TableUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/utill/TableUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/BoardForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/BoardForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/DashboardForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/DashboardForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/LoginForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/LoginForm.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/UserVerifyForm.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/UserVerifyForm.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/ForgotPasswordModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/hnkm/rohanarenting/model/UserAccountsModel.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,6 +85,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/GDSE/JavaProject/Rohana-Renting/Rohana-Renting/lib/javafx-sdk-11.0.2/lib/javafx.web.jar",
@@ -247,6 +166,9 @@
       <workItem from="1685621853614" duration="1053000" />
       <workItem from="1685624839038" duration="3305000" />
       <workItem from="1685628160162" duration="6508000" />
+      <workItem from="1685635865359" duration="459000" />
+      <workItem from="1685763903751" duration="37000" />
+      <workItem from="1685763964081" duration="5305000" />
     </task>
     <task id="LOCAL-00001" summary="Merge remote-tracking branch 'main/master'">
       <created>1682585310957</created>
@@ -374,7 +296,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684470837788</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Factory Design Pattern Added, Login and Forgot Complete">
+      <created>1685635992539</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1685635992539</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -397,6 +326,7 @@
     <MESSAGE value="Commit" />
     <MESSAGE value="Version 1" />
     <MESSAGE value="Remove License Add New One" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove License Add New One" />
+    <MESSAGE value="Factory Design Pattern Added, Login and Forgot Complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Factory Design Pattern Added, Login and Forgot Complete" />
   </component>
 </project>

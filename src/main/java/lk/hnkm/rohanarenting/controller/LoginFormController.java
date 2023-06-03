@@ -71,7 +71,7 @@ public class LoginFormController {
         if(Regex.validateEID(employeeIdFld.getText())&&Regex.validatePassword(passwordFld.getText())) {
             try {
                 if (loginService.verifyUserCredentials(new UserDTO(employeeIdFld.getText().toUpperCase(),null, passwordFld.getText(),null))) {
-                    loginService.insertUserEntry(employeeIdFld.getText().toUpperCase());
+                    loginService.insertUserLogInEntry(employeeIdFld.getText().toUpperCase());
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/BoardForm.fxml"));
                     Parent parent = loader.load();
                     BoardFormController boardController = loader.getController();
@@ -105,7 +105,7 @@ public class LoginFormController {
                     if (ButtonType == ButtonType.OK) {
                         stage.close();
                         try {
-                            loginService.setUserLogoutEntry();
+                            loginService.insertUserLogoutEntry();
                             loadLoginForm();
                             TopUpNotifications.logOut(employeeIdFld.getText().toUpperCase());
                         } catch (IOException | SQLException e) {

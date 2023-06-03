@@ -29,7 +29,7 @@ public class LoginDAOImpl implements LoginDAO {
     }
 
     @Override
-    public User get() {
+    public User get(User entity) {
         return null;
     }
 
@@ -44,12 +44,18 @@ public class LoginDAOImpl implements LoginDAO {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM user WHERE   `Employee ID` =? AND UPassword=?",entity.getEmployeeId(),password);
         return resultSet.next();
     }
+
     @Override
-    public void InsertUserEntry(String employeeId) throws SQLException {
+    public ArrayList<User> search(String searchPhrase) throws SQLException, NoSuchAlgorithmException {
+        return null;
+    }
+
+    @Override
+    public void insertUserLogInEntry(String employeeId) throws SQLException {
         CruidUtil.execute("INSERT INTO  user_login_history(EID,Date,Log_Time) VALUES(?,?,?)", employeeId, LocalDate.now(), LocalTime.now());
     }
     @Override
-    public void setUserLogoutEntry() throws SQLException {
+    public void insertUserLogoutEntry() throws SQLException {
         CruidUtil.execute("UPDATE user_login_history SET Logout_Time = ? WHERE Logout_Time IS NULL", LocalTime.now());
     }
 }

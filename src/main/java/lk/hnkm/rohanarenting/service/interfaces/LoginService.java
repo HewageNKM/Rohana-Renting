@@ -10,6 +10,6 @@ public interface LoginService extends SuperService {
     boolean verifyUserCredentials(UserDTO dto) throws SQLException, NoSuchAlgorithmException;
     boolean passwordValidate(String password);
     boolean employeeIdValidate(String employeeId);
-    void insertUserEntry(String employeeId) throws SQLException;
-    void setUserLogoutEntry() throws SQLException;
+    void insertUserLogInEntry(String employeeId) throws SQLException;
+    void insertUserLogoutEntry() throws SQLException;
 }

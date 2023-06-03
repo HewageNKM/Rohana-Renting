@@ -6,6 +6,6 @@ import lk.hnkm.rohanarenting.entity.User;
 import java.sql.SQLException;
 
 public interface LoginDAO extends CruidDAO<User> {
-    public void InsertUserEntry(String employeeId) throws SQLException;
-    public void setUserLogoutEntry() throws SQLException;
+    public void insertUserLogInEntry(String employeeId) throws SQLException;
+    public void insertUserLogoutEntry() throws SQLException;
 }

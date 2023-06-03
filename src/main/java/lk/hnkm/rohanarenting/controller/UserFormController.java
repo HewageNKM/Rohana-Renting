@@ -24,7 +24,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lk.hnkm.rohanarenting.dto.UserDTO;
 import lk.hnkm.rohanarenting.dto.tm.UserTM;
-import lk.hnkm.rohanarenting.model.UserAccountsModel;
+import lk.hnkm.rohanarenting.service.ServiceFactory;
+import lk.hnkm.rohanarenting.service.impl.UserAccountServiceImpl;
+import lk.hnkm.rohanarenting.service.interfaces.UserAccountService;
 import lk.hnkm.rohanarenting.utill.notification.TopUpNotifications;
 import lk.hnkm.rohanarenting.utill.Regex;
 import lk.hnkm.rohanarenting.utill.TableUtil;
@@ -33,6 +35,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UserFormController {
 
@@ -55,6 +58,8 @@ public class UserFormController {
     public TableColumn passwordColumn;
     private Stage stage = new Stage();
     ObservableList<UserTM> usersList = FXCollections.observableArrayList();
+    private final UserAccountService userAccountService = (UserAccountServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.USER_ACCOUNT_SERVICE);
+
 
     public void initialize() {
         saveBtn.setDisable(true);
@@ -76,7 +81,7 @@ public class UserFormController {
     private void loadTableData() {
         try {
             usersList.clear();
-            ArrayList<UserTM> arrayList =  UserAccountsModel.getAllUsers();
+            ArrayList<UserTM> arrayList =  userAccountService.getUsers();
             for (UserTM userTM: arrayList) {                                // Set Edit and Delete Button Action
                 setEditButtonAction(userTM.getEditBtn());
                 setDeleteButtonAction(userTM.getDeleteBtn());
@@ -96,7 +101,7 @@ public class UserFormController {
             new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure ?").showAndWait().ifPresent(buttonType -> {
                 if(buttonType==ButtonType.OK){
                     try {
-                        if(UserAccountsModel.deleteUser(user.getEID())){
+                        if(userAccountService.deleteUser(new UserDTO(user.getEID(),user.getName(),user.getUPassword(),user.getPermissionLevel()))){
                             new Alert(Alert.AlertType.INFORMATION,"User Deleted !").show();
                             loadTableData();
                             clearFields();
@@ -139,7 +144,7 @@ public class UserFormController {
     public void enterOnAction(ActionEvent actionEvent) {
         UserDTO userDTO = null;
         try {
-            userDTO = UserAccountsModel.getUserDetail(employeeFld.getText());
+            userDTO = userAccountService.getUser(new UserDTO(employeeFld.getText(),null,null,null));
             if(userDTO ==null){
                 new Alert(Alert.AlertType.ERROR,"No User Account Found !").show();
                 clearFields();
@@ -155,16 +160,18 @@ public class UserFormController {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
     //Save Button Action
     public void saveBtnOnAction(ActionEvent actionEvent) {
         try {
-           if(UserAccountsModel.isUserExist(employeeFld.getText())){
+           if(userAccountService.isUserExist(new UserDTO(employeeFld.getText(),null,null,null))){
                new Alert(Alert.AlertType.CONFIRMATION,"New User Data Will Be Updated !",ButtonType.YES).showAndWait().ifPresent(buttonType -> {
                    if(buttonType==ButtonType.YES){
                        try {
-                           if(UserAccountsModel.updateUser(new UserDTO(employeeFld.getText(),userNameFld.getText(), passwordFld.getText(),aPermission.isSelected()?"A":"B"))) {
+                           if(userAccountService.updateUser(new UserDTO(employeeFld.getText(),userNameFld.getText(), passwordFld.getText(),aPermission.isSelected()?"A":"B"))) {
                                TopUpNotifications.success("User Data Updated !");
                                clearFields();
                                loadTableData();
@@ -178,7 +185,7 @@ public class UserFormController {
                    }
                });
            }else {
-                if(UserAccountsModel.addUser(new UserDTO(employeeFld.getText(),userNameFld.getText(),passwordFld.getText(),aPermission.isSelected()?"A":"B"))){
+                if(userAccountService.addUser(new UserDTO(employeeFld.getText(),userNameFld.getText(),passwordFld.getText(),aPermission.isSelected()?"A":"B"))){
                     TopUpNotifications.success("User Data Saved !");
                     loadTableData();
                      clearFields();
@@ -215,26 +222,21 @@ public class UserFormController {
     public void employeeValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        try {
-            if (Regex.validateEID(employeeFld.getText())&& UserAccountsModel.verifyEmployeeID(employeeFld.getText())) {
-                notifyLabel.setTextFill(Color.GREEN);
-                notifyLabel.setText("Valid Employee ID !");
-                employeeFld.setStyle("-fx-border-color: green;");
-            }else {
-                notifyLabel.setTextFill(Color.RED);
-                notifyLabel.setText("InValid Employee ID !");
-                employeeFld.setStyle("-fx-border-color: red;");
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-            e.printStackTrace();
+        if (userAccountService.validateEmployeeId(employeeFld.getText())) {
+            notifyLabel.setTextFill(Color.GREEN);
+            notifyLabel.setText("Valid Employee ID !");
+            employeeFld.setStyle("-fx-border-color: green;");
+        }else {
+            notifyLabel.setTextFill(Color.RED);
+            notifyLabel.setText("InValid Employee ID !");
+            employeeFld.setStyle("-fx-border-color: red;");
         }
     }
     // Validate Password
     public void passwordValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validatePassword(passwordFld.getText())) {
+        if (userAccountService.validatePassword(passwordFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Password !");
             passwordFld.setStyle("-fx-border-color: green;");
@@ -246,23 +248,18 @@ public class UserFormController {
     }
     // Validate All the Fields
     public void refreshOnClick(MouseEvent mouseEvent) {
-        try {
-            if(Regex.validateEID(employeeFld.getText())&&Regex.validatePassword(passwordFld.getText())&&Regex.validatePassword(passwordFld.getText())& UserAccountsModel.verifyEmployeeID(employeeFld.getText())&&Regex.validateUsername(userNameFld.getText())){
-                notifyLabel.setTextFill(Color.GREEN);
-                notifyLabel.setText("All Set !");
-                userNameFld.setText(userNameFld.getText().toUpperCase());
-                employeeFld.setText(employeeFld.getText().toUpperCase());
-                saveBtn.setDisable(false);
-                deleteBtn.setDisable(false);
-            }else {
-                notifyLabel.setTextFill(Color.RED);
-                notifyLabel.setText("Please Fill All Fields Correctly !");
-                saveBtn.setDisable(true);
-                deleteBtn.setDisable(true);
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-            e.printStackTrace();
+        if(Regex.validateEID(employeeFld.getText())&&Regex.validatePassword(passwordFld.getText())&&Regex.validatePassword(passwordFld.getText())&&Regex.validateUsername(userNameFld.getText())){
+            notifyLabel.setTextFill(Color.GREEN);
+            notifyLabel.setText("All Set !");
+            userNameFld.setText(userNameFld.getText().toUpperCase());
+            employeeFld.setText(employeeFld.getText().toUpperCase());
+            saveBtn.setDisable(false);
+            deleteBtn.setDisable(false);
+        }else {
+            notifyLabel.setTextFill(Color.RED);
+            notifyLabel.setText("Please Fill All Fields Correctly !");
+            saveBtn.setDisable(true);
+            deleteBtn.setDisable(true);
         }
     }
     // Delete Button Action
@@ -270,7 +267,7 @@ public class UserFormController {
         new Alert(Alert.AlertType.WARNING, "User Details Will Be Deleted !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
             if (buttonType == ButtonType.YES) {
                 try {
-                    if (UserAccountsModel.deleteUser(employeeFld.getText())) {
+                    if (userAccountService.deleteUser(new UserDTO(employeeFld.getText(), userNameFld.getText(), passwordFld.getText(), aPermission.isSelected() ? "A" : "B"))) {
                         new Alert(Alert.AlertType.INFORMATION, "User Details Deleted !").show();
                         clearFields();
                         loadTableData();
@@ -304,30 +301,22 @@ public class UserFormController {
             loadTableData();
         } else {
             try {
-                ArrayList<UserTM> arrayList = UserAccountsModel.searchUser("%"+serachPhaseFld.getText()+"%");
+                ArrayList<UserTM> arrayList = userAccountService.SearchUsers("%"+serachPhaseFld.getText()+"%");
                 for (UserTM userTM:arrayList) {
                     setEditButtonAction(userTM.getEditBtn());
                     setDeleteButtonAction(userTM.getDeleteBtn());
                 }
                 ObservableList<UserTM> users = FXCollections.observableArrayList(arrayList);
                 usersTable.setItems(users);
-            } catch (SQLException e) {
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }
         }
     }
 
-    public void loginHistoryBtnOnAction(ActionEvent actionEvent) throws IOException {
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/LoginHistoryView.fxml"))));
-        stage.setTitle("Login History");
-        stage.centerOnScreen();
-        stage.getIcons().add(new Image("/img/search.png"));
-        stage.show();
-    }
-
     public void loginHistoryViewBtnOnAction(ActionEvent actionEvent) throws IOException {
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/LoginHistoryViewForm.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LoginHistoryViewForm.fxml")))));
         stage.setTitle("Login History");
         stage.centerOnScreen();
         stage.getIcons().add(new Image("/img/search.png"));

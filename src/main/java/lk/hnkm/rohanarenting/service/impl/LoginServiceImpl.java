@@ -30,12 +30,12 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void insertUserEntry(String employeeId) throws SQLException {
-        loginDAO.InsertUserEntry(employeeId);
+    public void insertUserLogInEntry(String employeeId) throws SQLException {
+        loginDAO.insertUserLogInEntry(employeeId);
     }
 
     @Override
-    public void setUserLogoutEntry() throws SQLException {
-        loginDAO.setUserLogoutEntry();
+    public void insertUserLogoutEntry() throws SQLException {
+        loginDAO.insertUserLogoutEntry();
     }
 }

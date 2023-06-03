@@ -28,7 +28,7 @@ public class ForgotPasswordDAOImpl implements ForgotPasswordDAO {
     }
 
     @Override
-    public User get() {
+    public User get(User entity) {
         return null;
     }
 
@@ -42,5 +42,10 @@ public class ForgotPasswordDAOImpl implements ForgotPasswordDAO {
         String password = Encrypt.encrypt(entity.getPassword());
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM user WHERE   `Employee ID` =? AND UPassword=?",entity.getEmployeeId(),password);
         return resultSet.next();
+    }
+
+    @Override
+    public ArrayList<User> search(String searchPhrase) throws SQLException, NoSuchAlgorithmException {
+        return null;
     }
 }
