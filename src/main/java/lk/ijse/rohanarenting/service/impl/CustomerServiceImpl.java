@@ -77,7 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean validateCustomerMobileNumber(String customerMobileNumber) {
-        return Regex.validateName(customerMobileNumber);
+        return Regex.validateMobile(customerMobileNumber);
     }
 
     @Override

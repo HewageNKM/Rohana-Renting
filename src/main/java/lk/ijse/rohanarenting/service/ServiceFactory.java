@@ -1,16 +1,13 @@
 package lk.ijse.rohanarenting.service;
 
-import lk.ijse.rohanarenting.service.impl.CustomerServiceImpl;
-import lk.ijse.rohanarenting.service.impl.ForgotPasswordServiceImpl;
-import lk.ijse.rohanarenting.service.impl.LoginServiceImpl;
-import lk.ijse.rohanarenting.service.impl.UserAccountServiceImpl;
+import lk.ijse.rohanarenting.service.impl.*;
 
 public class ServiceFactory {
     private static ServiceFactory serviceFactory;
     private ServiceFactory() {
     }
    public enum ServiceType{
-       FORGOT_PASSWORD, LOGIN_SERVICE, USER_ACCOUNT_SERVICE, CUSTOMER_SERVICE
+       FORGOT_PASSWORD, LOGIN_SERVICE, USER_ACCOUNT_SERVICE, CUSTOMER_SERVICE, EMPLOYEE_SERVICE
    }
     public static ServiceFactory getInstance(){
         if(serviceFactory==null){
@@ -28,6 +25,8 @@ public class ServiceFactory {
                 return new UserAccountServiceImpl();
             case CUSTOMER_SERVICE:
                 return new CustomerServiceImpl();
+            case EMPLOYEE_SERVICE:
+                return new EmployeeServiceImpl();
             default:
                 return null;
         }

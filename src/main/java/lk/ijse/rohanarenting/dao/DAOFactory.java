@@ -1,16 +1,13 @@
 package lk.ijse.rohanarenting.dao;
 
-import lk.ijse.rohanarenting.dao.impl.CustomerDAOImpl;
-import lk.ijse.rohanarenting.dao.impl.ForgotPasswordDAOImpl;
-import lk.ijse.rohanarenting.dao.impl.LoginDAOImpl;
-import lk.ijse.rohanarenting.dao.impl.UserAccountDAOImpl;
+import lk.ijse.rohanarenting.dao.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
     private DAOFactory() {
     }
     public enum DAOType{
-        LOGIN_DAO,FORGOT_PASSWORD_DAO,USER_ACCOUNT_DAO,CUSTOMER_DAO
+        LOGIN_DAO,FORGOT_PASSWORD_DAO,USER_ACCOUNT_DAO,CUSTOMER_DAO,EMPLOYEE_DAO
     }
     public static DAOFactory getInstance(){
         if(daoFactory==null){
@@ -28,6 +25,8 @@ public class DAOFactory {
                 return new UserAccountDAOImpl();
             case CUSTOMER_DAO:
                 return new CustomerDAOImpl();
+            case EMPLOYEE_DAO:
+                return new EmployeeDAOImpl();
             default:
                 return null;
         }
