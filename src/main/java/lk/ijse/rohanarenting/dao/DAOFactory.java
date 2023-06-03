@@ -1,5 +1,6 @@
 package lk.ijse.rohanarenting.dao;
 
+import lk.ijse.rohanarenting.dao.impl.CustomerDAOImpl;
 import lk.ijse.rohanarenting.dao.impl.ForgotPasswordDAOImpl;
 import lk.ijse.rohanarenting.dao.impl.LoginDAOImpl;
 import lk.ijse.rohanarenting.dao.impl.UserAccountDAOImpl;
@@ -25,6 +26,8 @@ public class DAOFactory {
                 return new ForgotPasswordDAOImpl();
             case USER_ACCOUNT_DAO:
                 return new UserAccountDAOImpl();
+            case CUSTOMER_DAO:
+                return new CustomerDAOImpl();
             default:
                 return null;
         }
