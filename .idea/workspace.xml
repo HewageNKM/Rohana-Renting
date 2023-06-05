@@ -4,27 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="Customer Form Search Bug Fixed">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="Employee Form Complete">
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/impl/InsuranceDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/interfaces/InsuranceDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/entity/Insurance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/impl/InsuranceServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/interfaces/InsuranceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/EmployeeFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/EmployeeFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/ToolFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/ToolFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/impl/EmployeeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/impl/EmployeeDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/model/EmployeeModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/impl/CustomerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/impl/CustomerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/impl/EmployeeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/impl/EmployeeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/interfaces/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/interfaces/CustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/interfaces/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/interfaces/EmployeeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/CustomerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/CustomerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/EmployeeFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/EmployeeFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/ToolFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/ToolFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/dao/impl/EmployeeDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/dao/impl/EmployeeDAOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/model/EmployeeModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/impl/CustomerServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/impl/CustomerServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/impl/EmployeeServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/impl/EmployeeServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/interfaces/CustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/interfaces/CustomerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/interfaces/EmployeeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/interfaces/EmployeeService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/InsuranceFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/InsuranceFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/DAOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/model/InsuranceModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/ServiceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/ServiceFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +112,7 @@
       <recent name="D:\GDSE\JavaProject\RohanaRenting\src\main\resources\reports" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.lk.ijse.rohanarenting.AppInitializer">
     <configuration name="AppInitializer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="lk.hnkm.rohanarenting.AppInitializer" />
       <module name="CustomerManagementSystem" />
@@ -149,8 +139,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="lk.ijse.rohanarenting.AppInitializer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lk.ijse.rohanarenting.AppInitializer" />
+      <module name="CustomerManagementSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lk.ijse.rohanarenting.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.lk.ijse.rohanarenting.AppInitializer" />
         <item itemvalue="Application.AppInitializer" />
         <item itemvalue="Application.AppInitializer" />
       </list>
@@ -184,7 +188,9 @@
       <workItem from="1685635865359" duration="459000" />
       <workItem from="1685763903751" duration="37000" />
       <workItem from="1685763964081" duration="5490000" />
-      <workItem from="1685771052713" duration="10807000" />
+      <workItem from="1685771052713" duration="11131000" />
+      <workItem from="1685858000603" duration="777000" />
+      <workItem from="1685942264546" duration="6277000" />
     </task>
     <task id="LOCAL-00001" summary="Merge remote-tracking branch 'main/master'">
       <created>1682585310957</created>
@@ -354,7 +360,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685795327093</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Employee Form Complete">
+      <created>1685798486759</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1685798486759</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -383,6 +396,7 @@
     <MESSAGE value="CustomerDAO [Null] Bug Fixed" />
     <MESSAGE value="Customer Form Mobile Number Bug Fixed" />
     <MESSAGE value="Customer Form Search Bug Fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Customer Form Search Bug Fixed" />
+    <MESSAGE value="Employee Form Complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Employee Form Complete" />
   </component>
 </project>

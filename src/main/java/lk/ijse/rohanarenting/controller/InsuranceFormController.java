@@ -16,15 +16,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lk.ijse.rohanarenting.dto.InsuranceDTO;
 import lk.ijse.rohanarenting.dto.tm.InsuranceTM;
-import lk.ijse.rohanarenting.model.InsuranceModel;
-import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.InsuranceServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.InsuranceService;
 import lk.ijse.rohanarenting.utill.Regex;
 import lk.ijse.rohanarenting.utill.TableUtil;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -96,6 +99,7 @@ public class InsuranceFormController {
     private TextField faxFld;
 
     ObservableList<InsuranceTM> insuranceTMS =  FXCollections.observableArrayList();
+    private final InsuranceService insuranceService = (InsuranceServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.INSURANCE_SERVICE);
 
     public void initialize(){
         saveBtn.setDisable(true);
@@ -107,7 +111,7 @@ public class InsuranceFormController {
 
     private void loadAllInsurance() {
         try {
-            ArrayList<InsuranceTM> allInsurance = InsuranceModel.getAllInsurance();
+            ArrayList<InsuranceTM> allInsurance = insuranceService.getAllInsurance();
             for (InsuranceTM insuranceTM:allInsurance) {
                 setOnActionOnBtn(insuranceTM);
             }
@@ -159,7 +163,7 @@ public class InsuranceFormController {
     void enterOnAction(ActionEvent event) {
         if(Regex.validateVehicleID(insuranceIdFld.getText())) {
             try {
-                InsuranceDTO insuranceDTO = InsuranceModel.getVehicleInsurance(insuranceIdFld.getText());
+                InsuranceDTO insuranceDTO = insuranceService.getInsurance(new InsuranceDTO(insuranceIdFld.getText(), null, null, null, null, null, null, null, null, null));
                 if(insuranceDTO !=null){
                     insuranceIdFld.setText(insuranceDTO.getIID());
                     insuranceNameFld.setText(insuranceDTO.getName());
@@ -175,13 +179,13 @@ public class InsuranceFormController {
                 }else {
                     new Alert(Alert.AlertType.ERROR,"Insurance Details  Not Found !").show();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }
         }else {
             try {
-                InsuranceDTO insuranceDTO = InsuranceModel.getToolInsurance(insuranceIdFld.getText());
+                InsuranceDTO insuranceDTO = insuranceService.getInsurance(new InsuranceDTO(insuranceIdFld.getText(), null, null, null, null, null, null, null, null, null));
                 if(insuranceDTO !=null){
                     insuranceIdFld.setText(insuranceDTO.getIID());
                     insuranceNameFld.setText(insuranceDTO.getName());
@@ -198,7 +202,7 @@ public class InsuranceFormController {
                     new Alert(Alert.AlertType.ERROR,"Insurance Details  Not Found !").show();
                 }
 
-            } catch (SQLException e) {
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }
@@ -207,8 +211,17 @@ public class InsuranceFormController {
 
     @FXML
     void refreshOnClick(MouseEvent event) {
-        try {
-            if ((InsuranceModel.isVehicleIdExists(insuranceIdFld.getText()) || InsuranceModel.isToolIdExit(insuranceIdFld.getText())) && Regex.validateNameWithSpaces(insuranceNameFld.getText()) && Regex.validateNameWithSpaces(insuranceProviderFld.getText()) && Regex.validateNameWithSpaces(agentNameFld.getText()) && Regex.validateMobile(agentContactFld.getText()) && Regex.validateEmail(emailFld.getText()) && Regex.validateFax(faxFld.getText()) && Regex.validateAddress(addressFld.getText()) && joingDatePicker.getValue() != null && expireDatePicker.getValue() != null && (expireDatePicker.getValue()!=null)) {
+            if (
+                    insuranceService.validateInsuranceId(insuranceIdFld.getText()) &&
+                            insuranceService.validateInsuranceName(insuranceNameFld.getText()) &&
+                            insuranceService.validateInsuranceProvider(insuranceProviderFld.getText()) &&
+                            insuranceService.validateInsuranceName(agentNameFld.getText()) &&
+                            insuranceService.validateInsuranceMobileNumber(agentContactFld.getText()) &&
+                            insuranceService.validateInsuranceAddress(addressFld.getText()) &&
+                            insuranceService.validateInsuranceEmail(emailFld.getText()) &&
+                            insuranceService.validateInsuranceFax(faxFld.getText()) &&
+                            insuranceService.validateInsuranceDuration(joingDatePicker, expireDatePicker)
+            ) {
                 notifyLabel.setTextFill(Color.GREEN);
                 insuranceIdFld.setText(insuranceIdFld.getText().toUpperCase());
                 notifyLabel.setText("All Set !");
@@ -218,105 +231,49 @@ public class InsuranceFormController {
                 notifyLabel.setText("Check the Fields  !");
                 saveBtn.setDisable(true);
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-            throw new RuntimeException(e);
-        }
     }
     @FXML
     void saveBtnOnAction(ActionEvent event) {
         new Alert(Alert.AlertType.CONFIRMATION,"Invalid Date Will Not Be Proceed !",ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(ButtonType->{
-            if(ButtonType==ButtonType.OK){
-                if((ChronoUnit.MONTHS.between(joingDatePicker.getValue(), expireDatePicker.getValue())>=12)&&expireDatePicker.getValue().isAfter(LocalDate.now())) {
-                    if (Regex.validateVehicleID(insuranceIdFld.getText())) {
-                        try {
-                            if (InsuranceModel.isVehicleInsuranceDetailsExist(insuranceIdFld.getText())) {
-                                new Alert(Alert.AlertType.CONFIRMATION, "New Vehicle Insurance Data Will Be Updated ! ", javafx.scene.control.ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(Button -> {
-                                    if (Button == javafx.scene.control.ButtonType.OK) {
-                                        try {
-                                            Boolean isUpdated = InsuranceModel.updateVehicleInsuranceDetails(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
-                                            if (isUpdated) {
-                                                TopUpNotifications.success("Vehicle Insurance Details Updated ! ");
-                                                clearFields();
-                                                loadAllInsurance();
-                                            } else {
-                                                new Alert(Alert.AlertType.ERROR, "Data Not Updated ! ").show();
-                                            }
-                                        } catch (SQLException e) {
-                                            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
-                                            e.printStackTrace();
+            if(ButtonType== javafx.scene.control.ButtonType.OK){
+                if(insuranceService.validateInsuranceDuration(joingDatePicker,expireDatePicker)) {
+                    try {
+                        if (insuranceService.verifyInsurance(new InsuranceDTO(insuranceIdFld.getText(), null, null, null, null, null, null, null, null, null))) {
+                            new Alert(Alert.AlertType.CONFIRMATION, "New  Insurance Data Will Be Updated ! ", javafx.scene.control.ButtonType.OK, ButtonType.CANCEL).showAndWait().ifPresent(Button -> {
+                                if (Button == javafx.scene.control.ButtonType.OK) {
+                                    try {
+                                        if (insuranceService.updateInsurance(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()))) {
+                                            new Alert(Alert.AlertType.CONFIRMATION, "Insurance Data Updated !").show();
+                                            clearFields();
+                                            loadAllInsurance();
+                                        } else {
+                                            new Alert(Alert.AlertType.ERROR, "Data Not Updated !").show();
                                         }
+                                    } catch (SQLException | NoSuchAlgorithmException e) {
+                                        throw new RuntimeException(e);
                                     }
-                                });
-                            } else {
-                                new Alert(Alert.AlertType.CONFIRMATION, "New Vehicle Insurance Data Will Be Saved !", ButtonType.OK, ButtonType.CANCEL).showAndWait().ifPresent(Btn -> {
-                                    if (Btn == ButtonType.OK) {
-                                        try {
-                                            Boolean isUpdated = InsuranceModel.addVehicleInsuranceDetails(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
-                                            if (isUpdated) {
-                                                TopUpNotifications.success("Vehicle Insurance Details Saved ! ");
-                                                clearFields();
-                                                loadAllInsurance();
-                                            } else {
-                                                new Alert(Alert.AlertType.ERROR, "Data Not Saved ! ").show();
-                                            }
-                                        } catch (SQLException e) {
-                                            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
-                                            e.printStackTrace();
+                                }
+                            });
+                        } else {
+                            new Alert(Alert.AlertType.CONFIRMATION, "New Insurance Data Will Be Saved !", javafx.scene.control.ButtonType.OK, javafx.scene.control.ButtonType.CANCEL).showAndWait().ifPresent(BT -> {
+                                if (BT == javafx.scene.control.ButtonType.OK) {
+                                    try {
+                                        if (insuranceService.addInsurance(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()))) {
+                                            new Alert(Alert.AlertType.CONFIRMATION, "Insurance Data Saved !").show();
+                                            clearFields();
+                                            loadAllInsurance();
+                                        } else {
+                                            new Alert(Alert.AlertType.ERROR, "Data Not Saved !").show();
                                         }
+                                    } catch (SQLException | NoSuchAlgorithmException e) {
+                                        throw new RuntimeException(e);
                                     }
-                                });
-                            }
-                        } catch (SQLException e) {
-                            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
-                            e.printStackTrace();
+                                }
+                            });
                         }
-                    } else {
-                        try {
-                            if (InsuranceModel.isToolInsuranceDetailsExist(insuranceIdFld.getText())) {
-                                new Alert(Alert.AlertType.CONFIRMATION, "New Tool Insurance Data Will Be Updated !", ButtonType.OK, ButtonType.CANCEL).showAndWait().ifPresent(BT -> {
-                                    if (BT == javafx.scene.control.ButtonType.OK) {
-                                        try {
-                                            Boolean isUpdated = InsuranceModel.updateToolInsuranceDetails(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
-                                            if (isUpdated) {
-                                                TopUpNotifications.success("Tool Insurance Details Updated ! ");
-                                                clearFields();
-                                                loadAllInsurance();
-                                            } else {
-                                                new Alert(Alert.AlertType.ERROR, "Data Not Updated ! ").show();
-                                            }
-                                        } catch (SQLException e) {
-                                            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                            } else {
-                                new Alert(Alert.AlertType.CONFIRMATION, "New Tool Insurance Data Will Be Saved !", ButtonType.OK, ButtonType.CANCEL).showAndWait().ifPresent(b -> {
-                                    if (b == ButtonType.OK) {
-                                        try {
-                                            Boolean isUpdated = InsuranceModel.addToolInsuranceDetails(new InsuranceDTO(insuranceIdFld.getText(), insuranceNameFld.getText(), insuranceProviderFld.getText(), agentNameFld.getText(), agentContactFld.getText(), emailFld.getText(), addressFld.getText(), faxFld.getText(), joingDatePicker.getValue(), expireDatePicker.getValue()));
-                                            if (isUpdated) {
-                                                TopUpNotifications.success("Tool Insurance Details Saved ! ");
-                                                clearFields();
-                                                loadAllInsurance();
-                                            } else {
-                                                new Alert(Alert.AlertType.ERROR, "Data Not Saved ! ").show();
-                                            }
-                                        } catch (SQLException e) {
-                                            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                            }
-                        } catch (SQLException e) {
-                            new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
-                            e.printStackTrace();
-                        }
+                    } catch (SQLException | NoSuchAlgorithmException e) {
+                        throw new RuntimeException(e);
                     }
-                }else{
-                    new Alert(Alert.AlertType.ERROR,"Insurance Period Should Be At Least 12 Months, Check the Date !").show();
                 }
             }
         });
@@ -352,7 +309,7 @@ public class InsuranceFormController {
             loadAllInsurance();
         }else {
             try {
-                ArrayList<InsuranceTM> filteredList = InsuranceModel.searchInsurance("%"+searchFld.getText()+"%");
+                ArrayList<InsuranceTM> filteredList = insuranceService.searchInsurance("%"+searchFld.getText()+"%");
                 ObservableList<InsuranceTM> filterInsuranceTMS = FXCollections.observableArrayList(filteredList);
                 for (InsuranceTM insuranceTM:filterInsuranceTMS) {
                     setOnActionOnBtn(insuranceTM.getUpdate());
@@ -362,7 +319,7 @@ public class InsuranceFormController {
                 }else {
                     insuranceTable.getItems().clear();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }
@@ -392,7 +349,7 @@ public class InsuranceFormController {
 
     public void insuranceProviderValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
-        if(Regex.validateNameWithSpaces(insuranceProviderFld.getText())){
+        if(insuranceService.validateInsuranceProvider(insuranceProviderFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Provider Name !");
             insuranceProviderFld.setStyle("-fx-border-color: green");
@@ -405,7 +362,7 @@ public class InsuranceFormController {
 
     public void insuranceNameValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
-        if(Regex.validateNameWithSpaces(insuranceNameFld.getText())){
+        if(insuranceService.validateInsuranceName(insuranceNameFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Insurance Name !");
             insuranceNameFld.setStyle("-fx-border-color: green");
@@ -418,8 +375,7 @@ public class InsuranceFormController {
 
     public void IIDValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
-        try {
-            if(InsuranceModel.isToolIdExit(insuranceIdFld.getText())||(InsuranceModel.isVehicleIdExists(insuranceIdFld.getText()))){
+            if(insuranceService.validateInsuranceId(insuranceIdFld.getText())){
                 notifyLabel.setTextFill(Color.GREEN);
                 notifyLabel.setText("Valid ID !");
                 insuranceIdFld.setStyle("-fx-border-color: green");
@@ -428,15 +384,11 @@ public class InsuranceFormController {
                 notifyLabel.setText("Invalid ID !");
                 insuranceIdFld.setStyle("-fx-border-color: red");
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-            throw new RuntimeException(e);
-        }
     }
 
     public void agentNameValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
-        if(Regex.validateNameWithSpaces(agentNameFld.getText())){
+        if(insuranceService.validateInsuranceName(agentNameFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Name !");
             agentNameFld.setStyle("-fx-border-color: green");
@@ -462,7 +414,7 @@ public class InsuranceFormController {
 
     public void agentAddressValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
-        if(Regex.validateAddress(addressFld.getText())){
+        if(insuranceService.validateInsuranceAddress(addressFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Address !");
             addressFld.setStyle("-fx-border-color: green");
@@ -475,7 +427,7 @@ public class InsuranceFormController {
 
     public void emailValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
-        if(Regex.validateEmail(emailFld.getText())){
+        if(insuranceService.validateInsuranceEmail(emailFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Address !");
             emailFld.setStyle("-fx-border-color: green");
@@ -488,7 +440,7 @@ public class InsuranceFormController {
 
     public void faxValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
-        if(Regex.validateFax(faxFld.getText())){
+        if(insuranceService.validateInsuranceFax(faxFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Fax !");
             faxFld.setStyle("-fx-border-color: green");
