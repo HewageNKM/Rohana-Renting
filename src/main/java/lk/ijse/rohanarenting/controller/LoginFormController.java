@@ -68,7 +68,7 @@ public class LoginFormController {
 
     @FXML
     void loginBtnOnAction(ActionEvent event) throws IOException {
-        if(Regex.validateEID(employeeIdFld.getText())&&Regex.validatePassword(passwordFld.getText())) {
+        if(Regex.validateEID(employeeIdFld.getText())&& Regex.validatePassword(passwordFld.getText())) {
             try {
                 if (loginService.verifyUserCredentials(new UserDTO(employeeIdFld.getText().toUpperCase(),null, passwordFld.getText(),null))) {
                     loginService.insertUserLogInEntry(employeeIdFld.getText().toUpperCase());

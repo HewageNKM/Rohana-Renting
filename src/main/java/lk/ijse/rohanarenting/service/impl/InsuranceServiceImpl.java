@@ -2,9 +2,6 @@ package lk.ijse.rohanarenting.service.impl;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.DatePicker;
-import lk.ijse.rohanarenting.dao.DAOFactory;
-import lk.ijse.rohanarenting.dao.impl.InsuranceDAOImpl;
-import lk.ijse.rohanarenting.dao.interfaces.InsuranceDAO;
 import lk.ijse.rohanarenting.dto.InsuranceDTO;
 import lk.ijse.rohanarenting.dto.tm.InsuranceTM;
 import lk.ijse.rohanarenting.entity.Insurance;
@@ -18,7 +15,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class InsuranceServiceImpl implements InsuranceService {
-    private final InsuranceDAO insuranceDAO = (InsuranceDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.INSURANCE_DAO);
 
     @Override
     public boolean addInsurance(InsuranceDTO dto) throws SQLException, NoSuchAlgorithmException {

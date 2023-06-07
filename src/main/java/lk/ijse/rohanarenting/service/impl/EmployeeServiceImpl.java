@@ -1,9 +1,6 @@
 package lk.ijse.rohanarenting.service.impl;
 
 import com.jfoenix.controls.JFXButton;
-import lk.ijse.rohanarenting.dao.DAOFactory;
-import lk.ijse.rohanarenting.dao.impl.EmployeeDAOImpl;
-import lk.ijse.rohanarenting.dao.interfaces.EmployeeDAO;
 import lk.ijse.rohanarenting.dto.EmployeeDTO;
 import lk.ijse.rohanarenting.dto.tm.EmployeeTM;
 import lk.ijse.rohanarenting.entity.Employee;
@@ -16,7 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EmployeeServiceImpl implements EmployeeService {
-    private final EmployeeDAO employeeDAO = (EmployeeDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.EMPLOYEE_DAO);
     @Override
     public EmployeeDTO getEmployee(EmployeeDTO dto) throws SQLException, NoSuchAlgorithmException {
         Employee employee = employeeDAO.get(new Employee(dto.getEID(),null,null,null,null,null,null,null,null,null,null,null,null,null));
@@ -106,7 +102,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public boolean isEmployeeExists(String employeeId) throws SQLException, NoSuchAlgorithmException {
         return employeeDAO.verify(new Employee(employeeId,null,null,null,null,null,null,null,null,null,null,null,null,null));
     }
-    private ArrayList<EmployeeTM> getEmployeesTMS(ArrayList<Employee> employees) throws SQLException {
+    private ArrayList<EmployeeTM> getEmployeesTMS(ArrayList<Employee> employees) {
         ArrayList<EmployeeTM> employeeTMS = new ArrayList<>();
         for (Employee employee : employees) {
             JFXButton showBtn = new JFXButton();

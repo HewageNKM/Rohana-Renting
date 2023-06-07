@@ -28,6 +28,7 @@ import lk.ijse.rohanarenting.utill.Regex;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class UserVerifyController {
     public TextField employeeIdFld;
@@ -97,14 +98,14 @@ public class UserVerifyController {
     }
 
     private void loadForm() throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/view/"+title+"Form.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/" + title + "Form.fxml")));
         changeRoot.getChildren().removeAll();
         changeRoot.getChildren().setAll(parent);
         titleLabel.setText("Manage"+" "+title);
     }
 
     public void onClickRefresh(MouseEvent mouseEvent) {
-        if(Regex.validateEID(employeeIdFld.getText())&&Regex.validatePassword(passwordFld.getText())) {
+        if(Regex.validateEID(employeeIdFld.getText())&& Regex.validatePassword(passwordFld.getText())) {
             verifyBtn.setDisable(false);
         }else {
             verifyBtn.setDisable(true);

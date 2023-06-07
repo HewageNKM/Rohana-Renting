@@ -1,9 +1,6 @@
 package lk.ijse.rohanarenting.service.impl;
 
 import com.jfoenix.controls.JFXButton;
-import lk.ijse.rohanarenting.dao.DAOFactory;
-import lk.ijse.rohanarenting.dao.impl.UserAccountDAOImpl;
-import lk.ijse.rohanarenting.dao.interfaces.UserAccountDAO;
 import lk.ijse.rohanarenting.dto.UserDTO;
 import lk.ijse.rohanarenting.dto.tm.UserTM;
 import lk.ijse.rohanarenting.entity.User;
@@ -15,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserAccountServiceImpl implements UserAccountService {
-    private final UserAccountDAO userAccountDAO = (UserAccountDAOImpl)DAOFactory.getInstance().getDAO(DAOFactory.DAOType.USER_ACCOUNT_DAO);
     @Override
     public ArrayList<UserTM> getUsers() throws SQLException {
         ArrayList<User> users = userAccountDAO.getAll();

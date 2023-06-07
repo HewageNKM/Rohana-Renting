@@ -7,7 +7,7 @@ public class DAOFactory {
     private DAOFactory() {
     }
     public enum DAOType{
-        LOGIN_DAO,FORGOT_PASSWORD_DAO,USER_ACCOUNT_DAO,CUSTOMER_DAO,EMPLOYEE_DAO, INSURANCE_DAO
+        LOGIN_DAO,FORGOT_PASSWORD_DAO,USER_ACCOUNT_DAO,CUSTOMER_DAO,EMPLOYEE_DAO, INSURANCE_DAO, TOOL_DAO, VEHICLE_DAO
     }
     public static DAOFactory getInstance(){
         if(daoFactory==null){
@@ -29,6 +29,10 @@ public class DAOFactory {
                 return new EmployeeDAOImpl();
             case INSURANCE_DAO:
                 return new InsuranceDAOImpl();
+            case TOOL_DAO:
+                return new ToolDAOImpl();
+            case VEHICLE_DAO:
+                return new VehicleDAOImpl();
             default:
                 return null;
         }

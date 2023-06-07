@@ -401,7 +401,7 @@ public class InsuranceFormController {
 
     public void agentContactValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
-        if(Regex.validateMobile(agentContactFld.getText())){
+        if(insuranceService.validateInsuranceMobileNumber(agentContactFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Contact !");
             agentContactFld.setStyle("-fx-border-color: green");
@@ -453,7 +453,7 @@ public class InsuranceFormController {
 
     public void joinedKeyDateValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
-        if(Regex.validateFax(faxFld.getText())){
+        if(insuranceService.validateInsuranceFax(faxFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Date !");
             faxFld.setStyle("-fx-border-color: green");
@@ -465,7 +465,7 @@ public class InsuranceFormController {
     }
     public void joinedMouseDateValidate(MouseEvent mouseEvent) {
         saveBtn.setDisable(true);
-        if(Regex.validateFax(faxFld.getText())){
+        if(insuranceService.validateInsuranceFax(faxFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Date !");
             faxFld.setStyle("-fx-border-color: green");

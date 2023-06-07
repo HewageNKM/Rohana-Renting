@@ -25,7 +25,7 @@ import lk.ijse.rohanarenting.dto.tm.ReturnOrderTM;
 import lk.ijse.rohanarenting.dto.tm.ReturnTM;
 import lk.ijse.rohanarenting.model.ReturnModel;
 import lk.ijse.rohanarenting.utill.Genarate;
-import lk.ijse.rohanarenting.utill.Regex;
+import lk.ijse.rohanarenting.utill.toolService;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -147,10 +147,10 @@ public class ReturnFormController {
 
     public void idValidate(KeyEvent keyEvent) {
         try {
-            if(ReturnModel.verifyVehicleRentId(idFld.getText())||Regex.validateVehicleRentId(idFld.getText())) {
+            if(ReturnModel.verifyVehicleRentId(idFld.getText())|| toolService.validateVehicleRentId(idFld.getText())) {
                 idFld.setStyle("-fx-border-color: green");
                 changeBtn.setDisable(false);
-            }else if(ReturnModel.verifyToolRentID(idFld.getText())||Regex.validateToolRentId(idFld.getText())){
+            }else if(ReturnModel.verifyToolRentID(idFld.getText())|| toolService.validateToolRentId(idFld.getText())){
                 idFld.setStyle("-fx-border-color: green");
                 changeBtn.setDisable(false);
             }else{
@@ -168,7 +168,7 @@ public class ReturnFormController {
         new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure ?,This Will Take Immediate Effect !",ButtonType.NEXT,ButtonType.CANCEL).showAndWait().ifPresent(ButtonType->{
             if(ButtonType == ButtonType.NEXT){
                 Connection connection=null;
-                if(Regex.validateToolRentId(idFld.getText())){
+                if(toolService.validateToolRentId(idFld.getText())){
                     try {
                         connection = DBConnection.getInstance().getConnection();
                         connection.setAutoCommit(false);

@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 import lk.ijse.rohanarenting.dto.tm.ReturnOrderTM;
 import lk.ijse.rohanarenting.dto.tm.ReturnTM;
 import lk.ijse.rohanarenting.utill.CruidUtil;
-import lk.ijse.rohanarenting.utill.Regex;
+import lk.ijse.rohanarenting.utill.toolService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -78,12 +78,12 @@ public class ReturnModel {
 
     public static ArrayList<ReturnOrderTM> getOrderTM(String rentId) throws SQLException {
         ArrayList<ReturnOrderTM> returnOrderTMS = new ArrayList<>();
-        if(Regex.validateVehicleRentId(rentId)){
+        if(toolService.validateVehicleRentId(rentId)){
             ResultSet resultSet = CruidUtil.execute("SELECT Rent_ID,VID,Return_Date FROM vehicle_rent_order_detail WHERE Rent_ID=? AND Return_Status = 0 AND Refund_Status = 0",rentId);
             while (resultSet.next()){
                 returnOrderTMS.add(new ReturnOrderTM(resultSet.getString(1),resultSet.getString(2),resultSet.getDate(3).toLocalDate()));
             }
-        }else if(Regex.validateToolRentId(rentId)){
+        }else if(toolService.validateToolRentId(rentId)){
             ResultSet resultSet = CruidUtil.execute("SELECT Rent_ID,TID,Return_Date FROM tool_rent_order_detail WHERE Rent_ID= ? AND Return_Status = 0 AND Refund_Status = 0", rentId);
             while (resultSet.next()){
                 returnOrderTMS.add(new ReturnOrderTM(resultSet.getString(1),resultSet.getString(2),resultSet.getDate(3).toLocalDate()));
@@ -176,9 +176,9 @@ public class ReturnModel {
 
     public static boolean checkRefund(String rentId) throws SQLException {
         ResultSet resultSet = null;
-        if(Regex.validateVehicleRentId(rentId)){
+        if(toolService.validateVehicleRentId(rentId)){
             resultSet = CruidUtil.execute("SELECT * FROM vehicle_rent_order_detail WHERE Rent_ID = ? AND Refund_Status = 0", rentId);
-        }else if(Regex.validateToolRentId(rentId)){
+        }else if(toolService.validateToolRentId(rentId)){
             resultSet = CruidUtil.execute("SELECT * FROM tool_rent_order_detail WHERE Rent_ID = ? AND Refund_Status = 0", rentId);
         }
         assert resultSet != null;

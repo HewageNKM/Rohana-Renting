@@ -12,23 +12,21 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import lk.ijse.rohanarenting.dto.InsuranceDTO;
 import lk.ijse.rohanarenting.dto.VehicleDTO;
 import lk.ijse.rohanarenting.dto.tm.VehicleTM;
-import lk.ijse.rohanarenting.model.VehicleModel;
-import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
-import lk.ijse.rohanarenting.utill.Regex;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.VehicleServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.VehicleService;
 import lk.ijse.rohanarenting.utill.TableUtil;
+import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -37,6 +35,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -112,6 +111,7 @@ public class VehicleFormController {
     private ComboBox<String> categoryComboBox;
 
     ObservableList<VehicleTM> vehicles = FXCollections.observableArrayList();
+    private final VehicleService vehicleService = (VehicleServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.VEHICLE_SERVICE);
 
     public void initialize(){
        saveBtn.setDisable(true);
@@ -123,12 +123,12 @@ public class VehicleFormController {
     }
 
     private void setComboBox() {
-        ObservableList<String> catogory = FXCollections.observableArrayList("A","A1","B","B1","C","C1","CE","D","D1","DE","G","G1","J");
-        categoryComboBox.setItems(catogory);
+        ObservableList<String> category = FXCollections.observableArrayList("A","A1","B","B1","C","C1","CE","D","D1","DE","G","G1","J");
+        categoryComboBox.setItems(category);
     }
 
     private void setCellValueFactory() {
-        columnID.setCellValueFactory(new PropertyValueFactory<VehicleTM,String>("VID"));
+        columnID.setCellValueFactory(new PropertyValueFactory<>("VID"));
         ColumnManufacturer.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         columnModelName.setCellValueFactory(new PropertyValueFactory<>("modelName"));
         columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -141,7 +141,7 @@ public class VehicleFormController {
     }
     public void loadAllVehicles(){
         try {
-            ArrayList <VehicleTM> allVehicles = VehicleModel.getAllVehicles();
+            ArrayList <VehicleTM> allVehicles = vehicleService.getAllVehicles();
             for (VehicleTM vehicleTM:allVehicles) {
                 setShowBtnAction(vehicleTM.getShowBtn());
                 setEditBtnAction(vehicleTM.getEditBtn());
@@ -163,7 +163,7 @@ public class VehicleFormController {
                 new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to delete this Vehicle ?",ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {
-                            boolean isDeleted = VehicleModel.deleteVehicle(selectedItem.getVID());
+                            boolean isDeleted = vehicleService.deleteVehicle(new VehicleDTO(selectedItem.getVID(),selectedItem.getManufacturer(),selectedItem.getModelName(),selectedItem.getDescription(),selectedItem.getAvailability(),selectedItem.getRate(),selectedItem.getCategory()));
                             if(isDeleted){
                                 TopUpNotifications.success("Vehicle Deleted Successfully!");
                                 loadAllVehicles();
@@ -193,9 +193,9 @@ public class VehicleFormController {
                 descriptionFld.setText(selectedItem.getDescription());
                 rentalRateFld.setText(String.valueOf(selectedItem.getRate()));
                 categoryComboBox.setValue(selectedItem.getCategory());
-                Boolean isExist = null;
+                boolean isExist;
                 try {
-                    isExist = VehicleModel.checkOrderStatus(selectedItem.getVID());
+                    isExist = vehicleService.checkOrderStatus(new VehicleDTO(selectedItem.getVID(),selectedItem.getManufacturer(),selectedItem.getModelName(),selectedItem.getDescription(),selectedItem.getAvailability(),selectedItem.getRate(),selectedItem.getCategory()));
                     if(isExist){
                         orderStatusLabel.setStyle("-fx-text-fill: red");
                         orderStatusLabel.setText("This Vehicle is in an Order");
@@ -243,7 +243,7 @@ public class VehicleFormController {
     private void printVehicleReport(VehicleTM vehicleTM) {
         try {
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(Collections.singleton(vehicleTM));
-            InsuranceDTO insuranceDTO = VehicleModel.getInsuranceDetails(vehicleTM.getVID());
+            InsuranceDTO insuranceDTO = vehicleService.getInsuranceDetails(new VehicleDTO(vehicleTM.getVID(),vehicleTM.getManufacturer(),vehicleTM.getModelName(),vehicleTM.getDescription(),vehicleTM.getAvailability(),vehicleTM.getRate(),vehicleTM.getCategory()));
             Map<String, Object> params = new HashMap<>();
             params.put("VID",vehicleTM.getVID());
             params.put("manufacturer",vehicleTM.getManufacturer());
@@ -284,10 +284,10 @@ public class VehicleFormController {
 
 
     @FXML
-    void modelNameValidate(KeyEvent event) {
+    void modelNameValidate() {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(modelNameFld.getText().trim().isEmpty()) {
+        if(vehicleService.validateVehicleModel(modelNameFld.getText())) {
             modelNameFld.setStyle("-fx-border-color: red");
             notifyLabel.setTextFill(Color.RED);
             notifyLabel.setText("Invalid Brand Name !");
@@ -299,7 +299,7 @@ public class VehicleFormController {
     }
 
     @FXML
-    void clearBtnOnAction(ActionEvent event) {
+    void clearBtnOnAction() {
         clearFields();
     }
 
@@ -328,11 +328,11 @@ public class VehicleFormController {
     }
 
     @FXML
-    void deleteBtnOnAction(ActionEvent event) {
+    void deleteBtnOnAction() {
         new Alert(Alert.AlertType.CONFIRMATION,"Vehicle Data Will Be Deleted !", ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(buttonType -> {
             if(buttonType == ButtonType.OK){
                 try {
-                    if(VehicleModel.deleteVehicle(licenseFld.getText())){
+                    if(vehicleService.deleteVehicle(new VehicleDTO(licenseFld.getText(),null,null,null,null,null,null))){
                         TopUpNotifications.success("Vehicle Data Deleted Successfully !");
                         clearFields();
                         loadAllVehicles();
@@ -348,9 +348,9 @@ public class VehicleFormController {
     }
 
     @FXML
-    void enterOnAction(ActionEvent event) {
+    void enterOnAction() {
         try {
-            VehicleDTO vehicleDTO = VehicleModel.getVehicleDetail(licenseFld.getText());
+            VehicleDTO vehicleDTO = vehicleService.getVehicle(new VehicleDTO(licenseFld.getText(),null,null,null,null,null,null));
             if(vehicleDTO != null){
                 modelNameFld.setText(vehicleDTO.getModelName());
                 System.out.println(modelNameFld.getText());
@@ -360,7 +360,7 @@ public class VehicleFormController {
                 System.out.println(manufacturerFld.getText());
                 saveBtn.setDisable(false);
                 deleteBtn.setDisable(false);
-                Boolean isExist = VehicleModel.checkOrderStatus(licenseFld.getText());
+                boolean isExist = vehicleService.checkOrderStatus(new VehicleDTO(licenseFld.getText(),null,null,null,null,null,null));
                 if(isExist){
                     orderStatusLabel.setStyle("-fx-text-fill: red");
                     orderStatusLabel.setText("This Vehicle is in an Order");
@@ -388,17 +388,17 @@ public class VehicleFormController {
             }else {
                 new Alert(Alert.AlertType.ERROR,"No Vehicle Found !").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
     }
 
     @FXML
-    void manufacturerValidate(KeyEvent event) {
+    void manufacturerValidate() {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(Regex.validateName(manufacturerFld.getText())){
+        if(vehicleService.validateVehicleManufacturer(manufacturerFld.getText())){
             manufacturerFld.setStyle("-fx-border-color: green");
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Name !");
@@ -410,10 +410,10 @@ public class VehicleFormController {
     }
 
     @FXML
-    void rentalRateValidate(KeyEvent event) {
+    void rentalRateValidate() {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(Regex.validateNumberOnly(rentalRateFld.getText())) {
+        if(vehicleService.validateRate(rentalRateFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Value !");
             rentalRateFld.setStyle("-fx-border-color: green");
@@ -425,8 +425,15 @@ public class VehicleFormController {
     }
 
     @FXML
-   public void refreshOnClick(MouseEvent event) {
-        if(Regex.validateName(manufacturerFld.getText())&&(!modelNameFld.getText().trim().isEmpty())&&Regex.validateVehicleID(licenseFld.getText())&&Regex.validateNumbersAndDecimals(rentalRateFld.getText())&&(!descriptionFld.getText().trim().isEmpty())&&(!categoryComboBox.getSelectionModel().isEmpty())){
+   public void refreshOnClick() {
+        if(
+                vehicleService.validateVehicleId(licenseFld.getText()) &&
+                vehicleService.validateVehicleDescription(descriptionFld.getText()) &&
+                vehicleService.validateVehicleModel(modelNameFld.getText())&&
+                vehicleService.validateVehicleManufacturer(manufacturerFld.getText())&&
+                categoryComboBox.getSelectionModel().getSelectedItem() != null &&
+                vehicleService.validateRate(rentalRateFld.getText())
+        ){
             saveBtn.setDisable(false);
             deleteBtn.setDisable(false);
             notifyLabel.setTextFill(Color.GREEN);
@@ -442,10 +449,10 @@ public class VehicleFormController {
     }
 
     @FXML
-    void saveBtnOnAction(ActionEvent event) {
+    void saveBtnOnAction() {
         VehicleDTO vehicleDTO = new VehicleDTO();
         try {
-            if(VehicleModel.getVehicle(licenseFld.getText())){
+            if(vehicleService.getVehicle(new VehicleDTO(licenseFld.getText(),null,null,null,null,null,null)) != null){
                 new Alert(Alert.AlertType.CONFIRMATION,"New Vehicle Data Will Be Updated !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {
@@ -459,34 +466,28 @@ public class VehicleFormController {
                            }else {
                                vehicleDTO.setAvailability("Not Available");
                             }
-                           vehicleDTO.setCategory(categoryComboBox.getSelectionModel().getSelectedItem().toString());
-                            Boolean isExist = VehicleModel.checkOrderStatus(licenseFld.getText());
+                           vehicleDTO.setCategory(categoryComboBox.getSelectionModel().getSelectedItem());
+                            boolean isExist = vehicleService.checkOrderStatus(new VehicleDTO(licenseFld.getText(),null,null,null,null,null,null));
                             if(isExist){
                                 new Alert(Alert.AlertType.WARNING,"Due to Ongoing Order On This Vehicle Manual Availability Will Not Be Effect !").showAndWait();
-                                Boolean isUpdated =VehicleModel.updateVehicleWithoutAvailability(vehicleDTO);
+                                boolean isUpdated = vehicleService.updateVehicleWithoutAvailability(vehicleDTO);
                                 if(isUpdated){
                                     TopUpNotifications.success("Vehicle Data Updated !");
-                                    clearFields();
-                                    loadAllVehicles();
                                 }else {
                                     new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Not Updated !").show();
-                                    clearFields();
-                                    loadAllVehicles();
                                 }
 
                             }else {
-                                Boolean isUpdated =VehicleModel.updateVehicle(vehicleDTO);
+                                boolean isUpdated = vehicleService.updateVehicle(vehicleDTO);
                                 if(isUpdated){
                                     TopUpNotifications.success("Vehicle Data Updated !");
-                                    clearFields();
-                                    loadAllVehicles();
                                 }else {
                                     new Alert(Alert.AlertType.INFORMATION,"Vehicle Data Not Updated !").show();
-                                    clearFields();
-                                    loadAllVehicles();
                                 }
                             }
-                        } catch (SQLException e) {
+                            clearFields();
+                            loadAllVehicles();
+                        } catch (SQLException | NoSuchAlgorithmException e) {
                             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                             e.printStackTrace();
                         }
@@ -507,31 +508,31 @@ public class VehicleFormController {
                                 vehicleDTO.setAvailability("Not Available");
                             }
                             vehicleDTO.setCategory(categoryComboBox.getSelectionModel().getSelectedItem());
-                            if(VehicleModel.saveVehicle(vehicleDTO)){
+                            if(vehicleService.addVehicle(vehicleDTO)){
                                 TopUpNotifications.success("Vehicle Data Saved !");
                                 clearFields();
                                 loadAllVehicles();
                             }else {
                                 new Alert(Alert.AlertType.ERROR,"Vehicle Data Not Saved !").show();
                             }
-                        } catch (SQLException e) {
+                        } catch (SQLException | NoSuchAlgorithmException e) {
                             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                             e.printStackTrace();
                         }
                     }
                 });
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
     }
 
     @FXML
-    void licenseValidate(KeyEvent event) {
+    void licenseValidate() {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(Regex.validateVehicleID(licenseFld.getText())) {
+        if(vehicleService.validateVehicleId(licenseFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid ID !");
             licenseFld.setStyle("-fx-border-color: green");
@@ -543,34 +544,30 @@ public class VehicleFormController {
     }
 
 
-    public void searchOnAction(KeyEvent keyEvent) {
+    public void searchOnAction() {
         if (searchFld.getText().trim().isEmpty()) {
             loadAllVehicles();
         } else {
             try {
-                ArrayList<VehicleTM> arrayList = VehicleModel.getSearchVehicles("%" + searchFld.getText() + "%");
+                ArrayList<VehicleTM> arrayList = vehicleService.searchVehicle("%" + searchFld.getText() + "%");
                 for (VehicleTM vehicleTM : arrayList) {
                     setEditBtnAction(vehicleTM.getEditBtn());
                     setDeleteBtnAction(vehicleTM.getDeleteBtn());
                     setShowBtnAction(vehicleTM.getShowBtn());
                 }
                 ObservableList<VehicleTM> vehicles = FXCollections.observableArrayList(arrayList);
-                if (vehicles != null) {
-                    vehiclesTable.setItems(vehicles);
-                } else {
-                    vehiclesTable.getItems().clear();
-                }
-            } catch (SQLException e) {
+                vehiclesTable.setItems(vehicles);
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }
         }
     }
 
-    public void descriptionValidate(KeyEvent keyEvent) {
+    public void descriptionValidate() {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(descriptionFld.getText().trim().isEmpty()){
+        if(vehicleService.validateVehicleDescription(descriptionFld.getText())){
             descriptionFld.setStyle("-fx-border-color: red");
             notifyLabel.setText("Invalid Description !");
         }else {
@@ -579,7 +576,7 @@ public class VehicleFormController {
         }
     }
 
-    public void guideBtnOnAction(ActionEvent actionEvent) {
+    public void guideBtnOnAction() {
         File htmlFile = new File("D:\\GDSE\\JavaProject\\RohanaRenting\\src\\main\\resources\\html\\guide.html");
         try {
             Desktop.getDesktop().browse(htmlFile.toURI());

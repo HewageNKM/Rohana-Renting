@@ -24,7 +24,7 @@ import lk.ijse.rohanarenting.dto.tm.VehicleCartTM;
 import lk.ijse.rohanarenting.dto.tm.VehicleRentOrderJesperReportDetailTM;
 import lk.ijse.rohanarenting.model.RentModel;
 import lk.ijse.rohanarenting.utill.Genarate;
-import lk.ijse.rohanarenting.utill.Regex;
+import lk.ijse.rohanarenting.utill.toolService;
 import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -400,7 +400,7 @@ public class RentFormController {
     }
 
     public void vehicleRentDaysValidate(KeyEvent keyEvent) {
-        if(Regex.validateNumberOnly(vehicleRentDaysFld.getText())){
+        if(toolService.validateNumberOnly(vehicleRentDaysFld.getText())){
             vehicleRentDaysFld.setStyle("-fx-border-color: green");
         }else {
             vehicleRentDaysFld.setStyle("-fx-border-color: red");
@@ -409,7 +409,7 @@ public class RentFormController {
 
     public void vehicleOnClickRefresh(MouseEvent mouseEvent) {
         try {
-            if((RentModel.verifyCustomerId(vehicleCustomerFld.getText())&&RentModel.verifyVehicleId(vehicleFld.getText())&&Regex.validateNumberOnly(vehicleRentDaysFld.getText()))){
+            if((RentModel.verifyCustomerId(vehicleCustomerFld.getText())&&RentModel.verifyVehicleId(vehicleFld.getText())&& toolService.validateNumberOnly(vehicleRentDaysFld.getText()))){
                 vehicleCustomerFld.setText(vehicleCustomerFld.getText().toUpperCase());
                 vehicleFld.setText(vehicleFld.getText().toUpperCase());
                 vehicleAddCartBtn.setDisable(false);
@@ -431,7 +431,7 @@ public class RentFormController {
 
     public void toolOnClickRefresh(MouseEvent mouseEvent) {
         try {
-            if(RentModel.verifyCustomerId(toolCustomerFld.getText())&&RentModel.verifyToolId(toolFld.getText())&&Regex.validateNumberOnly(toolRentDaysFld.getText())){
+            if(RentModel.verifyCustomerId(toolCustomerFld.getText())&&RentModel.verifyToolId(toolFld.getText())&& toolService.validateNumberOnly(toolRentDaysFld.getText())){
                 toolCustomerFld.setText(toolCustomerFld.getText().toUpperCase());
                 toolFld.setText(toolFld.getText().toUpperCase());
                 toolAddCartBtn.setDisable(false);
@@ -544,7 +544,7 @@ public class RentFormController {
     }
 
     public void toolRentDaysValidate(KeyEvent keyEvent) {
-        if(Regex.validateNumberOnly(toolRentDaysFld.getText())){
+        if(toolService.validateNumberOnly(toolRentDaysFld.getText())){
             toolRentDaysFld.setStyle("-fx-border-color: green");
         }else {
             toolRentDaysFld.setStyle("-fx-border-color: red");

@@ -7,7 +7,7 @@ public class ServiceFactory {
     private ServiceFactory() {
     }
    public enum ServiceType{
-       FORGOT_PASSWORD, LOGIN_SERVICE, USER_ACCOUNT_SERVICE, CUSTOMER_SERVICE, EMPLOYEE_SERVICE, INSURANCE_SERVICE
+       FORGOT_PASSWORD, LOGIN_SERVICE, USER_ACCOUNT_SERVICE, CUSTOMER_SERVICE, EMPLOYEE_SERVICE, INSURANCE_SERVICE, TOOL_SERVICE, VEHICLE_SERVICE
    }
     public static ServiceFactory getInstance(){
         if(serviceFactory==null){
@@ -29,6 +29,10 @@ public class ServiceFactory {
                 return new EmployeeServiceImpl();
             case INSURANCE_SERVICE:
                 return new InsuranceServiceImpl();
+            case TOOL_SERVICE:
+                return new ToolServiceImpl();
+            case VEHICLE_SERVICE:
+                return new VehicleServiceImpl();
             default:
                 return null;
         }

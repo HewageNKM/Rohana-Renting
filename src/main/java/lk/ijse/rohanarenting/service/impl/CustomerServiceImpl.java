@@ -1,9 +1,6 @@
 package lk.ijse.rohanarenting.service.impl;
 
 import com.jfoenix.controls.JFXButton;
-import lk.ijse.rohanarenting.dao.DAOFactory;
-import lk.ijse.rohanarenting.dao.impl.CustomerDAOImpl;
-import lk.ijse.rohanarenting.dao.interfaces.CustomerDAO;
 import lk.ijse.rohanarenting.dto.CustomerDTO;
 import lk.ijse.rohanarenting.dto.tm.CustomerTM;
 import lk.ijse.rohanarenting.entity.Customer;
@@ -16,7 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerServiceImpl implements CustomerService {
-    private final CustomerDAO customerDAO = (CustomerDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.CUSTOMER_DAO);
     @Override
     public CustomerDTO getCustomer(CustomerDTO dto) throws SQLException, NoSuchAlgorithmException {
         Customer customer = customerDAO.get(new Customer(dto.getCID(),null,null,null,null,null,null,null,null,null));

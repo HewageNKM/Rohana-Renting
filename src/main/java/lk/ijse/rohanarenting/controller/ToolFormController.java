@@ -22,10 +22,12 @@ import javafx.scene.paint.Color;
 import lk.ijse.rohanarenting.dto.InsuranceDTO;
 import lk.ijse.rohanarenting.dto.ToolDTO;
 import lk.ijse.rohanarenting.dto.tm.ToolTM;
-import lk.ijse.rohanarenting.model.ToolModel;
-import lk.ijse.rohanarenting.utill.Regex;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.ToolServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.ToolService;
 import lk.ijse.rohanarenting.utill.TableUtil;
 import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
+import lombok.SneakyThrows;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -89,19 +91,21 @@ public class ToolFormController {
     @FXML
     private TextArea drecriptionFld;
     ObservableList<ToolTM> toolsList = FXCollections.observableArrayList();
+    private final ToolService toolService = (ToolServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.TOOL_SERVICE);
 
+    @SneakyThrows
     public void initialize(){
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
         setCellFactory();
         loadAllTools();
-        generateID();
+        toolService.generateID();
         TableUtil.installCopy(toolsTable);
     }
 
     private void loadAllTools() {
         try {
-            ArrayList<ToolTM> arrayList  = ToolModel.getTools();
+            ArrayList<ToolTM> arrayList  = toolService.getAllTool();
             for (ToolTM toolTM:arrayList) {
                 setShowBtnAction(toolTM.getShowBtn());
                 setEditBtnAction(toolTM.getEditBtn());
@@ -110,7 +114,7 @@ public class ToolFormController {
             toolsList.clear();
             toolsList.addAll(arrayList);
             toolsTable.setItems(toolsList);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
@@ -123,10 +127,10 @@ public class ToolFormController {
                     ToolTM toolTM = toolsTable.getSelectionModel().getSelectedItem();
                     if(toolTM!=null){
                         try {
-                            ToolModel.deleteTool(toolTM.getTID());
+                            toolService.deleteTool(new ToolDTO(toolTM.getTID(),null,null,null,null,null));
                             loadAllTools();
-                        } catch (SQLException e) {
-                            new Alert(Alert.AlertType.ERROR,"Tool Can't Delete At the Moment!, Error Code: "+e.getErrorCode()).show();
+                        } catch (Exception e) {
+                            new Alert(Alert.AlertType.ERROR,"Tool Can't Delete At the Moment!, Error Code: "+e.getMessage()).show();
                             e.printStackTrace();
                         }
                     }else {
@@ -147,7 +151,7 @@ public class ToolFormController {
                 rentalRateFld.setText(String.valueOf(toolTM.getRate()));
                 drecriptionFld.setText(toolTM.getDescription());
                 try {
-                    Boolean isExist = ToolModel.checkOrderStatus(toolTM.getTID());
+                    boolean isExist = toolService.checkOrderStatus(new ToolDTO(toolTM.getTID(),null,null,null,null,null));
                     if(isExist){
                         orderStatusLabel.setStyle("-fx-text-fill: red");
                         orderStatusLabel.setText("Tool is in an Order ");
@@ -170,7 +174,7 @@ public class ToolFormController {
                         orderStatusLabel.setStyle(null);
                     }
                     toolIdFld.setDisable(true);
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                     e.printStackTrace();
                 }
@@ -191,10 +195,11 @@ public class ToolFormController {
         });
     }
 
+    @SneakyThrows
     private void printToolReport(ToolTM toolTM) {
         HashMap<String,Object> params = new HashMap<>();
         try {
-            InsuranceDTO insuranceDTO = ToolModel.getInsurance(toolTM.getTID());
+            InsuranceDTO insuranceDTO = toolService.getInsurance(new ToolDTO(toolTM.getTID(),null,null,null,null,null));
             params.put("TID",toolTM.getTID());
             params.put("codeNumber",toolTM.getTID());
             params.put("brandName",toolTM.getBrandName());
@@ -223,10 +228,7 @@ public class ToolFormController {
             );
             JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, params,dataSource);
             JasperViewer.viewReport(jasperPrint, false);
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-            e.printStackTrace();
-        } catch (JRException e) {
+        } catch (SQLException | JRException e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
@@ -254,16 +256,16 @@ public class ToolFormController {
         new Alert(Alert.AlertType.CONFIRMATION,"Tool Data Will Be Deleted !", ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(buttonType -> {
             if(buttonType == ButtonType.OK){
                 try {
-                    if(ToolModel.deleteTool(toolIdFld.getText())){
+                    if(toolService.deleteTool(new ToolDTO(toolIdFld.getText(),null,null,null,null,null))){
                         TopUpNotifications.success("Tool Data Deleted Successfully !");
                         clearFields();
                         loadAllTools();
-                        generateID();
+                        toolService.generateID();
                     }else {
                         new Alert(Alert.AlertType.ERROR,"Tool Data Not Deleted !").show();
                     }
-                } catch (SQLException e) {
-                    new Alert(Alert.AlertType.ERROR,"Tool Can't Be Delete At the Moment!, Error Code: "+e.getErrorCode()).show();
+                } catch (Exception e) {
+                    new Alert(Alert.AlertType.ERROR,"Tool Can't Be Delete At the Moment!, Error Code: "+e.getMessage()).show();
                     e.printStackTrace();
                 }
             }
@@ -274,7 +276,7 @@ public class ToolFormController {
     void descriptionValidate(KeyEvent event) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(drecriptionFld.getText().trim().isEmpty()){
+        if(toolService.validateToolDescription(drecriptionFld.getText())){
             notifyLabel.setTextFill(Color.RED);
             notifyLabel.setText("Invalid Description !");
             drecriptionFld.setStyle("-fx-border-color: red");
@@ -288,7 +290,7 @@ public class ToolFormController {
     @FXML
     void enterOnAction(ActionEvent event) {
         try {
-            ToolDTO toolDTO = ToolModel.getToolDetail(toolIdFld.getText());
+            ToolDTO toolDTO = toolService.getTool(new ToolDTO(toolIdFld.getText(), null, null, null, null, null));
             if(toolDTO != null){
                 nameFld.setText(toolDTO.getName());
                 drecriptionFld.setText(toolDTO.getDescription());
@@ -296,7 +298,7 @@ public class ToolFormController {
                 brandNameFld.setText(toolDTO.getBrand());
                 saveBtn.setDisable(false);
                 deleteBtn.setDisable(false);
-                Boolean isExist = ToolModel.checkOrderStatus(toolIdFld.getText());
+                boolean isExist = toolService.checkOrderStatus(new ToolDTO(toolIdFld.getText(), null, null, null, null, null));
                 if(isExist){
                     orderStatusLabel.setStyle("-fx-text-fill: red");
                     orderStatusLabel.setText("Tool Is In An Order ");
@@ -319,32 +321,31 @@ public class ToolFormController {
             }else {
                 new Alert(Alert.AlertType.ERROR,"No Tool Found !").show();
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
     }
 
+    @SneakyThrows
     @FXML
     void idGenerateOnAction(ActionEvent event) {
-        generateID();
+        toolIdFld.setText(toolService.generateID());
     }
 
-    private void generateID() {
-        /*String id = Genarate.generateToolId();
-        try {
-            while (.verifyId(id)) {
-                id = Genarate.generateToolId();
-            }
-            toolIdFld.setText(id);
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
-        }*/
-    }
+    
 
     @FXML
    public void refreshOnClick(MouseEvent event) {
-        if(Regex.validateToolId(toolIdFld.getText())&&(!drecriptionFld.getText().trim().isEmpty())&&(!nameFld.getText().trim().isEmpty())&&(!brandNameFld.getText().trim().isEmpty())&&Regex.validateNumbersAndDecimals(rentalRateFld.getText())){
+        if(
+                toolService.validateToolId(toolIdFld.getText()) &&
+                        toolService.validateToolName(nameFld.getText()) &&
+                        toolService.validateToolDescription(drecriptionFld.getText()) &&
+                        toolService.validateToolPrice(rentalRateFld.getText()) &&
+                        toolService.validateToolBrand(brandNameFld.getText()
+        )
+                
+        ){
             notifyLabel.setTextFill(Color.GREEN);
             toolIdFld.setText(toolIdFld.getText().toUpperCase());
             notifyLabel.setText("All Set !");
@@ -358,11 +359,12 @@ public class ToolFormController {
         }
     }
 
+    @SneakyThrows
     @FXML
     void saveBtnOnAction(ActionEvent event) {
         ToolDTO toolDTO = new ToolDTO();
         try {
-            if(ToolModel.getToolDetail(toolIdFld.getText())!=null){
+            if(toolService.verify(new ToolDTO(toolIdFld.getText(),null,null,null,null,null))){
                 new Alert(Alert.AlertType.CONFIRMATION,"New Tool Data Will Be Updated !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {
@@ -376,29 +378,29 @@ public class ToolFormController {
                             }else {
                                 toolDTO.setAvalability("Not Available");
                             }
-                            Boolean isExist = ToolModel.checkOrderStatus(toolIdFld.getText());
+                            boolean isExist = toolService.checkOrderStatus(new ToolDTO(toolIdFld.getText(),null,null,null,null,null));
                             if(isExist){
                                 new Alert(Alert.AlertType.ERROR,"Tool Is In On An Order, Manual Availability Adjust Will Not Be Effect !").showAndWait();
-                                if(ToolModel.updateToolWithoutAvailability(toolDTO)){
+                                if(toolService.updateToolWithoutAvailability(toolDTO)){
                                     TopUpNotifications.success("Tool Data Updated !");
                                     clearFields();
                                     loadAllTools();
-                                    generateID();
+                                    toolService.generateID();
                                 }else {
                                     new Alert(Alert.AlertType.ERROR,"Tool Data Not Updated !").show();
                                 }
                             }else {
-                                if(ToolModel.updateTool(toolDTO)){
+                                if(toolService.updateTool(toolDTO)){
                                     TopUpNotifications.success("Tool Data Updated !");
                                     clearFields();
                                     loadAllTools();
-                                    generateID();
+                                    toolService.generateID();
                                 }else {
                                     new Alert(Alert.AlertType.ERROR,"Tool Data Not Updated !").show();
                                 }
                             }
 
-                        } catch (SQLException e) {
+                        } catch (Exception e) {
                             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                             e.printStackTrace();
                         }
@@ -418,15 +420,15 @@ public class ToolFormController {
                             }else {
                                 toolDTO.setAvalability("Not Available");
                             }
-                            if(ToolModel.saveTool(toolDTO)){
+                            if(toolService.addTool(toolDTO)){
                                 TopUpNotifications.success("Tool Data Saved !");
                                 loadAllTools();
                                 clearFields();
-                                generateID();
+                                toolService.addTool(toolDTO);
                             }else {
                                 new Alert(Alert.AlertType.ERROR,"Tool Data Not Saved !").show();
                             }
-                        } catch (SQLException e) {
+                        } catch (Exception e) {
                             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                             e.printStackTrace();
                         }
@@ -465,7 +467,7 @@ public class ToolFormController {
     void toolIdValidate(KeyEvent event) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(Regex.validateToolId(toolIdFld.getText())){
+        if(toolService.validateToolId(toolIdFld.getText())){
             toolIdFld.setStyle("-fx-border-color: green");
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Tool ID !");
@@ -479,7 +481,7 @@ public class ToolFormController {
     public void nameValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(Regex.validateName(nameFld.getText())){
+        if(toolService.validateToolName(nameFld.getText())){
             nameFld.setStyle("-fx-border-color: green");
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Name!");
@@ -493,7 +495,7 @@ public class ToolFormController {
     public void brandNameValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(brandNameFld.getText().trim().isEmpty()){
+        if(toolService.validateToolBrand(brandNameFld.getText())){
             brandNameFld.setStyle("-fx-border-color: red");
             notifyLabel.setTextFill(Color.RED);
             notifyLabel.setText("Invalid Brand Name !");
@@ -507,7 +509,7 @@ public class ToolFormController {
     public void rentalRateValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if(Regex.validateNumberOnly(rentalRateFld.getText())) {
+        if(toolService.validateToolPrice(rentalRateFld.getText())) {
             rentalRateFld.setStyle("-fx-border-color: green");
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Value !");
@@ -523,14 +525,10 @@ public class ToolFormController {
             loadAllTools();
         }else {
             try {
-                ArrayList<ToolTM> filterTools = ToolModel.searchTools("%"+searchFld.getText()+"%");
+                ArrayList<ToolTM> filterTools = toolService.searchTool("%"+searchFld.getText()+"%");
                 ObservableList<ToolTM> filterToolsTMS = FXCollections.observableArrayList(filterTools);
-                if(filterToolsTMS!=null){
-                  toolsTable.setItems(filterToolsTMS);
-                }else {
-                    toolsTable.getItems().clear();
-                }
-            } catch (SQLException e) {
+                toolsTable.setItems(filterToolsTMS);
+            } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }
