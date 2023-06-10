@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 import lk.ijse.rohanarenting.dto.tm.ReturnOrderTM;
 import lk.ijse.rohanarenting.dto.tm.ReturnTM;
 import lk.ijse.rohanarenting.utill.CruidUtil;
-import lk.ijse.rohanarenting.utill.toolService;
+import lk.ijse.rohanarenting.utill.Regex;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,12 +39,12 @@ public class ReturnModel {
 
     public static ReturnTM getReturnTM(ReturnOrderTM returnOrderTM, String returnId) throws SQLException {
        ResultSet resultSet = CruidUtil.execute("SELECT Rate_Per_Day FROM vehicle WHERE VID=?", returnOrderTM.getProductId());
-       Double rate = 0.0;
+       double rate = 0.0;
         if(resultSet.next()){
             rate = resultSet.getDouble(1);
         }
         Period period = Period.between(returnOrderTM.getReturnDate(),LocalDate.now());
-        Double fine = rate*period.getDays()*2;
+        double fine = rate*period.getDays()*2;
         if (fine>0) {
             return new ReturnTM(returnId, returnOrderTM.getProductId(), returnOrderTM.getReturnDate(),LocalDate.now(),period.getDays(),fine);
         }else {
@@ -78,12 +78,12 @@ public class ReturnModel {
 
     public static ArrayList<ReturnOrderTM> getOrderTM(String rentId) throws SQLException {
         ArrayList<ReturnOrderTM> returnOrderTMS = new ArrayList<>();
-        if(toolService.validateVehicleRentId(rentId)){
+        if(Regex.validateVehicleRentId(rentId)){
             ResultSet resultSet = CruidUtil.execute("SELECT Rent_ID,VID,Return_Date FROM vehicle_rent_order_detail WHERE Rent_ID=? AND Return_Status = 0 AND Refund_Status = 0",rentId);
             while (resultSet.next()){
                 returnOrderTMS.add(new ReturnOrderTM(resultSet.getString(1),resultSet.getString(2),resultSet.getDate(3).toLocalDate()));
             }
-        }else if(toolService.validateToolRentId(rentId)){
+        }else if(Regex.validateToolRentId(rentId)){
             ResultSet resultSet = CruidUtil.execute("SELECT Rent_ID,TID,Return_Date FROM tool_rent_order_detail WHERE Rent_ID= ? AND Return_Status = 0 AND Refund_Status = 0", rentId);
             while (resultSet.next()){
                 returnOrderTMS.add(new ReturnOrderTM(resultSet.getString(1),resultSet.getString(2),resultSet.getDate(3).toLocalDate()));
@@ -176,9 +176,9 @@ public class ReturnModel {
 
     public static boolean checkRefund(String rentId) throws SQLException {
         ResultSet resultSet = null;
-        if(toolService.validateVehicleRentId(rentId)){
+        if(Regex.validateVehicleRentId(rentId)){
             resultSet = CruidUtil.execute("SELECT * FROM vehicle_rent_order_detail WHERE Rent_ID = ? AND Refund_Status = 0", rentId);
-        }else if(toolService.validateToolRentId(rentId)){
+        }else if(Regex.validateToolRentId(rentId)){
             resultSet = CruidUtil.execute("SELECT * FROM tool_rent_order_detail WHERE Rent_ID = ? AND Refund_Status = 0", rentId);
         }
         assert resultSet != null;

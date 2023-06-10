@@ -9,9 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.rohanarenting.dto.tm.LoginHistoryTM;
-import lk.ijse.rohanarenting.model.LoginHistoryModel;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.LoginHistoryServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.LoginHistoryService;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LoginHistoryViewFormController {
@@ -22,6 +23,7 @@ public class LoginHistoryViewFormController {
     public TableColumn columnLogoutTime;
     public TextField searchFld;
     private ObservableList<LoginHistoryTM> loginHistoryTMS = FXCollections.observableArrayList();
+    private LoginHistoryService loginHistoryService = (LoginHistoryServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LOGIN_HISTORY_SERVICE);
     public  void initialize(){
         setCellValueFactory();
         loadAllLoginHistory();
@@ -30,10 +32,10 @@ public class LoginHistoryViewFormController {
     private void loadAllLoginHistory() {
         try {
             loginHistoryTMS.clear();
-            ArrayList<LoginHistoryTM> allLoginHistory = LoginHistoryModel.getAllLoginHistory();
+            ArrayList<LoginHistoryTM> allLoginHistory = loginHistoryService.getAllLoginHistory();
             loginHistoryTMS.addAll(allLoginHistory);
             loginHistoryTable.setItems(loginHistoryTMS);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -50,9 +52,9 @@ public class LoginHistoryViewFormController {
             loadAllLoginHistory();
         }else {
             try {
-                ArrayList<LoginHistoryTM> searchLoginHistory = LoginHistoryModel.searchLoginHistory("%"+searchFld.getText()+"%");
+                ArrayList<LoginHistoryTM> searchLoginHistory = loginHistoryService.searchLoginHistory("%"+searchFld.getText()+"%");
                 loginHistoryTable.setItems(FXCollections.observableArrayList(searchLoginHistory));
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }

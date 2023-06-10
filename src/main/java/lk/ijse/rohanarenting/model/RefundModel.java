@@ -13,7 +13,7 @@ import lk.ijse.rohanarenting.dto.CustomerDTO;
 import lk.ijse.rohanarenting.dto.tm.RefundOrderTM;
 import lk.ijse.rohanarenting.dto.tm.RefundTM;
 import lk.ijse.rohanarenting.utill.CruidUtil;
-import lk.ijse.rohanarenting.utill.toolService;
+import lk.ijse.rohanarenting.utill.Regex;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,16 +37,16 @@ public class RefundModel {
 
     public static Boolean checkVehicleReturn(String rentID) throws SQLException {
         ResultSet resultSet = null;
-        if (toolService.validateToolRentId(rentID)){
+        if (Regex.validateToolRentId(rentID)){
             resultSet = CruidUtil.execute("SELECT * FROM tool_rent_order_detail WHERE Rent_ID = ? AND Return_Status = 0",rentID);
-        } else if (toolService.validateVehicleRentId(rentID)) {
+        } else if (Regex.validateVehicleRentId(rentID)) {
             resultSet = CruidUtil.execute("SELECT * FROM vehicle_rent_order_detail WHERE Rent_ID = ? AND Return_Status = 0",rentID);
         }
         return !resultSet.next();
     }
 
     public static ArrayList<RefundOrderTM> getRefundOrderTM(String rentId) throws SQLException {
-        if(toolService.validateVehicleRentId(rentId)){
+        if(Regex.validateVehicleRentId(rentId)){
             ResultSet resultSet = CruidUtil.execute("SELECT vehicle_rent_order_detail.VID,vehicle_rent_order_detail.Rent_Days,vehicle_rent_order_detail.Total,vehicle_rent_order.Date FROM vehicle_rent_order_detail RIGHT JOIN vehicle_rent_order ON vehicle_rent_order_detail.Rent_ID = vehicle_rent_order.Rent_ID = vehicle_rent_order_detail.Rent_ID = vehicle_rent_order.Rent_ID WHERE vehicle_rent_order.Rent_ID = ? AND vehicle_rent_order_detail.Return_Status = 0 AND vehicle_rent_order_detail.Refund_Status = 0",rentId);
             ArrayList<RefundOrderTM> refundOrderTMS = new ArrayList<>();
             while (resultSet.next()) {

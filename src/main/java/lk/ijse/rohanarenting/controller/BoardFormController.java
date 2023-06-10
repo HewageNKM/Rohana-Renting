@@ -11,7 +11,6 @@ package lk.ijse.rohanarenting.controller;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,12 +23,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lk.ijse.rohanarenting.model.BoardModel;
+import lk.ijse.rohanarenting.dto.UserLoginDTO;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.BoardServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.BoardService;
 import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -41,10 +44,19 @@ public class BoardFormController {
     public BorderPane root;
     public Label employeeNameFld;
     public Label employeeIdFld;
-    private Stage userVerifyStage = new  Stage();
+    private final Stage userVerifyStage = new  Stage();
     private String employeeId;
+    private final BoardService boardService = (BoardServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.BOARD_SERVICE);
+
 
     public void initialize(String id) throws IOException {
+        startDate();
+        employeeId = id;
+        setEmployeeDetails();
+        loadDashboard();
+    }
+
+    private void startDate() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss a");
@@ -52,15 +64,12 @@ public class BoardFormController {
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
-        employeeId = id;
-        setEmployeeDetails();
-        loadDashboard();
     }
 
     private void setEmployeeDetails() {
         try {
-            employeeNameFld.setText("User:  "+ BoardModel.getUserName(employeeId).toUpperCase());
-        } catch (SQLException e) {
+            employeeNameFld.setText("User:  "+ boardService.getUserNames(employeeId).getUName().toUpperCase());
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
@@ -68,29 +77,29 @@ public class BoardFormController {
     }
 
     public void loadDashboard() throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/view/DashboardForm.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/DashboardForm.fxml")));
         changeRoot.getChildren().removeAll();
         changeRoot.getChildren().setAll(parent);
         titleLabel.setText("Dashboard");
     }
 
-    public void manageUserAccountBtnOnAction(ActionEvent actionEvent) throws IOException {
+    public void manageUserAccountBtnOnAction() throws IOException {
         loadSecureCheck("User");
     }
 
-    public void manageEmployeeBtnOnAction(ActionEvent actionEvent) throws IOException {
+    public void manageEmployeeBtnOnAction() throws IOException {
         loadSecureCheck("Employee");
     }
     @FXML
-    void dashboardBtnOnAction(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/view/DashboardForm.fxml"));
+    void dashboardBtnOnAction() throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/DashboardForm.fxml")));
        changeRoot.getChildren().removeAll();
        changeRoot.getChildren().setAll(parent);
        titleLabel.setText("Dashboard");
     }
 
     @FXML
-    void insuranceBtnOnAction(ActionEvent event) throws IOException {
+    void insuranceBtnOnAction() throws IOException {
        loadSecureCheck("Insurance");
     }
 
@@ -109,9 +118,9 @@ public class BoardFormController {
     }
 
     @FXML
-    void logoutBtnOnAction(ActionEvent event) {
+    void logoutBtnOnAction() {
         new Alert(Alert.AlertType.CONFIRMATION,"User Will Be Logout !", ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(ButtonType->{
-            if(ButtonType == ButtonType.OK){
+            if(ButtonType == javafx.scene.control.ButtonType.OK){
                 try {
                     Stage stage;
                     stage = (Stage) root.getScene().getWindow();
@@ -122,9 +131,9 @@ public class BoardFormController {
                     loginFormStage.centerOnScreen();
                     loginFormStage.setTitle("Login Form");
                     loginFormStage.show();
-                    BoardModel.insertUserLogout();
+                    boardService.addUserLogin(new UserLoginDTO(employeeId.toUpperCase(), LocalDate.now(),null, LocalTime.now()));
                     TopUpNotifications.logOut(employeeId.toUpperCase());
-                } catch (IOException | SQLException e) {
+                } catch (Exception e) {
                     new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
                     e.printStackTrace();
                 }
@@ -134,13 +143,13 @@ public class BoardFormController {
 
 
     @FXML
-    void refundBtnOnAction(ActionEvent event) throws IOException {
+    void refundBtnOnAction() throws IOException {
         loadSecureCheck("Refund");
     }
 
     @FXML
-    void rentBtnOnAction(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/view/RentForm.fxml"));
+    void rentBtnOnAction() throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/RentForm.fxml")));
         changeRoot.getChildren().clear();
         changeRoot.getChildren().setAll(parent);
         titleLabel.setText("Manage Rent");
@@ -148,25 +157,25 @@ public class BoardFormController {
     }
 
     @FXML
-    void returnBtnOnAction(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/view/ReturnForm.fxml"));
+    void returnBtnOnAction() throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/ReturnForm.fxml")));
         changeRoot.getChildren().clear();
         changeRoot.getChildren().setAll(parent);
         titleLabel.setText("Manage Return");
     }
 
     @FXML
-    void toolBtnONAction(ActionEvent event) throws IOException {
+    void toolBtnONAction() throws IOException {
         loadSecureCheck("Tool");
     }
 
     @FXML
-    void vehicleBtnOnAction(ActionEvent event) throws IOException {
+    void vehicleBtnOnAction() throws IOException {
         loadSecureCheck("Vehicle");
     }
 
-    public void customerBtnOnAction(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/view/CustomerForm.fxml"));
+    public void customerBtnOnAction() throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/CustomerForm.fxml")));
         changeRoot.getChildren().clear();
         changeRoot.getChildren().setAll(parent);
         titleLabel.setText("Customer Form");

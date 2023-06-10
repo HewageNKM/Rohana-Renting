@@ -24,6 +24,7 @@ import lk.ijse.rohanarenting.dto.CustomerDTO;
 import lk.ijse.rohanarenting.dto.tm.RefundOrderTM;
 import lk.ijse.rohanarenting.dto.tm.RefundTM;
 import lk.ijse.rohanarenting.model.RefundModel;
+import lk.ijse.rohanarenting.utill.Regex;
 import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
 import lk.ijse.rohanarenting.utill.Genarate;
 import net.sf.jasperreports.engine.*;
@@ -110,7 +111,7 @@ public class RefundController {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                if(toolService.validateToolRentId(rentIdFld.getText())){
+                if(Regex.validateToolRentId(rentIdFld.getText())){
                     try {
 
                         Boolean  isRefundTableUpdated= RefundModel.updateToolRefundTable(refundIdLabel.getText(),rentIdFld.getText());
@@ -145,7 +146,7 @@ public class RefundController {
                         new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                         e.printStackTrace();
                     }
-                }else if (toolService.validateVehicleRentId(rentIdFld.getText())){
+                }else if (Regex.validateVehicleRentId(rentIdFld.getText())){
                     try {
                         connection.setAutoCommit(false);
                         Boolean  isRefundTableUpdated= RefundModel.updateVehicleRefundTable(refundIdLabel.getText(),rentIdFld.getText());
@@ -248,7 +249,7 @@ public class RefundController {
     }
 
     public void enterOnAction(ActionEvent actionEvent) {
-        if(toolService.validateToolRentId(rentIdFld.getText())){
+        if(Regex.validateToolRentId(rentIdFld.getText())){
             try {
                 Boolean status =  RefundModel.verifyToolRentId(rentIdFld.getText());
                 if(RefundModel.verifyToolRentId(rentIdFld.getText())!=null){
@@ -269,7 +270,7 @@ public class RefundController {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }
-        }else if(toolService.validateVehicleRentId(rentIdFld.getText())){
+        }else if(Regex.validateVehicleRentId(rentIdFld.getText())){
             try {
               Boolean status =  RefundModel.verifyVehicleRentId(rentIdFld.getText());
                 if(RefundModel.verifyVehicleRentId(rentIdFld.getText())!=null){
@@ -297,7 +298,7 @@ public class RefundController {
     }
 
     public void validateRentId(KeyEvent keyEvent) {
-        if (toolService.validateToolRentId(rentIdFld.getText())|| toolService.validateVehicleRentId(rentIdFld.getText())) {
+        if (Regex.validateToolRentId(rentIdFld.getText())|| Regex.validateVehicleRentId(rentIdFld.getText())) {
             rentIdFld.setStyle("-fx-border-color: green");
         } else {
             rentIdFld.setStyle("-fx-border-color: red");

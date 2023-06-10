@@ -13,14 +13,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 
 public class ToolOrderDTO {
-  private String rentalOrderId;
+  private String orderId;
   private String customerId;
-  private String toolId;
-  private Integer rentDays;
+  private LocalDate date;
+  private LocalTime time;
 }
