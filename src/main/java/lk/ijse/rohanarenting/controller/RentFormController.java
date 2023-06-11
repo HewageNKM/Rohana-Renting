@@ -14,10 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import lk.ijse.rohanarenting.dto.CustomerDTO;
-import lk.ijse.rohanarenting.dto.ToolOrderDTO;
-import lk.ijse.rohanarenting.dto.ToolOrderDetailsDTO;
-import lk.ijse.rohanarenting.dto.VehicleOrderDTO;
+import lk.ijse.rohanarenting.dto.*;
 import lk.ijse.rohanarenting.dto.tm.ToolCartTM;
 import lk.ijse.rohanarenting.dto.tm.ToolRentOrderJesperReportDetailTM;
 import lk.ijse.rohanarenting.dto.tm.VehicleCartTM;
@@ -217,50 +214,31 @@ public class RentFormController {
     @FXML
     void placeVehicleOrderOnAction(ActionEvent event) {
         new Alert(Alert.AlertType.CONFIRMATION,"New Order Will Be Place !",ButtonType.NEXT,ButtonType.NO).showAndWait().ifPresent(ButtonType->{
-           /* Connection connection = null;
-            if(ButtonType == ButtonType.NEXT){
-                try {
-                    connection = DBConnection.getInstance().getConnection();
-                    connection.setAutoCommit(false);
-                    Boolean isOrderAdded= RentModel.updateVehicleRentOrderTable(new VehicleOrderDTO(vehicleRentOrderLabel.getText(),vehicleCustomerFld.getText(),vehicleFld.getText(),Integer.getInteger(vehicleRentDaysFld.getText())));
-                    if(isOrderAdded){
-                        Boolean isDetailsAdded = RentModel.addVehicleRentOrderDetailTable(vehicleCartTMS);
-                        if(isDetailsAdded){
-                            Boolean isVehicleUpdated = RentModel.updateVehicleTable(vehicleCartTMS);
-                            if(isVehicleUpdated){
-                                connection.commit();
-                                TopUpNotifications.success("Order Placed Successfully !");
-                                printVehicleInvoice();
-                                newVehicleOrder();
-                            }else {
-                                new Alert(Alert.AlertType.ERROR,"Order Not Place !").show();
-                                connection.rollback();
-                            }
-                        }else {
-                            new Alert(Alert.AlertType.ERROR,"Order Not Place !").show();
-                            connection.rollback();
-                        }
-                    }else {
-                        new Alert(Alert.AlertType.ERROR,"Order Not Place !").show();
-                        connection.rollback();
-                    }
-                } catch (SQLException e) {
-                    new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-                    e.printStackTrace();
-                }finally {
-                    try {
-                        assert connection != null;
-                        connection.setAutoCommit(true);
-                    } catch (SQLException e) {
-                        new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-                        e.printStackTrace();
-                    }
+            try {
+                if(rentService.placeVehicleOrder(getVehicleOrderDetailsDTOArrayList(),getVehicleOrderDTO())){
+                    printVehicleInvoice();
+                    newVehicleOrder();
+                    TopUpNotifications.success("Order Placed Successfully !");
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Order Not Place !").show();
                 }
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Order Not Place !").show();
-            }*/
-
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                e.printStackTrace();
+            }
         });
+    }
+
+    private VehicleOrderDTO getVehicleOrderDTO() {
+        return new VehicleOrderDTO(vehicleRentOrderLabel.getText(),vehicleCustomerFld.getText(),LocalDate.now(),LocalTime.now());
+    }
+
+    private ArrayList<VehicleOrderDetailsDTO> getVehicleOrderDetailsDTOArrayList() {
+        ArrayList<VehicleOrderDetailsDTO> vehicleOrderDetailsDTOS = new ArrayList<>();
+        for (VehicleCartTM vehicleCartTM:vehicleCartTMS) {
+            vehicleOrderDetailsDTOS.add(new VehicleOrderDetailsDTO(vehicleCartTM.getRentOrderID(),vehicleCartTM.getVehicleID(),vehicleCartTM.getVehicleManufacture(),vehicleCartTM.getVehicleModelName(),vehicleCartTM.getCategory(),vehicleCartTM.getRentDays(),vehicleCartTM.getRate(),vehicleCartTM.getTotal(),LocalDate.now().plusDays(vehicleCartTM.getRentDays()),vehicleCartTM.getReturnStatus(),0));
+        }
+        return vehicleOrderDetailsDTOS;
     }
 
     @SneakyThrows
@@ -560,45 +538,6 @@ public class RentFormController {
 
     public void placeToolOrderOnAction(ActionEvent actionEvent) {
         new Alert(Alert.AlertType.CONFIRMATION,"Tool Order Placed !",ButtonType.NEXT,ButtonType.CANCEL).showAndWait().ifPresent(buttonType -> {
-           /* if(buttonType==ButtonType.NEXT){
-               Connection connection=null;
-                try {
-                    connection = DBConnection.getInstance().getConnection();
-                    connection.setAutoCommit(false);
-                 Boolean isRentOrderTableUpdated =  RentModel.updateToolRentOrderTable(new ToolOrderDTO(toolRentOrderIdLabel.getText(), toolCustomerFld.getText(),toolFld.getText(),Integer.getInteger(toolRentDaysFld.getText())));
-                 if(isRentOrderTableUpdated){
-                     Boolean isToolDetailsTableUpdated = RentModel.updateToolDetailsTable(toolCartTMS);
-                     if(isToolDetailsTableUpdated){
-                         Boolean  isToolTableUpdated = RentModel.updateToolTable(toolCartTMS);
-                         if(isToolTableUpdated){
-                             connection.commit();
-                             TopUpNotifications.success("Tool Order Placed !");
-                             printToolInvoice();
-                             newToolOrder();
-                         }else {
-                           new Alert(Alert.AlertType.ERROR,"Tool Order Not Placed !").show();
-                           connection.rollback();
-                         }
-                     }else {
-                            new Alert(Alert.AlertType.ERROR,"Tool Order Not Placed !").show();
-                            connection.rollback();
-                     }
-                 }else {
-                     new Alert(Alert.AlertType.ERROR,"Tool Order Not Placed !").show();
-                     connection.rollback();
-                 }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }finally {
-                    try {
-                        connection.setAutoCommit(true);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Tool Order Not Placed !").show();
-            }*/
             ArrayList<ToolOrderDetailsDTO> toolOrderDetailsDTOS = new ArrayList<>();
             for (ToolCartTM toolCartTM:toolCartTMS) {
                 toolOrderDetailsDTOS.add(new ToolOrderDetailsDTO(toolRentOrderIdLabel.getText(),toolCartTM.getToolID(),toolCartTM.getBrandName(),toolCartTM.getToolName(),toolCartTM.getRentDays(),toolCartTM.getRate(),toolCartTM.getTotal(), LocalDate.now().plusDays(toolCartTM.getRentDays()),0,0));
@@ -614,6 +553,7 @@ public class RentFormController {
                 }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                e.printStackTrace();
             }
         });
     }

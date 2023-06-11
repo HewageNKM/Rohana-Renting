@@ -152,7 +152,7 @@ public class RentDAOImpl implements RentDAO {
     public boolean updateToolTable(ArrayList<Tool> entities) throws SQLException {
         int count=0;
         for (Tool tool:entities) {
-            Boolean b = CruidUtil.execute("UPDATE tool SET Availability = ? WHERE TID = ?",tool.getToolID(),tool.getAvailability());
+            boolean b = CruidUtil.execute("UPDATE tool SET Availability = 'Not Available' WHERE TID = ?",tool.getToolID());
             if(b){
                 count++;
             }

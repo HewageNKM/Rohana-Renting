@@ -16,7 +16,7 @@ public class VehicleOrderDetailsDTO {
     private String manufacturer;
     private String model;
     private String category;
-    private String rentDays;
+    private Integer rentDays;
     private Double rate;
     private Double total;
     private LocalDate returnDate;

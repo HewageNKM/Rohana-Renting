@@ -93,8 +93,6 @@ public class RentServiceImpl implements RentService {
                 connection.rollback();
                 return false;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }finally {
             assert connection != null;
             connection.setAutoCommit(true);
