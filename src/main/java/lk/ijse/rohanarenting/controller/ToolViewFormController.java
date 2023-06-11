@@ -8,10 +8,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.rohanarenting.dto.tm.ToolTM;
-import lk.ijse.rohanarenting.model.ToolViewModel;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.ToolViewServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.ToolViewService;
 import lk.ijse.rohanarenting.utill.TableUtil;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ToolViewFormController {
@@ -22,6 +23,8 @@ public class ToolViewFormController {
     public TableColumn columnRentalRate;
     public TableColumn columnBrandName;
     public TextField searchFld;
+
+    private final ToolViewService toolViewService = (ToolViewServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.TOOL_VIEW_SERVICE);
     public void initialize(){
         setCellValueFactories();
         loadToolTable();
@@ -30,10 +33,10 @@ public class ToolViewFormController {
 
     private void loadToolTable() {
         try {
-            ArrayList<ToolTM> toolTMS = ToolViewModel.getTools();
+            ArrayList<ToolTM> toolTMS = toolViewService.getAllTools();
             toolsTable.getItems().clear();
             toolsTable.getItems().addAll(toolTMS);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
@@ -52,10 +55,10 @@ public class ToolViewFormController {
             loadToolTable();
         }else{
             try {
-                ArrayList<ToolTM> filterList = ToolViewModel.searchTools("%"+searchFld.getText()+"%");
+                ArrayList<ToolTM> filterList = toolViewService.searchTool("%"+searchFld.getText()+"%");
                 toolsTable.getItems().clear();
                 toolsTable.getItems().addAll(FXCollections.observableArrayList(filterList));
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }

@@ -9,10 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.rohanarenting.dto.tm.OrderTM;
-import lk.ijse.rohanarenting.model.OrderViewModel;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.OrderViewServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.OrderViewService;
 import lk.ijse.rohanarenting.utill.TableUtil;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OrderViewFormController {
@@ -24,6 +25,7 @@ public class OrderViewFormController {
     public TableColumn columnTime;
     public TableColumn columnStatus;
     private ObservableList<OrderTM> orderTMS = FXCollections.observableArrayList();
+    private final OrderViewService orderViewService = (OrderViewServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.ORDER_VIEW_SERVICE);
     public void initialize(){
         setCellValueFactories();
         loadOrderTable();
@@ -33,10 +35,10 @@ public class OrderViewFormController {
     private void loadOrderTable() {
         try {
             orderTMS.clear();
-            ArrayList<OrderTM> orderList = OrderViewModel.getAllOrders();
+            ArrayList<OrderTM> orderList = orderViewService.getAllOrders();
             orderTMS.addAll(orderList);
             vehiclesTable.setItems(orderTMS);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
@@ -56,10 +58,10 @@ public class OrderViewFormController {
             loadOrderTable();
         } else {
             try {
-                ArrayList<OrderTM> filterList = OrderViewModel.searchOrder("%" + searchFld.getText() + "%");
+                ArrayList<OrderTM> filterList = orderViewService.searchOrders("%" + searchFld.getText() + "%");
                 orderTMS.clear();
                 orderTMS.addAll(FXCollections.observableArrayList(filterList));
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }

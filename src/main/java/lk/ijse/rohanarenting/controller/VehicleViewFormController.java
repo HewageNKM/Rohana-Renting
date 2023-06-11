@@ -17,10 +17,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.rohanarenting.dto.tm.VehicleTM;
-import lk.ijse.rohanarenting.model.VehicleViewModel;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.VehicleViewServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.VehicleViewService;
 import lk.ijse.rohanarenting.utill.TableUtil;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class VehicleViewFormController {
@@ -29,10 +30,11 @@ public class VehicleViewFormController {
     public TableColumn<Object, Object> columnID;
     public TableColumn<Object, Object> columnModelName;
     public TableColumn<Object, Object> ColumnManufacturer;
-    public TableColumn columnRentalRate;
+    public TableColumn<Object, Object> columnRentalRate;
     public TableColumn columnCategory;
     public TableColumn columnAvailability;
     private ObservableList<VehicleTM> vehiclesTMS = FXCollections.observableArrayList();
+    private final VehicleViewService vehicleViewService = (VehicleViewServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.VEHICLE_VIEW_SERVICE);
 
     public void initialize() {
         TableUtil.installCopy(vehiclesTable);
@@ -42,11 +44,11 @@ public class VehicleViewFormController {
 
     private void loadVehicleTable() {
         try {
-            ArrayList<VehicleTM> allVehicles = VehicleViewModel.getAllVehicles();
+            ArrayList<VehicleTM> allVehicles = vehicleViewService.getAllVehicles();
             vehiclesTMS.clear();
             vehiclesTMS.addAll(allVehicles);
             vehiclesTable.setItems(vehiclesTMS);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }
@@ -66,11 +68,11 @@ public class VehicleViewFormController {
             loadVehicleTable();
         }else {
             try {
-                ArrayList<VehicleTM> allVehicles = VehicleViewModel.searchVehicle("%"+searchFld.getText()+"%");
+                ArrayList<VehicleTM> allVehicles = vehicleViewService.searchVehicle("%"+searchFld.getText()+"%");
                 vehiclesTMS.clear();
                 vehiclesTMS.addAll(allVehicles);
                 vehiclesTable.setItems(vehiclesTMS);
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
                 e.printStackTrace();
             }

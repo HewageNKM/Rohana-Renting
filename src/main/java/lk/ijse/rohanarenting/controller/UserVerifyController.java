@@ -22,12 +22,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.rohanarenting.model.UserVerifyModel;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.UserVerifyServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.UserVerifyService;
 import lk.ijse.rohanarenting.utill.Regex;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.Objects;
 
 public class UserVerifyController {
@@ -41,6 +41,8 @@ public class UserVerifyController {
     private AnchorPane changeRoot;
     private Label titleLabel;
     private Stage verifyUserStage;
+
+    private final UserVerifyService userVerifyService = (UserVerifyServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.USER_VERIFY_SERVICE);
 
     public void initialize(String employeeId, String title, AnchorPane changeRoot, Label titleLabel, Stage verifyUserStage) {
         this.changeRoot = changeRoot;
@@ -78,7 +80,7 @@ public class UserVerifyController {
 
     public void verifyBtnOnAction(ActionEvent actionEvent) throws IOException {
         try {
-           Boolean isExist = UserVerifyModel.verifyUser(employeeIdFld.getText(),passwordFld.getText());
+           Boolean isExist = userVerifyService.verifyUser(employeeIdFld.getText(),passwordFld.getText());
             if(isExist!=null){
                 if(isExist){
                     verifyUserStage.close();
@@ -91,7 +93,7 @@ public class UserVerifyController {
                 notifyLabel.setStyle("-fx-text-fill: red");
                 notifyLabel.setText("Invalid Employee ID or Password");
             }
-        } catch (SQLException | NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
             e.printStackTrace();
         }

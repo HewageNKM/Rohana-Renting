@@ -52,7 +52,7 @@ public class ReturnFormController {
     ObservableList<ReturnOrderTM> orderList = FXCollections.observableArrayList();
     ObservableList<ReturnTM> returnList = FXCollections.observableArrayList();
 
-    private final ReturnService returnService = (ReturnServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.Return_Service);
+    private final ReturnService returnService = (ReturnServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.RETURN_SERVICE);
 
     public void initialize() {
         changeBtn.setDisable(true);
