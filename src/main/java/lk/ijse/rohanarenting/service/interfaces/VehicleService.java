@@ -28,4 +28,5 @@ public interface VehicleService extends SuperService {
         boolean validateVehicleModel(String id);
         boolean validateVehicleDescription(String id);
         boolean validateRate(String id);
+        boolean isVehicleExist(String id) throws SQLException, NoSuchAlgorithmException;
 }

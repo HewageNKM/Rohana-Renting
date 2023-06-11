@@ -92,7 +92,7 @@ public class ToolServiceImpl implements ToolService {
 
     @Override
     public boolean validateToolBrand(String brand) {
-        return Regex.validateName(brand);
+        return !Regex.validateName(brand);
     }
 
     @Override

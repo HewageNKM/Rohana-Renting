@@ -145,10 +145,14 @@ public class RentServiceImpl implements RentService {
     @Override
     public VehicleCartTM getVehicleCartModel(VehicleOrderDTO vehicleOrderDTO,String vehicleId,Integer rentDays) throws SQLException {
         Vehicle vehicle = rentDAO.getVehicleByAvailability(new Vehicle(vehicleId,null,null,null,null,null,null));
-        JFXButton remove = new JFXButton();
-        remove.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
-        Double total= rentDays * vehicle.getRate();
-        return vehicle != null ? new VehicleCartTM(vehicleOrderDTO.getRentalOrderId(), vehicleId, vehicle.getManufacturer(), vehicle.getModel(), vehicleOrderDTO.getCustomerID(), vehicle.getDescription(), vehicle.getCategory(), vehicle.getRate(), rentDays,total,0,remove) : null;
+        if(vehicle==null){
+            return null;
+        }else {
+            JFXButton remove = new JFXButton();
+            remove.setStyle("-fx-background-image: url('img/delete.png');-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-size: 40px 40px;-fx-background-color: transparent");
+            Double total= rentDays * vehicle.getRate();
+            return new VehicleCartTM(vehicleOrderDTO.getRentalOrderId(), vehicleId, vehicle.getManufacturer(), vehicle.getModel(), vehicleOrderDTO.getCustomerID(), vehicle.getDescription(), vehicle.getCategory(), vehicle.getRate(), rentDays,total,0,remove);
+        }
     }
 
     @Override

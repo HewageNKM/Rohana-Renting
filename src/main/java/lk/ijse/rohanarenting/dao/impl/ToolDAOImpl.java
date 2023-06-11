@@ -64,7 +64,8 @@ public class ToolDAOImpl implements ToolDAO {
 
     @Override
     public boolean verify(Tool entity) throws SQLException, NoSuchAlgorithmException {
-        return false;
+        ResultSet  resultSet = CruidUtil.execute("SELECT * FROM tool WHERE TID = ?",entity.getToolID());
+        return resultSet.next();
     }
 
     @Override

@@ -428,8 +428,8 @@ public class VehicleFormController {
    public void refreshOnClick() {
         if(
                 vehicleService.validateVehicleId(licenseFld.getText()) &&
-                vehicleService.validateVehicleDescription(descriptionFld.getText()) &&
-                vehicleService.validateVehicleModel(modelNameFld.getText())&&
+                !vehicleService.validateVehicleDescription(descriptionFld.getText()) &&
+                !vehicleService.validateVehicleModel(modelNameFld.getText())&&
                 vehicleService.validateVehicleManufacturer(manufacturerFld.getText())&&
                 categoryComboBox.getSelectionModel().getSelectedItem() != null &&
                 vehicleService.validateRate(rentalRateFld.getText())
@@ -452,7 +452,7 @@ public class VehicleFormController {
     void saveBtnOnAction() {
         VehicleDTO vehicleDTO = new VehicleDTO();
         try {
-            if(vehicleService.getVehicle(new VehicleDTO(licenseFld.getText(),null,null,null,null,null,null)) != null){
+            if(vehicleService.isVehicleExist(licenseFld.getText())){
                 new Alert(Alert.AlertType.CONFIRMATION,"New Vehicle Data Will Be Updated !", ButtonType.YES,ButtonType.NO).showAndWait().ifPresent(buttonType -> {
                     if(buttonType == ButtonType.YES){
                         try {

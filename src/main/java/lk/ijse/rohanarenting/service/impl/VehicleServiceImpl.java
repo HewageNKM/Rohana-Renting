@@ -88,16 +88,21 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public boolean validateVehicleModel(String id) {
-        return id.trim().isEmpty() || id.length() > 3;
+        return !Regex.validateName(id);
     }
 
     @Override
     public boolean validateVehicleDescription(String id) {
-        return id.trim().isEmpty() || id.length() > 5;
+        return (id.trim().isEmpty());
     }
 
     @Override
     public boolean validateRate(String id) {
         return Regex.validateNumbersAndDecimals(id);
+    }
+
+    @Override
+    public boolean isVehicleExist(String id) throws SQLException, NoSuchAlgorithmException {
+        return  vehicleDAO.verify(new Vehicle(id,null,null,null,null,null,null));
     }
 }

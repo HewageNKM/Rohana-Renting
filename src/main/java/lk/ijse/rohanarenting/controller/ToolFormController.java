@@ -340,9 +340,9 @@ public class ToolFormController {
         if(
                 toolService.validateToolId(toolIdFld.getText()) &&
                         toolService.validateToolName(nameFld.getText()) &&
-                        toolService.validateToolDescription(drecriptionFld.getText()) &&
+                        !toolService.validateToolDescription(drecriptionFld.getText()) &&
                         toolService.validateToolPrice(rentalRateFld.getText()) &&
-                        toolService.validateToolBrand(brandNameFld.getText()
+                        !toolService.validateToolBrand(brandNameFld.getText()
         )
                 
         ){
