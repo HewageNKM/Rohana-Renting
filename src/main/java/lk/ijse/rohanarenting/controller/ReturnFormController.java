@@ -20,16 +20,15 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import lk.ijse.rohanarenting.db.DBConnection;
 import lk.ijse.rohanarenting.dto.tm.ReturnOrderTM;
 import lk.ijse.rohanarenting.dto.tm.ReturnTM;
-import lk.ijse.rohanarenting.model.ReturnModel;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.ReturnServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.ReturnService;
 import lk.ijse.rohanarenting.utill.Genarate;
 import lk.ijse.rohanarenting.utill.Regex;
 
-
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -53,6 +52,8 @@ public class ReturnFormController {
     ObservableList<ReturnOrderTM> orderList = FXCollections.observableArrayList();
     ObservableList<ReturnTM> returnList = FXCollections.observableArrayList();
 
+    private final ReturnService returnService = (ReturnServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.Return_Service);
+
     public void initialize() {
         changeBtn.setDisable(true);
         processedBtn.setDisable(true);
@@ -65,7 +66,7 @@ public class ReturnFormController {
         String id = Genarate.genarateReturnId();
         while (true) {
             try {
-                if (ReturnModel.isReturnIdExist(id)) {
+                if (returnService.isReturnIdExist(id)) {
                     id = Genarate.genarateReturnId();
                 } else {
                     returnIdLabel.setText(id.toUpperCase());
@@ -88,7 +89,7 @@ public class ReturnFormController {
 
     private void loadReturnOrderTable() {
         try {
-            ArrayList<ReturnOrderTM> arrayList = ReturnModel.getOrderTM(idFld.getText());
+            ArrayList<ReturnOrderTM> arrayList = returnService.getOrderTM(idFld.getText());
             if(0 >= arrayList.size()){
                 new Alert(Alert.AlertType.WARNING,"No Item To Return !").show();
             }else {
@@ -128,13 +129,13 @@ public class ReturnFormController {
         if(returnOrderTM !=null){
             ReturnTM returnTM;
             try {
-                returnTM = ReturnModel.getReturnTM(returnOrderTM,returnIdLabel.getText());
+                returnTM = returnService.getReturnTM(returnOrderTM,returnIdLabel.getText());
                 System.out.print(returnTM);
                 returnList.add(returnTM);
                 orderList.remove(returnOrderTM);
                 returnOrderTable.setItems(returnList);
                 processedBtn.setDisable(false);
-                Double totalFine = ReturnModel.getTotalFine(returnList);
+                Double totalFine = returnService.getTotalFine(returnList);
                 fineLabel.setStyle("-fx-text-fill: red");
                 fineLabel.setText("Total Fine: "+String.valueOf(totalFine));
             } catch (SQLException e) {
@@ -148,10 +149,10 @@ public class ReturnFormController {
 
     public void idValidate(KeyEvent keyEvent) {
         try {
-            if(ReturnModel.verifyVehicleRentId(idFld.getText())|| Regex.validateVehicleRentId(idFld.getText())) {
+            if(returnService.verifyVehicleRentId(idFld.getText())|| Regex.validateVehicleRentId(idFld.getText())) {
                 idFld.setStyle("-fx-border-color: green");
                 changeBtn.setDisable(false);
-            }else if(ReturnModel.verifyToolRentID(idFld.getText())|| Regex.validateToolRentId(idFld.getText())){
+            }else if(returnService.verifyToolRentID(idFld.getText())|| Regex.validateToolRentId(idFld.getText())){
                 idFld.setStyle("-fx-border-color: green");
                 changeBtn.setDisable(false);
             }else{
@@ -167,7 +168,7 @@ public class ReturnFormController {
 
     public void procceedBtnOnAction(ActionEvent actionEvent) {
         new Alert(Alert.AlertType.CONFIRMATION,"Are You Sure ?,This Will Take Immediate Effect !",ButtonType.NEXT,ButtonType.CANCEL).showAndWait().ifPresent(ButtonType->{
-            if(ButtonType == ButtonType.NEXT){
+            /*if(ButtonType == ButtonType.NEXT){
                 Connection connection=null;
                 if(Regex.validateToolRentId(idFld.getText())){
                     try {
@@ -255,22 +256,28 @@ public class ReturnFormController {
                             e.printStackTrace();
                         }
                     }
-                }
+                }*/
+            try {
+                returnService.saveReturnOrder(returnList,idFld.getText());
+                new Alert(Alert.AlertType.INFORMATION,"Return Saved !").show();
+                clearFields();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         });
     }
 
     public void enterOnAction(ActionEvent actionEvent) {
         try {
-            if(ReturnModel.verifyVehicleRentId(idFld.getText())) {
-                if(ReturnModel.checkRefund(idFld.getText())){
+            if(returnService.verifyVehicleRentId(idFld.getText())) {
+                if(returnService.checkRefund(idFld.getText())){
                     new Alert(Alert.AlertType.ERROR, "This Order Has Already Been Refunded !").show();
                 }else {
                     loadReturnOrderTable();
                     idFld.setDisable(true);
                 }
-            }else if(ReturnModel.verifyToolRentID(idFld.getText())){
-                if(ReturnModel.checkRefund(idFld.getText())){
+            }else if(returnService.verifyToolRentID(idFld.getText())){
+                if(returnService.checkRefund(idFld.getText())){
                     new Alert(Alert.AlertType.ERROR, "This Order Has Already Been Refunded !").show();
                 }else {
                     loadReturnOrderTable();
