@@ -14,7 +14,9 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import lk.ijse.rohanarenting.model.DashboardModel;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.DashboardServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.DashboardService;
 import lombok.SneakyThrows;
 
 import java.sql.SQLException;
@@ -31,6 +33,7 @@ public class DashboardController {
     public PieChart pieChart;
     public Label employeeIdFld;
     public Label lastLoginFld;
+    private final DashboardService dashboardService = (DashboardServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.DASHBOARD_SERVICE);
 
     public void initialize() {
         rentalCounts();
@@ -43,7 +46,7 @@ public class DashboardController {
 
     @SneakyThrows
     private void loadPieChart() {
-        ObservableList<PieChart.Data> pieChartData = DashboardModel.getRentedCountPerMonthPie();
+        ObservableList<PieChart.Data> pieChartData = dashboardService.getRentedCountPerMonthPie();
         pieChart.setData(pieChartData);
         pieChart.setTitle("Sales Value Through the Year");
     }
@@ -51,7 +54,7 @@ public class DashboardController {
     private void loadBarChart() {
         try {
             barChart.setTitle("Orders Through the Year");
-            XYChart.Series<String, Integer> series  = DashboardModel.getRentedCountPerMonth();
+            XYChart.Series<String, Integer> series  = dashboardService.getRentedCountPerMonth();
             barChart.getData().add(series);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
@@ -61,9 +64,9 @@ public class DashboardController {
 
     private void setRefundDetails() {
         try {
-            int count = DashboardModel.getRefundCount();
+            int count = dashboardService.getRefundCount();
             refundCountLabel.setText(String.valueOf(count));
-            Double totalValue = DashboardModel.getTotalRefundValue();
+            Double totalValue = dashboardService.getTotalRefundValue();
             valueRefundTable.setText(String.valueOf(totalValue));
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
@@ -73,8 +76,8 @@ public class DashboardController {
 
     private void setSaleDetails() {
         try {
-            InvoiceCount.setText(DashboardModel.getInvoicesCount());
-            totalSaleLabel.setText(DashboardModel.getTotalSaleValue());
+            InvoiceCount.setText(dashboardService.getInvoicesCount());
+            totalSaleLabel.setText(dashboardService.getTotalSaleValue());
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();
             e.printStackTrace();
@@ -83,7 +86,7 @@ public class DashboardController {
 
     private void rentalCounts() {
         try {
-            ArrayList<Integer> counts = DashboardModel.getRentalCounts(carRentalCountLabel);
+            ArrayList<Integer> counts = dashboardService.getRentalCounts();
             carRentalCountLabel.setText(String.valueOf(counts.get(0)));
             toolRentalCountLabel.setText(String.valueOf(counts.get(1)));
         } catch (SQLException e) {
@@ -93,8 +96,8 @@ public class DashboardController {
     }
     public void setUserDetails() {
         try {
-            employeeIdFld.setText(DashboardModel.getEmployeeId());
-            lastLoginFld.setText(DashboardModel.getLastLogin());
+            employeeIdFld.setText(dashboardService.getEmployeeId());
+            lastLoginFld.setText(dashboardService.getLastLogin());
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage()).show();

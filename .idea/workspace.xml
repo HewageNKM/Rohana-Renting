@@ -4,39 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="All Refactored to Layer Architecture Except Dashboard and Refund Form with Some known Issues">
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/impl/RefundDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/interfaces/RefundDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/entity/Refund.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/entity/RefundDetails.java" afterDir="false" />
+    <list default="true" id="42186c36-a1ec-410b-bfde-0fa3b795904c" name="Changes" comment="Refund Form Complete">
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dto/CustomDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/DashboardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/RefundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/RefundController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/DAOFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/model/RefundModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/impl/RefundServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/impl/RefundServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/interfaces/RefundService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/interfaces/RefundService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/utill/Regex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/utill/Regex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/OrderViewFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/OrderViewFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/RefundController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/RefundController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/ReturnFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/ReturnFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/ToolViewFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/ToolViewFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/UserVerifyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/UserVerifyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/VehicleViewFormController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/controller/VehicleViewFormController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/dao/DAOFactory$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/dao/DAOFactory$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/dao/DAOFactory$DAOType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/dao/DAOFactory$DAOType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/dao/DAOFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/dao/DAOFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/model/GenarateModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/model/OrderViewModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/model/RefundModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/model/ToolViewModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/model/UserVerifyModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/model/VehicleViewModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/ServiceFactory$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/ServiceFactory$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/ServiceFactory$ServiceType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/ServiceFactory$ServiceType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/ServiceFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/ServiceFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/impl/RefundServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/impl/RefundServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/interfaces/CustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/interfaces/CustomerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/interfaces/RefundService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/service/interfaces/RefundService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/UserFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/controller/UserFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/impl/DashboardDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/impl/DashboardDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/impl/QueryDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/impl/QueryDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/interfaces/DashboardDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/interfaces/DashboardDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/interfaces/QueryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/dao/interfaces/QueryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/model/DashboardModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/impl/DashboardServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/impl/DashboardServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/interfaces/DashboardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/rohanarenting/service/interfaces/DashboardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/utill/Regex.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lk/ijse/rohanarenting/utill/Regex.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,35 +72,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last.edited.regexp": "RT7723C355",
-    "last_opened_file_path": "D:/GDSE/JavaProject/Rohana-Renting/Rohana-Renting/src/main/java/lk/ijse/rohanarenting/dto",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last.edited.regexp&quot;: &quot;RT7723C355&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/GDSE/JavaProject/Rohana-Renting/Rohana-Renting/src/main/java/lk/ijse/rohanarenting/dto&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql",
-      "mariadb"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;,
+      &quot;mariadb&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="lk.ijse.rohanarenting.dao.impl" />
@@ -230,7 +211,8 @@
       <workItem from="1686557723382" duration="5742000" />
       <workItem from="1686568864525" duration="695000" />
       <workItem from="1686632398088" duration="208000" />
-      <workItem from="1686745812360" duration="1542000" />
+      <workItem from="1686745812360" duration="5152000" />
+      <workItem from="1686752387138" duration="358000" />
     </task>
     <task id="LOCAL-00001" summary="Merge remote-tracking branch 'main/master'">
       <created>1682585310957</created>
@@ -456,7 +438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686492961750</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Refund Form Complete">
+      <created>1686747631236</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1686747631236</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,6 +482,7 @@
     <MESSAGE value="Tool, Vehicle Validation [Bug] Fixed" />
     <MESSAGE value="Orders Can't Place Bug Fixed" />
     <MESSAGE value="All Refactored to Layer Architecture Except Dashboard and Refund Form with Some known Issues" />
-    <option name="LAST_COMMIT_MESSAGE" value="All Refactored to Layer Architecture Except Dashboard and Refund Form with Some known Issues" />
+    <MESSAGE value="Refund Form Complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refund Form Complete" />
   </component>
 </project>

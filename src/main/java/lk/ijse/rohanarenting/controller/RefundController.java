@@ -38,16 +38,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class RefundController {
-    public TableColumn columnProductId;
-    public TableColumn columnRentDays;
-    public TableColumn columnTotal;
-    public TableColumn columnPurchaseDate;
-    public TableColumn refundColumnProductId;
-    public TableColumn refundColumnRefundAmount;
-    public TableColumn refundColumnTotal;
-    public TableColumn refundColumnRentDays;
+    public TableColumn<Object, Object> columnProductId;
+    public TableColumn<Object, Object> columnRentDays;
+    public TableColumn<Object, Object> columnTotal;
+    public TableColumn<Object, Object> columnPurchaseDate;
+    public TableColumn<Object, Object> refundColumnProductId;
+    public TableColumn<Object, Object> refundColumnRefundAmount;
+    public TableColumn<Object, Object> refundColumnTotal;
+    public TableColumn<Object, Object> refundColumnRentDays;
     public JFXButton changeBtn;
     public TextField rentIdFld;
     public Label refundIdLabel;
@@ -247,7 +248,7 @@ public class RefundController {
     }
 
     public void orderListBtnOnAction(ActionEvent actionEvent) throws IOException {
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/OrderViewForm.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderViewForm.fxml")))));
         stage.setTitle("Order View");
         stage.centerOnScreen();
         stage.getIcons().add(new Image("/img/search.png"));

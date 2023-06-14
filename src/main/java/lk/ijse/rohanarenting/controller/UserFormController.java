@@ -27,7 +27,6 @@ import lk.ijse.rohanarenting.dto.tm.UserTM;
 import lk.ijse.rohanarenting.service.ServiceFactory;
 import lk.ijse.rohanarenting.service.impl.UserAccountServiceImpl;
 import lk.ijse.rohanarenting.service.interfaces.UserAccountService;
-import lk.ijse.rohanarenting.utill.Regex;
 import lk.ijse.rohanarenting.utill.TableUtil;
 import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
 
@@ -248,7 +247,7 @@ public class UserFormController {
     }
     // Validate All the Fields
     public void refreshOnClick(MouseEvent mouseEvent) {
-        if(Regex.validateEID(employeeFld.getText()) && Regex.validatePassword(passwordFld.getText())&& Regex.validatePassword(passwordFld.getText())&& Regex.validateUsername(userNameFld.getText())){
+        if(userAccountService.validateEmployeeId(employeeFld.getText()) && userAccountService.validatePassword(passwordFld.getText())&& userAccountService.validatePassword(passwordFld.getText())&& userAccountService.validateUserName(userNameFld.getText())){
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("All Set !");
             userNameFld.setText(userNameFld.getText().toUpperCase());
@@ -285,7 +284,7 @@ public class UserFormController {
     public void userNameValidate(KeyEvent keyEvent) {
         saveBtn.setDisable(true);
         deleteBtn.setDisable(true);
-        if (Regex.validateUsername(userNameFld.getText())) {
+        if (userAccountService.validateUserName(userNameFld.getText())) {
             notifyLabel.setTextFill(Color.GREEN);
             notifyLabel.setText("Valid Name !");
             userNameFld.setStyle("-fx-border-color: green;");
