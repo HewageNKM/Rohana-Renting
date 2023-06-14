@@ -22,7 +22,7 @@ public class Regex {
         private static final String VEHICLE_ID_REGEX = "^[a-zA-Zz]{2,3}-[0-9]{4}$";
         private static final String TEXT_ONLY = "^[a-zA-Zz]{2,}$";
         public static final String NUMBER_ONLY = "^[1-9]\\d*$";
-        private static final String Tool_ID_REGEX = "^[Tt][0-9]{4}$";
+        private static final String TOOL_ID_REGEX = "^[Tt][0-9]{4}$";
         private static final String CUSTOMER_ID_REGEX = "^[Cc][0-9]{4}$";
         private static final String NUMBERS_DECIMAL = "^[+]?[0-9]*\\.?[0-9]+$";
         private static final String ZIP_REGEX = "[0-9]{5}$";
@@ -52,7 +52,7 @@ public class Regex {
         public static boolean validateVehicleID(String vid) {return vid.matches(VEHICLE_ID_REGEX);}
         public static boolean validateTextOnly(String text) {return text.matches(TEXT_ONLY);}
         public static boolean validateNumberOnly(String number) {return number.matches(NUMBER_ONLY);}
-        public static boolean validateToolId(String toolId){return toolId.matches(Tool_ID_REGEX); }
+        public static boolean validateToolId(String toolId){return toolId.matches(TOOL_ID_REGEX); }
         public static boolean validateCustomerCID(String customerId){return customerId.matches(CUSTOMER_ID_REGEX); }
         public static boolean validateNumbersAndDecimals(String customerId){return customerId.matches(NUMBERS_DECIMAL); }
         public static boolean validateZIP(String zipCode) {
@@ -62,5 +62,8 @@ public class Regex {
         public static boolean validateAddress(String address) {return address.matches(ADDRESS_REGEX);}
         public static boolean validateFax(String fax) {return fax.matches(FAX_REGEX);}
         public static boolean validateVehicleRentId(String vehicleRentId) {return vehicleRentId.matches(VEHICLE_RENT_ID);}
-        public static boolean validateToolRentId(String toolRentId) {return toolRentId.matches(TOOL_RENT_ID);}
+        public static boolean validateToolRentId(String toolRentId) {
+            boolean matches = toolRentId.matches(TOOL_RENT_ID);
+            System.out.println(matches);
+            return matches;}
 }

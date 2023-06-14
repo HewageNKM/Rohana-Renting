@@ -1,29 +1,57 @@
-/*
- * Copyright (c) 2023, All right reserved.
- * Author: Nadun Kawishika
- * Project Name: RohanaRenting
- * Date and Time: 4/16/23, 2:01 PM
- *
- */
+package lk.ijse.rohanarenting.dao.impl;
 
-package lk.ijse.rohanarenting.model;
-
-import javafx.collections.ObservableList;
-import lk.ijse.rohanarenting.dto.CustomerDTO;
+import lk.ijse.rohanarenting.dao.interfaces.RefundDAO;
 import lk.ijse.rohanarenting.dto.tm.RefundOrderTM;
-import lk.ijse.rohanarenting.dto.tm.RefundTM;
+import lk.ijse.rohanarenting.entity.*;
 import lk.ijse.rohanarenting.utill.CruidUtil;
 import lk.ijse.rohanarenting.utill.Regex;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.Period;
 import java.util.ArrayList;
 
-public class RefundModel {
-    public static Boolean verifyVehicleRentId(String rentId) throws SQLException {
+public class RefundDAOImpl implements RefundDAO {
+
+    @Override
+    public boolean insert(Refund entity) throws NoSuchAlgorithmException, SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean update(Refund entity) throws NoSuchAlgorithmException, SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(Refund entity) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public Refund get(Refund entity) throws SQLException, NoSuchAlgorithmException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Refund> getAll() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public boolean verify(Refund entity) throws SQLException, NoSuchAlgorithmException {
+        return false;
+    }
+
+    @Override
+    public ArrayList<Refund> search(String searchPhrase) throws SQLException, NoSuchAlgorithmException {
+        return null;
+    }
+
+    @Override
+    public Boolean verifyVehicleRentId(String rentId) throws SQLException {
         ResultSet resultSet = CruidUtil.execute("SELECT Date FROM vehicle_rent_order WHERE Rent_ID=?",rentId);
         if(resultSet.next()){
             LocalDate date = resultSet.getDate(1).toLocalDate();
@@ -35,7 +63,8 @@ public class RefundModel {
         }
     }
 
-    public static Boolean checkVehicleReturn(String rentID) throws SQLException {
+    @Override
+    public boolean checkVehicleReturn(String rentID) throws SQLException {
         ResultSet resultSet = null;
         if (Regex.validateToolRentId(rentID)){
             resultSet = CruidUtil.execute("SELECT * FROM tool_rent_order_detail WHERE Rent_ID = ? AND Return_Status = 0",rentID);
@@ -45,7 +74,8 @@ public class RefundModel {
         return !resultSet.next();
     }
 
-    public static ArrayList<RefundOrderTM> getRefundOrderTM(String rentId) throws SQLException {
+    @Override
+    public ArrayList<RefundOrderTM> getRefundOrderTM(String rentId) throws SQLException {
         if(Regex.validateVehicleRentId(rentId)){
             ResultSet resultSet = CruidUtil.execute("SELECT vehicle_rent_order_detail.VID,vehicle_rent_order_detail.Rent_Days,vehicle_rent_order_detail.Total,vehicle_rent_order.Date FROM vehicle_rent_order_detail RIGHT JOIN vehicle_rent_order ON vehicle_rent_order_detail.Rent_ID = vehicle_rent_order.Rent_ID = vehicle_rent_order_detail.Rent_ID = vehicle_rent_order.Rent_ID WHERE vehicle_rent_order.Rent_ID = ? AND vehicle_rent_order_detail.Return_Status = 0 AND vehicle_rent_order_detail.Refund_Status = 0",rentId);
             ArrayList<RefundOrderTM> refundOrderTMS = new ArrayList<>();
@@ -71,11 +101,8 @@ public class RefundModel {
         }
     }
 
-    public static RefundTM getRefundTM(RefundOrderTM refundOrderTM) throws SQLException {
-        return new RefundTM(refundOrderTM.getProductId(),refundOrderTM.getRentDays(),refundOrderTM.getTotal(),refundOrderTM.getTotal()*0.95);
-    }
-
-    public static Boolean verifyToolRentId(String rentID) throws SQLException {
+    @Override
+    public Boolean verifyToolRentId(String rentID) throws SQLException {
         ResultSet resultSet = CruidUtil.execute("SELECT Date FROM tool_rent_order WHERE Rent_ID=?",rentID);
         if(resultSet.next()){
             LocalDate date = resultSet.getDate(1).toLocalDate();
@@ -87,12 +114,14 @@ public class RefundModel {
         }
     }
 
-    public static boolean checkToolReturn(String rentID) throws SQLException {
+    @Override
+    public boolean checkToolReturn(String rentID) throws SQLException {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool_return WHERE Return_ID = ?",rentID);
         return resultSet.next();
     }
 
-    public static boolean isRefundIdExist(String id) throws SQLException {
+    @Override
+    public boolean isRefundIdExist(String id) throws SQLException {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM vehicle_refund WHERE Refund_ID=?",id);
         if(resultSet.next()){
             ResultSet resultSet1 =  CruidUtil.execute("SELECT * FROM tool_refund WHERE Refund_ID = ?",id);
@@ -111,97 +140,98 @@ public class RefundModel {
         }
     }
 
-    public static Boolean updateToolRefundTable(String refundId,String rentId) throws SQLException {
-        return CruidUtil.execute("INSERT INTO tool_refund VALUES(?,?,?,?)",refundId,rentId,LocalDate.now(), LocalTime.now());
+    @Override
+    public boolean updateToolRefundTable(Refund refund) throws SQLException {
+        return CruidUtil.execute("INSERT INTO tool_refund VALUES(?,?,?,?)", refund.getRefundId(),refund.getRentId(),refund.getDate(), refund.getTime());
     }
 
-    public static Boolean updateToolRefundDetailTable(ObservableList<RefundTM> refundTMS,String refundId) throws SQLException {
+    @Override
+    public boolean updateToolRefundDetailTable(ArrayList<RefundDetails> refundDetails) throws SQLException {
         int count = 0;
-        for (RefundTM refundTM : refundTMS) {
-          Boolean isUpdated = CruidUtil.execute("INSERT INTO tool_refund_detail VALUES(?,?,?,?)",refundId,refundTM.getProductId(),refundTM.getTotal(),refundTM.getRefundAmount());
-           if(isUpdated){
-                count++;
-           }
-        }
-        return count == refundTMS.size();
-    }
-
-    public static Double getTotal(ObservableList<RefundTM> refundTMS) {
-        Double total = 0.0;
-        for (RefundTM refundTM : refundTMS) {
-            total += refundTM.getRefundAmount();
-        }
-        return total;
-    }
-
-    public static Boolean updateToolRentTable(ObservableList<RefundTM> refundTMS) throws SQLException {
-        int count = 0;
-        for (RefundTM refundTM:refundTMS) {
-            Boolean isUpdated = CruidUtil.execute("UPDATE tool_rent_order_detail SET Refund_Status = 1,Return_Status = 1 WHERE TID = ?",refundTM.getProductId());
+        for (RefundDetails refundDetail : refundDetails) {
+            Boolean isUpdated = CruidUtil.execute("INSERT INTO tool_refund_detail VALUES(?,?,?,?)",refundDetail.getRefundId(),refundDetail.getId(),refundDetail.getTotal(),refundDetail.getRefundAmount());
             if(isUpdated){
                 count++;
             }
         }
-        return count == refundTMS.size();
+        return count == refundDetails.size();
     }
 
-    public static Boolean updateToolTable(ObservableList<RefundTM> refundTMS) throws SQLException {
+    @Override
+    public boolean updateToolRentTable(ArrayList<Tool> tools) throws SQLException {
         int count = 0;
-        for (RefundTM refundTM:refundTMS) {
-            Boolean isUpdated = CruidUtil.execute("UPDATE tool SET Availability = 'Available' WHERE TID = ?",refundTM.getProductId());
+        for (Tool tool:tools) {
+            Boolean isUpdated = CruidUtil.execute("UPDATE tool_rent_order_detail SET Refund_Status = 1,Return_Status = 1 WHERE TID = ?",tool.getToolID());
             if(isUpdated){
                 count++;
             }
         }
-        return count == refundTMS.size();
+        return count == tools.size();
     }
 
-    public static Boolean updateVehicleRefundTable(String refundId, String rentId) throws SQLException {
-        return CruidUtil.execute("INSERT INTO vehicle_refund VALUES(?,?,?,?)",refundId,rentId,LocalDate.now(), LocalTime.now());
-    }
-
-    public static Boolean updateVehicleRefundDetailTable(ObservableList<RefundTM> refundTMS, String refundId) throws SQLException {
+    @Override
+    public boolean updateToolTable(ArrayList<Tool> tools) throws SQLException {
         int count = 0;
-        for (RefundTM refundTM : refundTMS) {
-          Boolean isUpdated = CruidUtil.execute("INSERT INTO vehicle_refund_detail VALUES(?,?,?,?)",refundId,refundTM.getProductId(),refundTM.getTotal(),refundTM.getRefundAmount());
-          if(isUpdated){
-              count++;
-          }
-        }
-        return count == refundTMS.size();
-    }
-
-    public static Boolean updateVehicleRentTable(ObservableList<RefundTM> refundTMS) throws SQLException {
-        int count = 0;
-        for (RefundTM refundTM:refundTMS) {
-            Boolean isUpdated = CruidUtil.execute("UPDATE vehicle_rent_order_detail SET Refund_Status = 1,Return_Status = 1 WHERE VID = ?",refundTM.getProductId());
+        for (Tool tool:tools) {
+            Boolean isUpdated = CruidUtil.execute("UPDATE tool SET Availability = 'Available' WHERE TID = ?",tool.getToolID());
             if(isUpdated){
                 count++;
             }
         }
-        return count == refundTMS.size();
+        return count == tools.size();
     }
 
-    public static Boolean updateVehicleTable(ObservableList<RefundTM> refundTMS) throws SQLException {
+    @Override
+    public boolean updateVehicleRefundTable(Refund refund) throws SQLException {
+        return CruidUtil.execute("INSERT INTO vehicle_refund VALUES(?,?,?,?)",refund.getRefundId(),refund.getRentId(),refund.getDate(),refund.getTime());
+    }
+
+    @Override
+    public boolean updateVehicleRefundDetailTable(ArrayList<RefundDetails> refundDetails) throws SQLException {
         int count = 0;
-        for (RefundTM refundTM:refundTMS) {
-            Boolean isUpdated = CruidUtil.execute("UPDATE vehicle SET Availability = 'Available' WHERE VID = ?",refundTM.getProductId());
+        for (RefundDetails refundDetail : refundDetails) {
+            Boolean isUpdated = CruidUtil.execute("INSERT INTO vehicle_refund_detail VALUES(?,?,?,?)",refundDetail.getRefundId(),refundDetail.getId(),refundDetail.getTotal(),refundDetail.getRefundAmount());
             if(isUpdated){
                 count++;
             }
         }
-        return count == refundTMS.size();
+        return count == refundDetails.size();
     }
 
-    public static CustomerDTO getCustomer(String rentId) throws SQLException {
+    @Override
+    public boolean updateVehicleRentTable(ArrayList<Vehicle> vehicles) throws SQLException {
+        int count = 0;
+        for (Vehicle vehicle:vehicles) {
+            Boolean isUpdated = CruidUtil.execute("UPDATE vehicle_rent_order_detail SET Refund_Status = 1,Return_Status = 1 WHERE VID = ?",vehicle.getVehicleID());
+            if(isUpdated){
+                count++;
+            }
+        }
+        return count == vehicles.size();
+    }
+
+    @Override
+    public boolean updateVehicleTable(ArrayList<Vehicle> vehicles) throws SQLException {
+        int count = 0;
+        for (Vehicle vehicle:vehicles) {
+            Boolean isUpdated = CruidUtil.execute("UPDATE vehicle SET Availability = 'Available' WHERE VID = ?",vehicle.getVehicleID());
+            if(isUpdated){
+                count++;
+            }
+        }
+        return count == vehicles.size();
+    }
+
+    @Override
+    public Customer getCustomer(String rentId) throws SQLException {
         ResultSet resultSet = CruidUtil.execute("SELECT * FROM tool_rent_order WHERE Rent_ID=?",rentId);
         if(resultSet.next()){
             String customerId = resultSet.getString(2);
             ResultSet resultSet1 = CruidUtil.execute("SELECT * FROM customer WHERE CID=?",customerId);
             if(resultSet1.next()){
-                return new CustomerDTO(resultSet1.getString(1),resultSet1.getString(2),resultSet1.getString(3),resultSet1.getString(4),resultSet1.getDate(5).toLocalDate(),resultSet1.getString(6),resultSet1.getString(7),resultSet1.getString(8),resultSet1.getString(9),resultSet1.getInt(10));
+                return new Customer(resultSet1.getString(1),resultSet1.getString(2),resultSet1.getString(3),resultSet1.getString(4),resultSet1.getDate(5).toLocalDate(),resultSet1.getString(6),resultSet1.getString(7),resultSet1.getString(8),resultSet1.getString(9),resultSet1.getInt(10));
             }else {
-                return new CustomerDTO();
+                return new Customer();
             }
         }
         ResultSet resultSet1 = CruidUtil.execute("SELECT * FROM vehicle_rent_order WHERE Rent_ID=?",rentId);
@@ -209,11 +239,11 @@ public class RefundModel {
             String customerId = resultSet1.getString(2);
             ResultSet resultSet2 = CruidUtil.execute("SELECT * FROM customer WHERE CID=?", customerId);
             if (resultSet2.next()) {
-                return new CustomerDTO(resultSet2.getString(1), resultSet2.getString(2), resultSet2.getString(3), resultSet2.getString(4), resultSet2.getDate(5).toLocalDate(), resultSet2.getString(6), resultSet2.getString(7), resultSet2.getString(8), resultSet2.getString(9), resultSet2.getInt(10));
+                return new Customer(resultSet2.getString(1), resultSet2.getString(2), resultSet2.getString(3), resultSet2.getString(4), resultSet2.getDate(5).toLocalDate(), resultSet2.getString(6), resultSet2.getString(7), resultSet2.getString(8), resultSet2.getString(9), resultSet2.getInt(10));
             } else {
-                return new CustomerDTO();
+                return new Customer();
             }
         }
-        return new CustomerDTO();
+        return new Customer();
     }
 }

@@ -19,22 +19,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import lk.ijse.rohanarenting.db.DBConnection;
 import lk.ijse.rohanarenting.dto.CustomerDTO;
 import lk.ijse.rohanarenting.dto.tm.RefundOrderTM;
 import lk.ijse.rohanarenting.dto.tm.RefundTM;
-import lk.ijse.rohanarenting.model.RefundModel;
+import lk.ijse.rohanarenting.entity.Refund;
+import lk.ijse.rohanarenting.service.ServiceFactory;
+import lk.ijse.rohanarenting.service.impl.RefundServiceImpl;
+import lk.ijse.rohanarenting.service.interfaces.RefundService;
 import lk.ijse.rohanarenting.utill.Regex;
-import lk.ijse.rohanarenting.utill.notification.TopUpNotifications;
-import lk.ijse.rohanarenting.utill.Genarate;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,9 +55,10 @@ public class RefundController {
     public TableView<RefundOrderTM> refundOrderTable;
     public TableView<RefundTM> refundTable;
     public Label totalRefundLabel;
-    private ObservableList<RefundOrderTM> refundOrderTMS = FXCollections.observableArrayList();
-    private ObservableList<RefundTM> refundTMS = FXCollections.observableArrayList();
-    private Stage stage = new Stage();
+    private final ObservableList<RefundOrderTM> refundOrderTMS = FXCollections.observableArrayList();
+    private final ObservableList<RefundTM> refundTMS = FXCollections.observableArrayList();
+    private final Stage stage = new Stage();
+    private final RefundService refundService = (RefundServiceImpl) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.REFUND_SERVICE);
 
     public void initialize() {
         setRefundOrderTableCellValueFactory();
@@ -67,19 +69,11 @@ public class RefundController {
     }
 
     private void setRefundId(){
-        String id = Genarate.genarateRefundId();
-        while (true) {
-            try {
-                if (RefundModel.isRefundIdExist(id)) {
-                    id = Genarate.genarateRefundId();
-                } else {
-                    refundIdLabel.setText(id.toUpperCase());
-                    break;
-                }
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-                e.printStackTrace();
-            }
+        try {
+            refundIdLabel.setText(refundService.genarateRefundId());
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+            e.printStackTrace();
         }
     }
 
@@ -103,86 +97,17 @@ public class RefundController {
 
     public void proceedBtnOnAction(ActionEvent actionEvent) {
         new Alert(Alert.AlertType.CONFIRMATION,"Amount Will Be Refund !",ButtonType.OK,ButtonType.CANCEL).showAndWait().ifPresent(ButtonType->{
-            if(ButtonType == ButtonType.OK){
-                Connection connection = null;
-                try {
-                    connection = DBConnection.getInstance().getConnection();
-                    connection.setAutoCommit(false);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            try {
+                if(refundService.placeRefund(new Refund(refundIdLabel.getText(),rentIdFld.getText(), LocalDate.now(), LocalTime.now()),refundTMS)){
+                    printRefundInvoice();
+                    new Alert(Alert.AlertType.INFORMATION,"Refund Issued Success!").show();
+                    clearFields();
+                }else {
+                    new Alert(Alert.AlertType.ERROR,"Refund Issued  Not Success!").show();
                 }
-                if(Regex.validateToolRentId(rentIdFld.getText())){
-                    try {
-
-                        Boolean  isRefundTableUpdated= RefundModel.updateToolRefundTable(refundIdLabel.getText(),rentIdFld.getText());
-                        if(isRefundTableUpdated){
-                            Boolean isRefundDetailTableUpdated = RefundModel.updateToolRefundDetailTable(refundTMS,refundIdLabel.getText());
-                            if(isRefundDetailTableUpdated){
-                                Boolean isToolRentTableUpdated = RefundModel.updateToolRentTable(refundTMS);
-                                if(isToolRentTableUpdated){
-                                    Boolean isToolTableUpdated = RefundModel.updateToolTable(refundTMS);
-                                    if(isToolTableUpdated){
-                                        connection.commit();
-                                        printRefundInvoice();
-                                        TopUpNotifications.success("Refund Request Success !");
-                                        clearFields();
-                                    }else {
-                                        connection.rollback();
-                                        new Alert(Alert.AlertType.ERROR,"Refund Request Fail !").show();
-                                    }
-                                }else {
-                                    connection.rollback();
-                                    new Alert(Alert.AlertType.ERROR,"Refund Request Fail !").show();
-                                }
-                            }else {
-                                connection.rollback();
-                                new Alert(Alert.AlertType.ERROR,"Refund Request Fail !").show();
-                            }
-                        }else {
-                            connection.rollback();
-                            new Alert(Alert.AlertType.ERROR,"Refund Request Fail !").show();
-                        }
-                    } catch (SQLException e) {
-                        new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-                        e.printStackTrace();
-                    }
-                }else if (Regex.validateVehicleRentId(rentIdFld.getText())){
-                    try {
-                        connection.setAutoCommit(false);
-                        Boolean  isRefundTableUpdated= RefundModel.updateVehicleRefundTable(refundIdLabel.getText(),rentIdFld.getText());
-                        if(isRefundTableUpdated){
-                            Boolean isRefundDetailTableUpdated = RefundModel.updateVehicleRefundDetailTable(refundTMS,refundIdLabel.getText());
-                            if(isRefundDetailTableUpdated){
-                                Boolean isEquipRentTableUpdated = RefundModel.updateVehicleRentTable(refundTMS);
-                                if(isEquipRentTableUpdated){
-                                    Boolean isEquipTableUpdated = RefundModel.updateVehicleTable(refundTMS);
-                                    if(isEquipTableUpdated){
-                                        connection.commit();
-                                        printRefundInvoice();
-                                        TopUpNotifications.success("Refund Request Success !");
-                                        clearFields();
-                                    }else {
-                                        connection.rollback();
-                                        new Alert(Alert.AlertType.ERROR,"Refund Request Fail !").show();
-                                    }
-                                }else {
-                                    connection.rollback();
-                                    new Alert(Alert.AlertType.ERROR,"Refund Request Fail !").show();
-                                }
-                            }else {
-                                connection.rollback();
-                                new Alert(Alert.AlertType.ERROR,"Refund Request Fail !").show();
-                            }
-                        }else {
-                            connection.rollback();
-                            new Alert(Alert.AlertType.ERROR,"Refund Request Fail !").show();
-                        }
-                    } catch (SQLException e) {
-                        new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-                        e.printStackTrace();
-                    }
-
-                }
+            } catch (SQLException e) {
+                new  Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
+                e.printStackTrace();
             }
         });
     }
@@ -190,7 +115,7 @@ public class RefundController {
     private void printRefundInvoice() {
         try {
             HashMap<String,Object> params = new HashMap<>();
-            CustomerDTO customerDTO = RefundModel.getCustomer(rentIdFld.getText());
+            CustomerDTO customerDTO = refundService.getCustomer(rentIdFld.getText());
             params.put("refundId",refundIdLabel.getText());
             params.put("name", customerDTO.getFirstName()+" "+ customerDTO.getLastName());
             params.put("street", customerDTO.getStreet());
@@ -198,7 +123,7 @@ public class RefundController {
             params.put("city", customerDTO.getCity());
             params.put("mobile", customerDTO.getMobileNumber());
             params.put("email", customerDTO.getEmail());
-            params.put("subTotal",RefundModel.getTotal(refundTMS));
+            params.put("subTotal",refundService.getTotal(refundTMS));
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(refundTMS);
             JasperReport compileReport = JasperCompileManager.compileReport(
                     JRXmlLoader.load(
@@ -232,7 +157,7 @@ public class RefundController {
 
     private void loadRefundOrderTable() {
         try {
-            ArrayList<RefundOrderTM> refundOrder = RefundModel.getRefundOrderTM(rentIdFld.getText());
+            ArrayList<RefundOrderTM> refundOrder = refundService.getRefundOrderTM(rentIdFld.getText());
             if(refundOrder.size()<=0){
                 new Alert(Alert.AlertType.ERROR,"No Items To Refund!").show();
                 clearFields();
@@ -251,10 +176,10 @@ public class RefundController {
     public void enterOnAction(ActionEvent actionEvent) {
         if(Regex.validateToolRentId(rentIdFld.getText())){
             try {
-                Boolean status =  RefundModel.verifyToolRentId(rentIdFld.getText());
-                if(RefundModel.verifyToolRentId(rentIdFld.getText())!=null){
+                Boolean status =  refundService.verifyToolRentId(rentIdFld.getText());
+                if(refundService.verifyToolRentId(rentIdFld.getText())!=null){
                     if(Boolean.TRUE.equals(status)){
-                        if(RefundModel.checkToolReturn(rentIdFld.getText())){
+                        if(refundService.checkToolReturn(rentIdFld.getText())){
                             new Alert(Alert.AlertType.WARNING,"Can't Issue Refund ! AR").show();
                         }else {
                             loadRefundOrderTable();;
@@ -272,10 +197,10 @@ public class RefundController {
             }
         }else if(Regex.validateVehicleRentId(rentIdFld.getText())){
             try {
-              Boolean status =  RefundModel.verifyVehicleRentId(rentIdFld.getText());
-                if(RefundModel.verifyVehicleRentId(rentIdFld.getText())!=null){
+              Boolean status =  refundService.verifyVehicleRentId(rentIdFld.getText());
+                if(refundService.verifyVehicleRentId(rentIdFld.getText())!=null){
                     if(Boolean.TRUE.equals(status)){
-                        if(RefundModel.checkVehicleReturn(rentIdFld.getText())){
+                        if(refundService.checkVehicleReturn(rentIdFld.getText())){
                             new Alert(Alert.AlertType.WARNING,"Can't Issue Refund ! AOR").show();
                         }else {
                             loadRefundOrderTable();
@@ -298,7 +223,7 @@ public class RefundController {
     }
 
     public void validateRentId(KeyEvent keyEvent) {
-        if (Regex.validateToolRentId(rentIdFld.getText())|| Regex.validateVehicleRentId(rentIdFld.getText())) {
+        if (refundService.validateToolRentId(rentIdFld.getText())|| refundService.validateVehicleRentId(rentIdFld.getText())) {
             rentIdFld.setStyle("-fx-border-color: green");
         } else {
             rentIdFld.setStyle("-fx-border-color: red");
@@ -308,19 +233,14 @@ public class RefundController {
     public void changeBtnOnAction(ActionEvent actionEvent) {
         RefundOrderTM refundOrderTM = refundOrderTable.getSelectionModel().getSelectedItem();
         if(refundOrderTM!=null) {
-            try {
-                RefundTM refundTM=RefundModel.getRefundTM(refundOrderTM);
+                RefundTM refundTM=refundService.getRefundTM(refundOrderTM);
                 refundTMS.add(refundTM);
                 refundTable.setItems(refundTMS);
-                Double total = RefundModel.getTotal(refundTMS);
+                Double total = refundService.getTotal(refundTMS);
                 totalRefundLabel.setStyle("-fx-text-fill: red");
                 totalRefundLabel.setText("Total : "+String.valueOf(total));
                 refundOrderTMS.remove(refundOrderTM);
                 processedBtn.setDisable(false);
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR,e.getLocalizedMessage()).show();
-                e.printStackTrace();
-            }
         }else {
             new Alert(Alert.AlertType.ERROR,"Please Select Row !").show();
         }
