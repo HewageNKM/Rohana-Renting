@@ -27,6 +27,10 @@ Install my-project with npm
 - Manage Login Access
 - Manage Employee details
 
+## License
+
+![App Screenshot](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)
+[Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/)
 
 ## Screenshots
 ![Appscreenshot](https://github.com/HewageNKM/Rohana-Renting/assets/107237482/0d9f3a5f-e84e-45f7-87ee-580e0e249acd)
